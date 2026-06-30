@@ -1,11 +1,14 @@
 import { Package } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { packs } from "../../../lib/registry";
+import type { Locale } from "../../../i18n/routing";
+import { findSkill, packs } from "../../../lib/registry";
+import { localizeSkill } from "../../../lib/skill-i18n";
 
 export default async function PacksPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("packsPage");
+  const activeLocale = locale as Locale;
 
   return (
     <main className="page">
@@ -22,7 +25,10 @@ export default async function PacksPage({ params }: { params: Promise<{ locale: 
             <p>{t(`packs.${pack.id}.summary`)}</p>
             <pre>aso install-pack {pack.id} --target codex --dir .</pre>
             <div className="tags">
-              {pack.skills.map((skill) => <span key={skill}>{skill}</span>)}
+              {pack.skills.map((skillId) => {
+                const skill = findSkill(skillId);
+                return <span key={skillId}>{skill ? localizeSkill(skill, activeLocale).name : skillId}</span>;
+              })}
             </div>
           </article>
         ))}

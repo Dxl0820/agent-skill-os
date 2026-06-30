@@ -2,15 +2,21 @@ import { Bot, Boxes, Code2, Terminal } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { SkillCard } from "../../components/SkillCard";
 import { Link } from "../../i18n/navigation";
+import type { Locale } from "../../i18n/routing";
 import { skills } from "../../lib/registry";
+import { localizeSkills } from "../../lib/skill-i18n";
 
 const featuredIds = ["readme-writer", "code-reviewer", "prd-writer", "short-video-script-writer", "issue-triage", "release-notes-writer"];
-const featured = featuredIds.map((id) => skills.find((skill) => skill.id === id)).filter(Boolean);
+const featured = featuredIds.flatMap((id) => {
+  const skill = skills.find((item) => item.id === id);
+  return skill ? [skill] : [];
+});
 
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("home");
+  const localizedFeatured = localizeSkills(featured, locale as Locale);
 
   return (
     <main>
@@ -44,7 +50,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           <Link href="/skills">{t("browseAll")}</Link>
         </div>
         <div className="grid">
-          {featured.map((skill) => skill ? <SkillCard key={skill.id} skill={skill} /> : null)}
+          {localizedFeatured.map((skill) => <SkillCard key={skill.id} skill={skill} />)}
         </div>
       </section>
 

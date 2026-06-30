@@ -20,7 +20,8 @@
   "language": {
     "label": "语言",
     "en": "English",
-    "zhCN": "中文"
+    "zhCN": "中文",
+    "ja": "日本語"
   },
   "home": {
     "eyebrow": "面向 AI 编程 Agent 的开源技能库",
@@ -57,7 +58,8 @@
     "difficulty": "难度",
     "targets": "适配目标",
     "tags": "标签",
-    "related": "相关技能"
+    "related": "相关技能",
+    "originalLanguageNotice": "技能正文暂时以原始语言显示。"
   },
   "packsPage": {
     "eyebrow": "技能包",

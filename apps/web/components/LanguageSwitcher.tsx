@@ -22,7 +22,7 @@ export function LanguageSwitcher() {
       >
         {locales.map((locale) => (
           <option key={locale} value={locale}>
-            {locale === "zh-CN" ? t("zhCN") : t("en")}
+            {locale === "zh-CN" ? t("zhCN") : locale === "ja" ? t("ja") : t("en")}
           </option>
         ))}
       </select>

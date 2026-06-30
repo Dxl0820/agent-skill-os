@@ -1,0 +1,128 @@
+{
+  "metadata": {
+    "title": "Agent Skill OS",
+    "description": "実績あるスキルを 30 秒で AI コーディングエージェントにインストールします。"
+  },
+  "nav": {
+    "label": "メインナビゲーション",
+    "skills": "スキル",
+    "packs": "パック",
+    "showcase": "ショーケース",
+    "docs": "ドキュメント"
+  },
+  "footer": {
+    "label": "フッターナビゲーション",
+    "tagline": "AI コーディングエージェント向けの再利用可能な専門スキル。",
+    "skills": "スキル",
+    "packs": "パック",
+    "docs": "ドキュメント"
+  },
+  "language": {
+    "label": "言語",
+    "en": "English",
+    "zhCN": "中文",
+    "ja": "日本語"
+  },
+  "home": {
+    "eyebrow": "AI コーディングエージェント向け OSS スキルレジストリ",
+    "tagline": "実績あるスキルを 30 秒で AI コーディングエージェントにインストールします。",
+    "viewSkills": "スキルを見る",
+    "showcase": "ショーケース",
+    "quickStart": "クイックスタート",
+    "featuredSkills": "注目スキル",
+    "browseAll": "24 件すべてを見る",
+    "worksWithTitle": "対応ツール",
+    "worksWithBody": "汎用フォルダ、Claude、Codex、Cursor のターゲットアダプターに対応します。",
+    "whyTitle": "Skill OS が必要な理由",
+    "whyBody": "プロンプト断片を、インストール可能でバージョン管理できる再利用可能なスキルにします。",
+    "localTitle": "ローカルファースト",
+    "localBody": "MVP ではアカウント、データベース、マーケットプレイス、モデル呼び出しは不要です。"
+  },
+  "skillsPage": {
+    "eyebrow": "スキルギャラリー",
+    "title": "再利用可能な AI エージェントスキルを閲覧、検索、インストールできます。",
+    "description": "各スキルは型付きメタデータ、ターゲット互換性、再現可能なワークフローを持つ Markdown です。"
+  },
+  "skills": {
+    "filters": {
+      "search": "スキルを検索",
+      "category": "カテゴリ",
+      "tag": "タグ",
+      "all": "すべて"
+    },
+    "card": {
+      "view": "スキルを見る"
+    }
+  },
+  "skillDetail": {
+    "difficulty": "難易度",
+    "targets": "対応ターゲット",
+    "tags": "タグ",
+    "related": "関連スキル",
+    "originalLanguageNotice": "スキル本文は現在、元の言語で表示されています。"
+  },
+  "packsPage": {
+    "eyebrow": "スキルパック",
+    "title": "完全なワークフローを 1 つのコマンドでインストールします。",
+    "description": "パックは開発生産性、リポジトリ保守、ローンチ、動画制作に関連するスキルを組み合わせます。",
+    "packs": {
+      "developer-productivity": {
+        "name": "開発者生産性",
+        "summary": "日常の AI 支援開発に必要な基本スキル。"
+      },
+      "repo-maintainer": {
+        "name": "リポジトリ保守",
+        "summary": "Issue、PR、リリース、ドキュメントを前に進めるためのスキル。"
+      },
+      "launch-kit": {
+        "name": "ローンチキット",
+        "summary": "プロジェクトアイデアを公開可能なアセットに変えるスキル。"
+      },
+      "ai-video-creator": {
+        "name": "AI 動画クリエイター",
+        "summary": "技術デモ、脚本、タイトル、資料要約を計画するためのスキル。"
+      }
+    }
+  },
+  "showcase": {
+    "eyebrow": "ショーケース",
+    "title": "最初の 30 秒でインストールできる 3 つのワークフロー。",
+    "description": "各シナリオはコマンド、インストールされるスキル、期待される出力、AI コーディングエージェントにとっての価値を示します。",
+    "installCommand": "インストールコマンド",
+    "installedSkills": "インストールされるスキル",
+    "expectedOutput": "期待される出力",
+    "useful": "役立つ理由",
+    "viewPacks": "パックを見る",
+    "scenarios": {
+      "developerProductivity": {
+        "name": "開発者生産性",
+        "output": "レビュー指摘、回帰テスト、再現手順、リファクタリング計画、README 草案、PR 要約。",
+        "useful": "古いプロンプトをコピーせずに、日常開発ワークフローをコーディングエージェントへまとめて提供できます。"
+      },
+      "launchKit": {
+        "name": "ローンチキット",
+        "output": "PRD、README 改善、ランディングコピー、ローンチ投稿、デモ動画計画。",
+        "useful": "粗いプロジェクトアイデアを GitHub とソーシャル向けの公開可能なアセットに変えます。"
+      },
+      "aiVideoCreator": {
+        "name": "AI 動画クリエイター",
+        "output": "ショート脚本、デモ構成、YouTube タイトル、サムネイル文言、資料要約。",
+        "useful": "技術プロジェクトを見やすいデモと再利用可能なコンテンツにまとめやすくします。"
+      }
+    }
+  },
+  "docsPage": {
+    "eyebrow": "ドキュメント",
+    "title": "スキルのインストール、新規作成、レジストリ検証を行います。",
+    "installation": "インストール",
+    "cliUsage": "CLI の使い方",
+    "skillFormat": "スキル形式",
+    "skillFormatBody": "スキルは <code>skills/&lt;skill-id&gt;/SKILL.md</code> に置かれ、frontmatter メタデータと必須 Markdown セクションを含みます。",
+    "targetAdapters": "ターゲットアダプター",
+    "targetAdaptersBody": "Generic は <code>agent-skills/</code>、Claude は <code>.claude/skills/</code>、Codex は <code>.codex/skills/</code>、Cursor は <code>.mdc</code> ルールを書き込みます。",
+    "contributing": "コントリビューション",
+    "contributingBody": "Pull Request を開く前に <code>pnpm validate</code> と <code>pnpm test</code> を実行してください。完全なスキル貢献ガイドは <code>docs/contributing-skill.md</code> を参照してください。",
+    "roadmap": "ロードマップ",
+    "roadmapBody": "v0.2 ではコミュニティ投稿フロー、評価メタデータ、追加アダプター、より良いテンプレート、スキル依存関係を追加します。"
+  }
+}

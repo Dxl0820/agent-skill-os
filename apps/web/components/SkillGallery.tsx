@@ -4,24 +4,41 @@ import { Search } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 import { SkillCard } from "./SkillCard";
-import type { SkillMetadata } from "../lib/registry";
+import type { LocalizedSkillMetadata } from "../lib/skill-i18n";
 
-export function SkillGallery({ skills }: { skills: SkillMetadata[] }) {
+export function SkillGallery({ skills }: { skills: LocalizedSkillMetadata[] }) {
   const t = useTranslations("skills.filters");
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("all");
   const [tag, setTag] = useState("all");
   const categories = ["all", ...Array.from(new Set(skills.map((skill) => skill.category)))];
-  const tags = ["all", ...Array.from(new Set(skills.flatMap((skill) => skill.tags))).sort()];
+  const tagOptions = useMemo(() => {
+    const options = new Map<string, string>();
+    for (const skill of skills) {
+      skill.tags.forEach((item, index) => {
+        if (!options.has(item)) {
+          options.set(item, skill.tagLabels[index] ?? item);
+        }
+      });
+    }
+
+    return [
+      { value: "all", label: t("all") },
+      ...Array.from(options, ([value, label]) => ({ value, label })).sort((a, b) => a.label.localeCompare(b.label))
+    ];
+  }, [skills, t]);
   const filtered = useMemo(() => {
     const normalized = query.toLowerCase().trim();
     return skills.filter((skill) => {
       const categoryOk = category === "all" || skill.category === category;
       const tagOk = tag === "all" || skill.tags.includes(tag);
-      const text = [skill.id, skill.name, skill.summary, skill.category, skill.tags.join(" ")].join(" ").toLowerCase();
-      return categoryOk && tagOk && (!normalized || text.includes(normalized));
+      return categoryOk && tagOk && (!normalized || skill.searchText.includes(normalized));
     });
   }, [category, query, skills, tag]);
+  const categoryLabel = (item: string) => {
+    if (item === "all") return t("all");
+    return skills.find((skill) => skill.category === item)?.categoryLabel ?? item;
+  };
 
   return (
     <section className="gallery-shell">
@@ -32,12 +49,12 @@ export function SkillGallery({ skills }: { skills: SkillMetadata[] }) {
         </label>
         <select value={category} onChange={(event) => setCategory(event.target.value)} aria-label={t("category")}>
           {categories.map((item) => (
-            <option key={item} value={item}>{item === "all" ? t("all") : item}</option>
+            <option key={item} value={item}>{categoryLabel(item)}</option>
           ))}
         </select>
         <select value={tag} onChange={(event) => setTag(event.target.value)} aria-label={t("tag")}>
-          {tags.map((item) => (
-            <option key={item} value={item}>{item === "all" ? t("all") : item}</option>
+          {tagOptions.map((item) => (
+            <option key={item.value} value={item.value}>{item.label}</option>
           ))}
         </select>
       </div>

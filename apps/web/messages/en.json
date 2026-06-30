@@ -20,7 +20,8 @@
   "language": {
     "label": "Language",
     "en": "English",
-    "zhCN": "Chinese"
+    "zhCN": "Chinese",
+    "ja": "Japanese"
   },
   "home": {
     "eyebrow": "Open-source skill registry for AI coding agents",
@@ -57,7 +58,8 @@
     "difficulty": "Difficulty",
     "targets": "Targets",
     "tags": "Tags",
-    "related": "Related Skills"
+    "related": "Related Skills",
+    "originalLanguageNotice": "Skill content is currently shown in its original language."
   },
   "packsPage": {
     "eyebrow": "Skill Packs",

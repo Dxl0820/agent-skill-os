@@ -1,6 +1,9 @@
 import { ArrowRight, Film, Rocket, Wrench } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "../../../i18n/navigation";
+import type { Locale } from "../../../i18n/routing";
+import { findSkill } from "../../../lib/registry";
+import { localizeSkill } from "../../../lib/skill-i18n";
 
 const scenarios = [
   {
@@ -27,6 +30,7 @@ export default async function ShowcasePage({ params }: { params: Promise<{ local
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("showcase");
+  const activeLocale = locale as Locale;
 
   return (
     <main className="page">
@@ -51,7 +55,10 @@ export default async function ShowcasePage({ params }: { params: Promise<{ local
               <div className="showcase-block">
                 <strong>{t("installedSkills")}</strong>
                 <div className="tags">
-                  {scenario.skills.map((skill) => <span key={skill}>{skill}</span>)}
+                  {scenario.skills.map((skillId) => {
+                    const skill = findSkill(skillId);
+                    return <span key={skillId}>{skill ? localizeSkill(skill, activeLocale).name : skillId}</span>;
+                  })}
                 </div>
               </div>
               <div className="showcase-block">
