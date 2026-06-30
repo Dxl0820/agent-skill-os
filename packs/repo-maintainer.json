@@ -1,0 +1,12 @@
+{
+  "id": "repo-maintainer",
+  "name": "Repo Maintainer",
+  "summary": "Skills for maintaining issues, PRs, releases, and contributor experience.",
+  "skills": [
+    "issue-triage",
+    "pr-summarizer",
+    "release-notes-writer",
+    "changelog-writer",
+    "contributing-guide-writer"
+  ]
+}

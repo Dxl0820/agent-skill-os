@@ -1,0 +1,11 @@
+{
+  "id": "ai-video-creator",
+  "name": "AI Video Creator",
+  "summary": "Skills for planning short videos, demos, titles, and source summaries.",
+  "skills": [
+    "short-video-script-writer",
+    "youtube-title-thumbnail-ideas",
+    "demo-video-planner",
+    "source-summarizer"
+  ]
+}

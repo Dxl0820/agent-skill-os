@@ -1,0 +1,925 @@
+{
+  "generatedAt": "2026-06-30T07:51:31.174Z",
+  "skills": [
+    {
+      "id": "api-docs-writer",
+      "name": "API Docs Writer",
+      "summary": "Generate practical API documentation from code or interface notes.",
+      "description": "A reusable Agent Skill OS skill that helps AI coding agents complete api docs writer work with a reliable workflow.",
+      "category": "documentation",
+      "tags": [
+        "api",
+        "docs",
+        "reference"
+      ],
+      "targets": [
+        "generic",
+        "claude",
+        "codex",
+        "cursor"
+      ],
+      "difficulty": "intermediate",
+      "version": "0.1.0",
+      "author": "Agent Skill OS",
+      "license": "MIT",
+      "inputs": [
+        "endpoint list",
+        "request examples",
+        "response examples"
+      ],
+      "outputs": [
+        "API reference",
+        "usage examples",
+        "error notes"
+      ],
+      "use_cases": [
+        "Document a public API",
+        "Create internal integration docs"
+      ]
+    },
+    {
+      "id": "bug-reproducer",
+      "name": "Bug Reproducer",
+      "summary": "Turn a bug report into reproducible steps and a minimal failing case.",
+      "description": "A reusable Agent Skill OS skill that helps AI coding agents complete bug reproducer work with a reliable workflow.",
+      "category": "coding",
+      "tags": [
+        "bug",
+        "reproduction",
+        "debugging"
+      ],
+      "targets": [
+        "generic",
+        "claude",
+        "codex",
+        "cursor"
+      ],
+      "difficulty": "beginner",
+      "version": "0.1.0",
+      "author": "Agent Skill OS",
+      "license": "MIT",
+      "inputs": [
+        "bug report",
+        "environment",
+        "logs"
+      ],
+      "outputs": [
+        "repro steps",
+        "minimal case",
+        "expected vs actual"
+      ],
+      "use_cases": [
+        "Confirm a reported bug",
+        "Create a failing test"
+      ]
+    },
+    {
+      "id": "changelog-writer",
+      "name": "Changelog Writer",
+      "summary": "Turn commits, PRs, or release notes into a clear changelog.",
+      "description": "A reusable Agent Skill OS skill that helps AI coding agents complete changelog writer work with a reliable workflow.",
+      "category": "documentation",
+      "tags": [
+        "changelog",
+        "release",
+        "commits"
+      ],
+      "targets": [
+        "generic",
+        "claude",
+        "codex",
+        "cursor"
+      ],
+      "difficulty": "beginner",
+      "version": "0.1.0",
+      "author": "Agent Skill OS",
+      "license": "MIT",
+      "inputs": [
+        "commits",
+        "merged PRs",
+        "release scope"
+      ],
+      "outputs": [
+        "CHANGELOG entry",
+        "breaking changes",
+        "migration notes"
+      ],
+      "use_cases": [
+        "Prepare a release",
+        "Summarize repo changes"
+      ]
+    },
+    {
+      "id": "code-reviewer",
+      "name": "Code Reviewer",
+      "summary": "Review code for bugs, risks, edge cases, and missing tests.",
+      "description": "A reusable Agent Skill OS skill that helps AI coding agents complete code reviewer work with a reliable workflow.",
+      "category": "coding",
+      "tags": [
+        "review",
+        "quality",
+        "testing"
+      ],
+      "targets": [
+        "generic",
+        "claude",
+        "codex",
+        "cursor"
+      ],
+      "difficulty": "intermediate",
+      "version": "0.1.0",
+      "author": "Agent Skill OS",
+      "license": "MIT",
+      "inputs": [
+        "diff",
+        "requirements",
+        "test output"
+      ],
+      "outputs": [
+        "findings",
+        "risk summary",
+        "test suggestions"
+      ],
+      "use_cases": [
+        "Review a pull request",
+        "Check a risky change"
+      ]
+    },
+    {
+      "id": "competitor-researcher",
+      "name": "Competitor Researcher",
+      "summary": "Structure competitor research into comparable positioning and feature notes.",
+      "description": "A reusable Agent Skill OS skill that helps AI coding agents complete competitor researcher work with a reliable workflow.",
+      "category": "research",
+      "tags": [
+        "competitors",
+        "market",
+        "positioning"
+      ],
+      "targets": [
+        "generic",
+        "claude",
+        "codex",
+        "cursor"
+      ],
+      "difficulty": "intermediate",
+      "version": "0.1.0",
+      "author": "Agent Skill OS",
+      "license": "MIT",
+      "inputs": [
+        "competitor names",
+        "sources",
+        "criteria"
+      ],
+      "outputs": [
+        "comparison table",
+        "insights",
+        "opportunities"
+      ],
+      "use_cases": [
+        "Study alternatives",
+        "Prepare positioning"
+      ]
+    },
+    {
+      "id": "contributing-guide-writer",
+      "name": "Contributing Guide Writer",
+      "summary": "Create contributor onboarding and contribution rules for open-source repositories.",
+      "description": "A reusable Agent Skill OS skill that helps AI coding agents complete contributing guide writer work with a reliable workflow.",
+      "category": "documentation",
+      "tags": [
+        "contributing",
+        "github",
+        "onboarding"
+      ],
+      "targets": [
+        "generic",
+        "claude",
+        "codex",
+        "cursor"
+      ],
+      "difficulty": "beginner",
+      "version": "0.1.0",
+      "author": "Agent Skill OS",
+      "license": "MIT",
+      "inputs": [
+        "repo workflow",
+        "test commands",
+        "coding standards"
+      ],
+      "outputs": [
+        "CONTRIBUTING.md",
+        "PR checklist",
+        "local setup"
+      ],
+      "use_cases": [
+        "Help first-time contributors",
+        "Standardize contribution flow"
+      ]
+    },
+    {
+      "id": "demo-video-planner",
+      "name": "Demo Video Planner",
+      "summary": "Plan a product demo video with scenes, narration, and screen actions.",
+      "description": "A reusable Agent Skill OS skill that helps AI coding agents complete demo video planner work with a reliable workflow.",
+      "category": "content",
+      "tags": [
+        "demo",
+        "video",
+        "screens"
+      ],
+      "targets": [
+        "generic",
+        "claude",
+        "codex",
+        "cursor"
+      ],
+      "difficulty": "intermediate",
+      "version": "0.1.0",
+      "author": "Agent Skill OS",
+      "license": "MIT",
+      "inputs": [
+        "product flow",
+        "key features",
+        "viewer goal"
+      ],
+      "outputs": [
+        "demo outline",
+        "shot list",
+        "narration"
+      ],
+      "use_cases": [
+        "Record launch demos",
+        "Create walkthrough videos"
+      ]
+    },
+    {
+      "id": "dependency-upgrade-planner",
+      "name": "Dependency Upgrade Planner",
+      "summary": "Analyze dependency upgrade risks and produce a safe rollout plan.",
+      "description": "A reusable Agent Skill OS skill that helps AI coding agents complete dependency upgrade planner work with a reliable workflow.",
+      "category": "coding",
+      "tags": [
+        "dependencies",
+        "upgrade",
+        "risk"
+      ],
+      "targets": [
+        "generic",
+        "claude",
+        "codex",
+        "cursor"
+      ],
+      "difficulty": "advanced",
+      "version": "0.1.0",
+      "author": "Agent Skill OS",
+      "license": "MIT",
+      "inputs": [
+        "package list",
+        "target versions",
+        "changelog links"
+      ],
+      "outputs": [
+        "upgrade plan",
+        "risk matrix",
+        "test commands"
+      ],
+      "use_cases": [
+        "Upgrade framework versions",
+        "Plan security patching"
+      ]
+    },
+    {
+      "id": "issue-triage",
+      "name": "Issue Triage",
+      "summary": "Summarize issues, classify priority, and suggest labels and next actions.",
+      "description": "A reusable Agent Skill OS skill that helps AI coding agents complete issue triage work with a reliable workflow.",
+      "category": "github",
+      "tags": [
+        "issues",
+        "labels",
+        "triage"
+      ],
+      "targets": [
+        "generic",
+        "claude",
+        "codex",
+        "cursor"
+      ],
+      "difficulty": "beginner",
+      "version": "0.1.0",
+      "author": "Agent Skill OS",
+      "license": "MIT",
+      "inputs": [
+        "issue body",
+        "repo context",
+        "labels"
+      ],
+      "outputs": [
+        "summary",
+        "priority",
+        "labels",
+        "response draft"
+      ],
+      "use_cases": [
+        "Triage incoming issues",
+        "Prepare maintainer replies"
+      ]
+    },
+    {
+      "id": "landing-page-copywriter",
+      "name": "Landing Page Copywriter",
+      "summary": "Write landing page hero copy, sections, CTAs, and conversion messaging.",
+      "description": "A reusable Agent Skill OS skill that helps AI coding agents complete landing page copywriter work with a reliable workflow.",
+      "category": "product",
+      "tags": [
+        "landing",
+        "copy",
+        "launch"
+      ],
+      "targets": [
+        "generic",
+        "claude",
+        "codex",
+        "cursor"
+      ],
+      "difficulty": "beginner",
+      "version": "0.1.0",
+      "author": "Agent Skill OS",
+      "license": "MIT",
+      "inputs": [
+        "product",
+        "audience",
+        "proof",
+        "CTA"
+      ],
+      "outputs": [
+        "hero copy",
+        "section copy",
+        "CTA set"
+      ],
+      "use_cases": [
+        "Launch a new project",
+        "Improve first-screen messaging"
+      ]
+    },
+    {
+      "id": "launch-post-writer",
+      "name": "Launch Post Writer",
+      "summary": "Create launch posts for X, Hacker News, Reddit, Juejin, and Zhihu.",
+      "description": "A reusable Agent Skill OS skill that helps AI coding agents complete launch post writer work with a reliable workflow.",
+      "category": "product",
+      "tags": [
+        "launch",
+        "social",
+        "marketing"
+      ],
+      "targets": [
+        "generic",
+        "claude",
+        "codex",
+        "cursor"
+      ],
+      "difficulty": "beginner",
+      "version": "0.1.0",
+      "author": "Agent Skill OS",
+      "license": "MIT",
+      "inputs": [
+        "product summary",
+        "audience",
+        "proof points"
+      ],
+      "outputs": [
+        "platform posts",
+        "hooks",
+        "CTA variants"
+      ],
+      "use_cases": [
+        "Announce an open-source repo",
+        "Promote a feature launch"
+      ]
+    },
+    {
+      "id": "performance-reviewer",
+      "name": "Performance Reviewer",
+      "summary": "Identify likely performance bottlenecks and practical optimizations.",
+      "description": "A reusable Agent Skill OS skill that helps AI coding agents complete performance reviewer work with a reliable workflow.",
+      "category": "coding",
+      "tags": [
+        "performance",
+        "profiling",
+        "optimization"
+      ],
+      "targets": [
+        "generic",
+        "claude",
+        "codex",
+        "cursor"
+      ],
+      "difficulty": "advanced",
+      "version": "0.1.0",
+      "author": "Agent Skill OS",
+      "license": "MIT",
+      "inputs": [
+        "hot path",
+        "metrics",
+        "code sample"
+      ],
+      "outputs": [
+        "bottleneck list",
+        "measurement plan",
+        "optimization ideas"
+      ],
+      "use_cases": [
+        "Review slow rendering",
+        "Improve batch processing"
+      ]
+    },
+    {
+      "id": "pr-summarizer",
+      "name": "PR Summarizer",
+      "summary": "Summarize pull request changes, risks, and review focus areas.",
+      "description": "A reusable Agent Skill OS skill that helps AI coding agents complete pr summarizer work with a reliable workflow.",
+      "category": "github",
+      "tags": [
+        "pull-request",
+        "summary",
+        "review"
+      ],
+      "targets": [
+        "generic",
+        "claude",
+        "codex",
+        "cursor"
+      ],
+      "difficulty": "beginner",
+      "version": "0.1.0",
+      "author": "Agent Skill OS",
+      "license": "MIT",
+      "inputs": [
+        "diff",
+        "PR description",
+        "tests"
+      ],
+      "outputs": [
+        "summary",
+        "risk notes",
+        "test evidence"
+      ],
+      "use_cases": [
+        "Write PR descriptions",
+        "Prepare release notes"
+      ]
+    },
+    {
+      "id": "prd-writer",
+      "name": "PRD Writer",
+      "summary": "Turn a product idea into a crisp product requirements document.",
+      "description": "A reusable Agent Skill OS skill that helps AI coding agents complete prd writer work with a reliable workflow.",
+      "category": "product",
+      "tags": [
+        "prd",
+        "requirements",
+        "product"
+      ],
+      "targets": [
+        "generic",
+        "claude",
+        "codex",
+        "cursor"
+      ],
+      "difficulty": "intermediate",
+      "version": "0.1.0",
+      "author": "Agent Skill OS",
+      "license": "MIT",
+      "inputs": [
+        "idea",
+        "users",
+        "goals",
+        "constraints"
+      ],
+      "outputs": [
+        "PRD",
+        "acceptance criteria",
+        "non-goals"
+      ],
+      "use_cases": [
+        "Start a new product",
+        "Align stakeholders"
+      ]
+    },
+    {
+      "id": "readme-writer",
+      "name": "README Writer",
+      "summary": "Create high-converting GitHub README files for open-source projects.",
+      "description": "A reusable Agent Skill OS skill that helps AI coding agents complete readme writer work with a reliable workflow.",
+      "category": "documentation",
+      "tags": [
+        "readme",
+        "github",
+        "docs",
+        "launch"
+      ],
+      "targets": [
+        "generic",
+        "claude",
+        "codex",
+        "cursor"
+      ],
+      "difficulty": "beginner",
+      "version": "0.1.0",
+      "author": "Agent Skill OS",
+      "license": "MIT",
+      "inputs": [
+        "repo name",
+        "project description",
+        "features",
+        "install commands"
+      ],
+      "outputs": [
+        "README.md draft",
+        "feature list",
+        "quick start",
+        "contribution section"
+      ],
+      "use_cases": [
+        "Launch a new GitHub repo",
+        "Improve open-source project presentation"
+      ]
+    },
+    {
+      "id": "refactor-planner",
+      "name": "Refactor Planner",
+      "summary": "Break a refactor into small, reversible, testable steps.",
+      "description": "A reusable Agent Skill OS skill that helps AI coding agents complete refactor planner work with a reliable workflow.",
+      "category": "coding",
+      "tags": [
+        "refactor",
+        "architecture",
+        "plan"
+      ],
+      "targets": [
+        "generic",
+        "claude",
+        "codex",
+        "cursor"
+      ],
+      "difficulty": "intermediate",
+      "version": "0.1.0",
+      "author": "Agent Skill OS",
+      "license": "MIT",
+      "inputs": [
+        "current code",
+        "target design",
+        "constraints"
+      ],
+      "outputs": [
+        "step plan",
+        "risk map",
+        "test plan"
+      ],
+      "use_cases": [
+        "Plan a cleanup",
+        "Reduce coupling safely"
+      ]
+    },
+    {
+      "id": "release-notes-writer",
+      "name": "Release Notes Writer",
+      "summary": "Create release notes from commits, pull requests, and issues.",
+      "description": "A reusable Agent Skill OS skill that helps AI coding agents complete release notes writer work with a reliable workflow.",
+      "category": "github",
+      "tags": [
+        "release",
+        "notes",
+        "github"
+      ],
+      "targets": [
+        "generic",
+        "claude",
+        "codex",
+        "cursor"
+      ],
+      "difficulty": "intermediate",
+      "version": "0.1.0",
+      "author": "Agent Skill OS",
+      "license": "MIT",
+      "inputs": [
+        "version",
+        "merged PRs",
+        "breaking changes"
+      ],
+      "outputs": [
+        "release notes",
+        "highlights",
+        "upgrade notes"
+      ],
+      "use_cases": [
+        "Publish GitHub releases",
+        "Announce product updates"
+      ]
+    },
+    {
+      "id": "roadmap-planner",
+      "name": "Roadmap Planner",
+      "summary": "Convert requirements and feedback into a practical product roadmap.",
+      "description": "A reusable Agent Skill OS skill that helps AI coding agents complete roadmap planner work with a reliable workflow.",
+      "category": "github",
+      "tags": [
+        "roadmap",
+        "planning",
+        "issues"
+      ],
+      "targets": [
+        "generic",
+        "claude",
+        "codex",
+        "cursor"
+      ],
+      "difficulty": "intermediate",
+      "version": "0.1.0",
+      "author": "Agent Skill OS",
+      "license": "MIT",
+      "inputs": [
+        "goals",
+        "constraints",
+        "feature ideas"
+      ],
+      "outputs": [
+        "roadmap",
+        "milestones",
+        "priorities"
+      ],
+      "use_cases": [
+        "Plan a quarter",
+        "Organize backlog themes"
+      ]
+    },
+    {
+      "id": "short-video-script-writer",
+      "name": "Short Video Script Writer",
+      "summary": "Write 15, 30, and 60 second short-form video scripts.",
+      "description": "A reusable Agent Skill OS skill that helps AI coding agents complete short video script writer work with a reliable workflow.",
+      "category": "content",
+      "tags": [
+        "video",
+        "script",
+        "shorts"
+      ],
+      "targets": [
+        "generic",
+        "claude",
+        "codex",
+        "cursor"
+      ],
+      "difficulty": "beginner",
+      "version": "0.1.0",
+      "author": "Agent Skill OS",
+      "license": "MIT",
+      "inputs": [
+        "topic",
+        "audience",
+        "offer"
+      ],
+      "outputs": [
+        "script",
+        "shot list",
+        "hook"
+      ],
+      "use_cases": [
+        "Create product teasers",
+        "Explain a feature quickly"
+      ]
+    },
+    {
+      "id": "source-summarizer",
+      "name": "Source Summarizer",
+      "summary": "Summarize source material into concise, structured, traceable notes.",
+      "description": "A reusable Agent Skill OS skill that helps AI coding agents complete source summarizer work with a reliable workflow.",
+      "category": "research",
+      "tags": [
+        "sources",
+        "summary",
+        "research"
+      ],
+      "targets": [
+        "generic",
+        "claude",
+        "codex",
+        "cursor"
+      ],
+      "difficulty": "beginner",
+      "version": "0.1.0",
+      "author": "Agent Skill OS",
+      "license": "MIT",
+      "inputs": [
+        "source text",
+        "URL",
+        "research question"
+      ],
+      "outputs": [
+        "summary",
+        "key claims",
+        "open questions"
+      ],
+      "use_cases": [
+        "Digest articles",
+        "Prepare research briefs"
+      ]
+    },
+    {
+      "id": "technical-decision-record",
+      "name": "Technical Decision Record",
+      "summary": "Write architecture decision records with context, options, and consequences.",
+      "description": "A reusable Agent Skill OS skill that helps AI coding agents complete technical decision record work with a reliable workflow.",
+      "category": "research",
+      "tags": [
+        "adr",
+        "architecture",
+        "decision"
+      ],
+      "targets": [
+        "generic",
+        "claude",
+        "codex",
+        "cursor"
+      ],
+      "difficulty": "intermediate",
+      "version": "0.1.0",
+      "author": "Agent Skill OS",
+      "license": "MIT",
+      "inputs": [
+        "decision topic",
+        "options",
+        "constraints"
+      ],
+      "outputs": [
+        "ADR",
+        "tradeoffs",
+        "follow-ups"
+      ],
+      "use_cases": [
+        "Document technical choices",
+        "Record product architecture"
+      ]
+    },
+    {
+      "id": "test-writer",
+      "name": "Test Writer",
+      "summary": "Generate unit tests, edge tests, and regression cases from code behavior.",
+      "description": "A reusable Agent Skill OS skill that helps AI coding agents complete test writer work with a reliable workflow.",
+      "category": "coding",
+      "tags": [
+        "testing",
+        "vitest",
+        "regression"
+      ],
+      "targets": [
+        "generic",
+        "claude",
+        "codex",
+        "cursor"
+      ],
+      "difficulty": "intermediate",
+      "version": "0.1.0",
+      "author": "Agent Skill OS",
+      "license": "MIT",
+      "inputs": [
+        "target code",
+        "expected behavior",
+        "known bugs"
+      ],
+      "outputs": [
+        "test cases",
+        "fixtures",
+        "coverage notes"
+      ],
+      "use_cases": [
+        "Add regression tests",
+        "Cover edge cases"
+      ]
+    },
+    {
+      "id": "user-story-mapper",
+      "name": "User Story Mapper",
+      "summary": "Break requirements into user stories, flows, and acceptance criteria.",
+      "description": "A reusable Agent Skill OS skill that helps AI coding agents complete user story mapper work with a reliable workflow.",
+      "category": "product",
+      "tags": [
+        "stories",
+        "acceptance",
+        "planning"
+      ],
+      "targets": [
+        "generic",
+        "claude",
+        "codex",
+        "cursor"
+      ],
+      "difficulty": "intermediate",
+      "version": "0.1.0",
+      "author": "Agent Skill OS",
+      "license": "MIT",
+      "inputs": [
+        "requirements",
+        "personas",
+        "workflow"
+      ],
+      "outputs": [
+        "user stories",
+        "journey map",
+        "acceptance criteria"
+      ],
+      "use_cases": [
+        "Plan MVP scope",
+        "Prepare implementation tickets"
+      ]
+    },
+    {
+      "id": "youtube-title-thumbnail-ideas",
+      "name": "YouTube Title Thumbnail Ideas",
+      "summary": "Generate YouTube titles, thumbnail text, and opening hooks.",
+      "description": "A reusable Agent Skill OS skill that helps AI coding agents complete youtube title thumbnail ideas work with a reliable workflow.",
+      "category": "content",
+      "tags": [
+        "youtube",
+        "thumbnail",
+        "hook"
+      ],
+      "targets": [
+        "generic",
+        "claude",
+        "codex",
+        "cursor"
+      ],
+      "difficulty": "beginner",
+      "version": "0.1.0",
+      "author": "Agent Skill OS",
+      "license": "MIT",
+      "inputs": [
+        "video idea",
+        "audience",
+        "angle"
+      ],
+      "outputs": [
+        "title ideas",
+        "thumbnail text",
+        "hooks"
+      ],
+      "use_cases": [
+        "Package a tutorial video",
+        "Improve click-through rate"
+      ]
+    }
+  ],
+  "packs": [
+    {
+      "id": "ai-video-creator",
+      "name": "AI Video Creator",
+      "summary": "Skills for planning short videos, demos, titles, and source summaries.",
+      "skills": [
+        "short-video-script-writer",
+        "youtube-title-thumbnail-ideas",
+        "demo-video-planner",
+        "source-summarizer"
+      ]
+    },
+    {
+      "id": "developer-productivity",
+      "name": "Developer Productivity",
+      "summary": "Essential skills for daily AI-assisted development.",
+      "skills": [
+        "code-reviewer",
+        "test-writer",
+        "bug-reproducer",
+        "refactor-planner",
+        "readme-writer",
+        "pr-summarizer"
+      ]
+    },
+    {
+      "id": "launch-kit",
+      "name": "Launch Kit",
+      "summary": "Skills for turning a product idea into launch-ready assets.",
+      "skills": [
+        "prd-writer",
+        "landing-page-copywriter",
+        "launch-post-writer",
+        "readme-writer",
+        "demo-video-planner"
+      ]
+    },
+    {
+      "id": "repo-maintainer",
+      "name": "Repo Maintainer",
+      "summary": "Skills for maintaining issues, PRs, releases, and contributor experience.",
+      "skills": [
+        "issue-triage",
+        "pr-summarizer",
+        "release-notes-writer",
+        "changelog-writer",
+        "contributing-guide-writer"
+      ]
+    }
+  ]
+}

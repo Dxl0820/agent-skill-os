@@ -1,0 +1,13 @@
+{
+  "id": "developer-productivity",
+  "name": "Developer Productivity",
+  "summary": "Essential skills for daily AI-assisted development.",
+  "skills": [
+    "code-reviewer",
+    "test-writer",
+    "bug-reproducer",
+    "refactor-planner",
+    "readme-writer",
+    "pr-summarizer"
+  ]
+}

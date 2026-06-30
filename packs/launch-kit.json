@@ -1,0 +1,12 @@
+{
+  "id": "launch-kit",
+  "name": "Launch Kit",
+  "summary": "Skills for turning a product idea into launch-ready assets.",
+  "skills": [
+    "prd-writer",
+    "landing-page-copywriter",
+    "launch-post-writer",
+    "readme-writer",
+    "demo-video-planner"
+  ]
+}
