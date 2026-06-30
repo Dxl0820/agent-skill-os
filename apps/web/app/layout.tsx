@@ -15,6 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <nav>
             <a href="/skills">Skills</a>
             <a href="/packs">Packs</a>
+            <a href="/showcase">Showcase</a>
             <a href="/docs">Docs</a>
           </nav>
         </header>

@@ -13,10 +13,10 @@ export default function Home() {
           <span className="eyebrow">Open-source skill registry for AI coding agents</span>
           <h1>Agent Skill OS</h1>
           <p>Install battle-tested skills into your AI coding agent in 30 seconds.</p>
-          <div className="hero-actions">
-            <a className="button primary" href="/skills">View Skills</a>
-            <a className="button secondary" href="/docs">Quick Start</a>
-          </div>
+        <div className="hero-actions">
+          <a className="button primary" href="/skills">View Skills</a>
+          <a className="button secondary" href="/showcase">Showcase</a>
+        </div>
         </div>
         <div className="terminal-preview" aria-label="CLI preview">
           <div className="terminal-bar"><span /><span /><span /></div>

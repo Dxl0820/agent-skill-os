@@ -101,3 +101,17 @@ export interface InstallResult {
   skipped: boolean;
   reason?: string;
 }
+
+export interface NewSkillOptions {
+  id: string;
+  rootDir?: string;
+  category?: (typeof skillCategories)[number];
+  target?: InstallTarget;
+  force?: boolean;
+}
+
+export interface NewSkillResult {
+  skillId: string;
+  filePath: string;
+  created: boolean;
+}

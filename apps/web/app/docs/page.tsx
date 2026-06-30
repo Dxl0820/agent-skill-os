@@ -11,7 +11,7 @@ export default function DocsPage() {
       </section>
       <section>
         <h2>CLI Usage</h2>
-        <pre>{["aso list", "aso search readme", "aso show readme-writer", "aso install readme-writer --target codex --dir .", "aso install-pack developer-productivity --target generic --dir ."].join("\n")}</pre>
+        <pre>{["aso list", "aso search readme", "aso show readme-writer", "aso new-skill my-skill --category coding", "aso install readme-writer --target codex --dir .", "aso install-pack developer-productivity --target generic --dir ."].join("\n")}</pre>
       </section>
       <section>
         <h2>Skill Format</h2>
@@ -23,7 +23,7 @@ export default function DocsPage() {
       </section>
       <section>
         <h2>Contributing</h2>
-        <p>Run <code>pnpm validate</code> and <code>pnpm test</code> before opening a pull request.</p>
+        <p>Run <code>pnpm validate</code> and <code>pnpm test</code> before opening a pull request. Use <code>docs/contributing-skill.md</code> for the full skill contribution guide.</p>
       </section>
       <section>
         <h2>Roadmap</h2>

@@ -5,6 +5,7 @@ import pc from "picocolors";
 import { Command } from "commander";
 import {
   buildRegistry,
+  createNewSkill,
   getSkillById,
   installPack,
   installSkill,
@@ -12,6 +13,7 @@ import {
   loadPacks,
   loadSkills,
   searchSkills,
+  skillCategories,
   validateAllSkills,
   validatePacks,
   type InstallTarget
@@ -22,7 +24,7 @@ const program = new Command();
 program
   .name("aso")
   .description("Install battle-tested skills into your AI coding agent in 30 seconds.")
-  .version("0.1.0");
+  .version("0.1.1");
 
 program
   .command("list")
@@ -188,6 +190,20 @@ program
   });
 
 program
+  .command("new-skill")
+  .description("Create a new skill template")
+  .argument("<skill-id>")
+  .option("--category <category>", "category: documentation, coding, github, product, content, research", "documentation")
+  .option("--target <target>", "target: generic, claude, codex, cursor", "generic")
+  .option("--force", "overwrite an existing skill directory")
+  .action(async (skillId, options) => {
+    const category = parseCategory(options.category);
+    const target = parseTarget(options.target);
+    const result = await createNewSkill({ id: skillId, category, target, force: options.force });
+    console.log(pc.green("✓ Created " + result.skillId + " at " + path.relative(process.cwd(), result.filePath).split(path.sep).join("/")));
+  });
+
+program
   .command("export")
   .description("Export registry")
   .option("--format <format>", "json or markdown", "json")
@@ -239,6 +255,13 @@ function parseTarget(value: string): InstallTarget {
     return value as InstallTarget;
   }
   fail("Invalid target: " + value + ". Expected one of " + installTargets.join(", "));
+}
+
+function parseCategory(value: string): (typeof skillCategories)[number] {
+  if ((skillCategories as readonly string[]).includes(value)) {
+    return value as (typeof skillCategories)[number];
+  }
+  fail("Invalid category: " + value + ". Expected one of " + skillCategories.join(", "));
 }
 
 function printInstallResult(result: InstallResultLike): void {

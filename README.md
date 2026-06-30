@@ -2,20 +2,10 @@
 
 Install battle-tested skills into your AI coding agent in 30 seconds.
 
-~~~bash
-pnpm add -g agent-skill-os
-aso install readme-writer --target codex --dir .
-aso install-pack developer-productivity --target codex --dir .
-~~~
-
-<p>
-  <a href="#quick-start">Quick Start</a> •
-  <a href="#skills">Skills</a> •
-  <a href="#cli">CLI</a> •
-  <a href="#contributing">Contributing</a>
-</p>
-
-## Why
+[![npm version](https://img.shields.io/npm/v/agent-skill-os?color=2563eb)](https://www.npmjs.com/package/agent-skill-os)
+[![CI](https://github.com/Dxl0820/agent-skill-os/actions/workflows/ci.yml/badge.svg)](https://github.com/Dxl0820/agent-skill-os/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-059669.svg)](LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/Dxl0820/agent-skill-os?style=social)](https://github.com/Dxl0820/agent-skill-os/stargazers)
 
 Before:
 
@@ -29,15 +19,43 @@ After:
 aso install-pack developer-productivity --target codex --dir .
 ~~~
 
+![Agent Skill OS demo](assets/demo.gif)
+
+~~~bash
+pnpm add -g agent-skill-os
+aso install readme-writer --target codex --dir .
+aso install-pack developer-productivity --target codex --dir .
+~~~
+
+<p>
+  <a href="#quick-start">Quick Start</a> •
+  <a href="#demo">Demo</a> •
+  <a href="#skills">Skills</a> •
+  <a href="#cli">CLI</a> •
+  <a href="#contributing">Contributing</a>
+</p>
+
+## Why
+
 Agent Skill OS turns reusable prompts and workflows into installable Markdown skills with typed metadata, validation, packs, and target adapters.
 
 ## Quick Start
 
 ~~~bash
 pnpm install
-pnpm validate
-pnpm test
-pnpm build
+pnpm aso list
+pnpm aso install-pack developer-productivity --target codex --dir .
+~~~
+
+## Demo
+
+The release placeholder lives at [assets/demo.gif](assets/demo.gif). Replace it with a short terminal capture showing `aso search`, `aso install`, and the generated `.codex/skills` structure.
+
+Try the demo repository:
+
+~~~bash
+cd examples/demo-repo
+pnpm aso install-pack developer-productivity --target codex --dir .
 ~~~
 
 ## Install a Skill
@@ -143,7 +161,7 @@ pnpm build
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md).
+See [CONTRIBUTING.md](CONTRIBUTING.md) and [docs/contributing-skill.md](docs/contributing-skill.md).
 
 ## License
 
