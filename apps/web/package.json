@@ -12,6 +12,7 @@
     "@agent-skill-os/core": "workspace:*",
     "lucide-react": "latest",
     "next": "latest",
+    "next-intl": "^4.13.0",
     "react": "latest",
     "react-dom": "latest"
   },

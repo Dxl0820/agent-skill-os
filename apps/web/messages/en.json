@@ -1,0 +1,126 @@
+{
+  "metadata": {
+    "title": "Agent Skill OS",
+    "description": "Install battle-tested skills into your AI coding agent in 30 seconds."
+  },
+  "nav": {
+    "label": "Primary navigation",
+    "skills": "Skills",
+    "packs": "Packs",
+    "showcase": "Showcase",
+    "docs": "Docs"
+  },
+  "footer": {
+    "label": "Footer navigation",
+    "tagline": "Reusable expert skills for AI coding agents.",
+    "skills": "Skills",
+    "packs": "Packs",
+    "docs": "Docs"
+  },
+  "language": {
+    "label": "Language",
+    "en": "English",
+    "zhCN": "Chinese"
+  },
+  "home": {
+    "eyebrow": "Open-source skill registry for AI coding agents",
+    "tagline": "Install battle-tested skills into your AI coding agent in 30 seconds.",
+    "viewSkills": "View Skills",
+    "showcase": "Showcase",
+    "quickStart": "Quick Start",
+    "featuredSkills": "Featured Skills",
+    "browseAll": "Browse all 24",
+    "worksWithTitle": "Works With",
+    "worksWithBody": "Generic folders, Claude, Codex, and Cursor target adapters.",
+    "whyTitle": "Why Skill OS",
+    "whyBody": "Prompt snippets become installable, versioned, reusable skills.",
+    "localTitle": "Local-first",
+    "localBody": "No account, database, marketplace, or model call is required for the MVP."
+  },
+  "skillsPage": {
+    "eyebrow": "Skill Gallery",
+    "title": "Browse, search, and install reusable AI agent skills.",
+    "description": "Every skill is Markdown with typed metadata, target compatibility, and a repeatable workflow."
+  },
+  "skills": {
+    "filters": {
+      "search": "Search skills",
+      "category": "Category",
+      "tag": "Tag",
+      "all": "all"
+    },
+    "card": {
+      "view": "View skill"
+    }
+  },
+  "skillDetail": {
+    "difficulty": "Difficulty",
+    "targets": "Targets",
+    "tags": "Tags",
+    "related": "Related Skills"
+  },
+  "packsPage": {
+    "eyebrow": "Skill Packs",
+    "title": "Install a complete workflow in one command.",
+    "description": "Packs combine related skills for developer productivity, repo maintenance, launches, and video creation.",
+    "packs": {
+      "developer-productivity": {
+        "name": "Developer Productivity",
+        "summary": "Essential skills for daily AI-assisted development."
+      },
+      "repo-maintainer": {
+        "name": "Repo Maintainer",
+        "summary": "Skills for keeping issues, pull requests, releases, and docs moving."
+      },
+      "launch-kit": {
+        "name": "Launch Kit",
+        "summary": "Skills for turning a project idea into launch-ready assets."
+      },
+      "ai-video-creator": {
+        "name": "AI Video Creator",
+        "summary": "Skills for planning technical demos, scripts, titles, and source summaries."
+      }
+    }
+  },
+  "showcase": {
+    "eyebrow": "Showcase",
+    "title": "Three installable workflows for the first 30 seconds.",
+    "description": "Each scenario shows the command, installed skills, expected output, and why it matters for an AI coding agent.",
+    "installCommand": "Install command",
+    "installedSkills": "Installed skills",
+    "expectedOutput": "Expected output",
+    "useful": "Why it is useful",
+    "viewPacks": "View packs",
+    "scenarios": {
+      "developerProductivity": {
+        "name": "Developer Productivity",
+        "output": "Review findings, regression tests, repro steps, refactor plans, README drafts, and PR summaries.",
+        "useful": "Gives a coding agent a complete daily development workflow without copy-pasting old prompts."
+      },
+      "launchKit": {
+        "name": "Launch Kit",
+        "output": "PRDs, README polish, landing copy, launch posts, and demo video plans.",
+        "useful": "Turns a rough project idea into launch-ready GitHub and social assets."
+      },
+      "aiVideoCreator": {
+        "name": "AI Video Creator",
+        "output": "Short scripts, demo outlines, YouTube titles, thumbnail text, and source summaries.",
+        "useful": "Helps creators package technical projects into watchable demos and reusable content."
+      }
+    }
+  },
+  "docsPage": {
+    "eyebrow": "Docs",
+    "title": "Install skills, create new ones, and validate your registry.",
+    "installation": "Installation",
+    "cliUsage": "CLI Usage",
+    "skillFormat": "Skill Format",
+    "skillFormatBody": "Skills live at <code>skills/&lt;skill-id&gt;/SKILL.md</code> with frontmatter metadata and required Markdown sections.",
+    "targetAdapters": "Target Adapters",
+    "targetAdaptersBody": "Generic writes to <code>agent-skills/</code>, Claude writes to <code>.claude/skills/</code>, Codex writes to <code>.codex/skills/</code>, and Cursor writes <code>.mdc</code> rules.",
+    "contributing": "Contributing",
+    "contributingBody": "Run <code>pnpm validate</code> and <code>pnpm test</code> before opening a pull request. Use <code>docs/contributing-skill.md</code> for the full skill contribution guide.",
+    "roadmap": "Roadmap",
+    "roadmapBody": "v0.2 adds community submission workflow, rating metadata, more adapters, better templates, and skill dependency support."
+  }
+}

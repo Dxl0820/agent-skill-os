@@ -19,7 +19,9 @@ After:
 aso install-pack developer-productivity --target codex --dir .
 ~~~
 
-![Agent Skill OS demo](assets/demo.gif)
+<p align="center">
+  <img src="assets/demo.gif" alt="Agent Skill OS demo" width="960" />
+</p>
 
 ~~~bash
 pnpm add -g agent-skill-os
@@ -49,14 +51,48 @@ pnpm aso install-pack developer-productivity --target codex --dir .
 
 ## Demo
 
-The release placeholder lives at [assets/demo.gif](assets/demo.gif). Replace it with a short terminal capture showing `aso search`, `aso install`, and the generated `.codex/skills` structure.
+<p align="center">
+  <img src="assets/demo.gif" alt="Agent Skill OS demo" width="960" />
+</p>
 
-Try the demo repository:
+Install a full developer productivity skill pack into Codex in seconds.
 
 ~~~bash
-cd examples/demo-repo
-pnpm aso install-pack developer-productivity --target codex --dir .
+aso search readme
+aso install-pack developer-productivity --target codex --dir ./demo
+tree .\demo\.codex /F
+type .\demo\.codex\AGENTS.md
 ~~~
+
+Generated structure:
+
+~~~txt
+demo/
+  .agent-skill-os/
+    manifest.json
+  .codex/
+    AGENTS.md
+    skills/
+      bug-reproducer/
+        SKILL.md
+      code-reviewer/
+        SKILL.md
+      pr-summarizer/
+        SKILL.md
+      readme-writer/
+        SKILL.md
+      refactor-planner/
+        SKILL.md
+      test-writer/
+        SKILL.md
+~~~
+
+Recording notes:
+
+- Disable color output before recording: `set NO_COLOR=1` in cmd.exe or `$env:NO_COLOR=1` in PowerShell.
+- Use a terminal at least 960px wide.
+- Keep commands short so lines do not wrap in the GIF.
+- Keep the GIF between 8 and 15 seconds.
 
 ## Install a Skill
 

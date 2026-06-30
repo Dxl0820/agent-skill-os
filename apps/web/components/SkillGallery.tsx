@@ -1,11 +1,13 @@
 "use client";
 
 import { Search } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 import { SkillCard } from "./SkillCard";
 import type { SkillMetadata } from "../lib/registry";
 
 export function SkillGallery({ skills }: { skills: SkillMetadata[] }) {
+  const t = useTranslations("skills.filters");
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("all");
   const [tag, setTag] = useState("all");
@@ -26,16 +28,16 @@ export function SkillGallery({ skills }: { skills: SkillMetadata[] }) {
       <div className="filters">
         <label className="search-box">
           <Search size={18} />
-          <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search skills" />
+          <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder={t("search")} />
         </label>
-        <select value={category} onChange={(event) => setCategory(event.target.value)} aria-label="Category">
+        <select value={category} onChange={(event) => setCategory(event.target.value)} aria-label={t("category")}>
           {categories.map((item) => (
-            <option key={item} value={item}>{item}</option>
+            <option key={item} value={item}>{item === "all" ? t("all") : item}</option>
           ))}
         </select>
-        <select value={tag} onChange={(event) => setTag(event.target.value)} aria-label="Tag">
+        <select value={tag} onChange={(event) => setTag(event.target.value)} aria-label={t("tag")}>
           {tags.map((item) => (
-            <option key={item} value={item}>{item}</option>
+            <option key={item} value={item}>{item === "all" ? t("all") : item}</option>
           ))}
         </select>
       </div>
