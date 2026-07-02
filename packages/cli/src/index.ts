@@ -24,6 +24,7 @@ import {
   loadSkills,
   refreshRemoteRegistries,
   removeRegistry,
+  assessAllSkillsQuality,
   searchRemoteRegistrySkills,
   recommendSkills,
   searchSkills,
@@ -35,7 +36,7 @@ import {
 } from "@agent-skill-os/core";
 
 const program = new Command();
-const cliVersion = "0.5.0";
+const cliVersion = "0.6.0";
 const cliPackageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
 program
@@ -327,6 +328,34 @@ program
     console.log(pc.green("✓ All skills and packs are valid"));
   });
 
+program
+  .command("quality")
+  .description("Run static skill quality and trust checks")
+  .option("--json", "print JSON")
+  .option("--min-grade <grade>", "minimum acceptable grade: A, B, C, D, F", "B")
+  .action(async (options) => {
+    const reports = assessAllSkillsQuality(await loadCliSkills());
+    if (options.json) {
+      printJson(reports);
+      return;
+    }
+    const minimum = gradeRank(String(options.minGrade || "B"));
+    let failed = false;
+    console.log(pc.bold("Agent Skill OS Quality"));
+    console.log("");
+    for (const report of reports) {
+      const ok = gradeRank(report.grade) <= minimum && report.safety === "pass" && report.runtimeContract === "complete";
+      failed ||= !ok;
+      console.log((ok ? pc.green("✓") : pc.red("✕")) + " " + report.id + " grade=" + report.grade + " score=" + report.score + " safety=" + report.safety + " routing=" + report.routing + " runtime=" + report.runtimeContract);
+      for (const issue of report.issues) {
+        console.log("  - " + issue);
+      }
+    }
+    if (failed) {
+      process.exitCode = 1;
+    }
+  });
+
 const registryCommand = program
   .command("registry")
   .description("Manage remote skill registries");
@@ -478,6 +507,16 @@ function parseCategory(value: string): (typeof skillCategories)[number] {
     return value as (typeof skillCategories)[number];
   }
   fail("Invalid category: " + value + ". Expected one of " + skillCategories.join(", "));
+}
+
+function gradeRank(value: string): number {
+  const normalized = value.toUpperCase();
+  if (normalized === "A") return 1;
+  if (normalized === "B") return 2;
+  if (normalized === "C") return 3;
+  if (normalized === "D") return 4;
+  if (normalized === "F") return 5;
+  fail("Invalid grade: " + value);
 }
 
 function isRemoteSpecifier(value: string): boolean {

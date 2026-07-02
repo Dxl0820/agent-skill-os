@@ -156,6 +156,7 @@ pnpm aso search readme --remote
 pnpm aso install official/readme-writer --target codex --dir ./tmp/demo
 pnpm aso install-url https://example.com/skills/readme-writer/SKILL.md --target codex --dir ./tmp/demo
 pnpm aso mcp
+pnpm aso quality
 pnpm aso validate
 pnpm aso doctor --target generic --dir ./tmp/demo
 ~~~
@@ -210,6 +211,18 @@ aso install-pack company/frontend-team --target codex --dir .
 ~~~
 
 See [docs/private-registry.md](docs/private-registry.md).
+
+## Quality Checks
+
+Agent Skill OS v0.6 adds deterministic skill quality and trust checks:
+
+~~~bash
+aso quality
+aso quality --json
+aso quality --min-grade A
+~~~
+
+The checker reports grade, safety, routing quality, runtime contract completeness, and issues. See [docs/quality.md](docs/quality.md).
 
 ## Repository Structure
 
@@ -280,7 +293,7 @@ pnpm build
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md), [docs/contributing-skill.md](docs/contributing-skill.md), [docs/registry.md](docs/registry.md), [docs/mcp.md](docs/mcp.md), and [docs/private-registry.md](docs/private-registry.md).
+See [CONTRIBUTING.md](CONTRIBUTING.md), [docs/contributing-skill.md](docs/contributing-skill.md), [docs/registry.md](docs/registry.md), [docs/mcp.md](docs/mcp.md), [docs/private-registry.md](docs/private-registry.md), and [docs/quality.md](docs/quality.md).
 
 ## License
 

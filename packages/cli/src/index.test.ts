@@ -21,6 +21,8 @@ describe("cli smoke", () => {
     expect(useResult.stdout).toContain(".codex/skills/readme-writer/SKILL.md");
     const recommendResult = await execa(tsxBin, [cli, "recommend", "review this pull request"], { cwd });
     expect(recommendResult.stdout).toContain("code-reviewer");
+    const qualityResult = await execa(tsxBin, [cli, "quality", "--json"], { cwd });
+    expect(qualityResult.stdout).toContain('"grade": "A"');
     await expect(execa(tsxBin, [cli, "validate"], { cwd })).resolves.toMatchObject({ exitCode: 0 });
   }, 30000);
 

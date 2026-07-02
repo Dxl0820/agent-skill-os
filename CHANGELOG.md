@@ -1,5 +1,23 @@
 # Changelog
 
+## Agent Skill OS v0.6.0
+
+This release adds deterministic skill quality and trust checks.
+
+### Highlights
+
+- Added `aso quality` and `aso quality --json`.
+- Added static quality reports with score, grade, safety, routing, runtime contract status, and issues.
+- Added unsafe-claim checks for unsupported automation or secret access language.
+- Added `docs/quality.md`.
+
+### Verified
+
+```bash
+pnpm --filter @agent-skill-os/core test
+pnpm --filter agent-skill-os test
+```
+
 ## Agent Skill OS v0.5.0
 
 This release adds team/private registry pack support.
