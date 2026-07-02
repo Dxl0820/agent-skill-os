@@ -1,5 +1,28 @@
 # Changelog
 
+## Agent Skill OS v0.8.0
+
+This release adds Web registry discovery for target adapters and practical workflows.
+
+### Highlights
+
+- Added `/targets` and `/targets/[target]` pages.
+- Added `/use-cases` and `/use-cases/[slug]` pages.
+- Added localized discovery copy for English, Chinese, and Japanese.
+- Added page-level SEO alternates for the new discovery routes.
+- Updated navigation and footer links for target and use-case discovery.
+- Bumped package and CLI versions to `0.8.0`.
+
+### Verified
+
+```bash
+pnpm validate
+pnpm test
+pnpm build
+pnpm pack --dry-run
+pnpm publish --dry-run --no-git-checks
+```
+
 ## Agent Skill OS v0.7.0
 
 This release adds installed skill versioning, dependency metadata, and lockfile-based project state.

@@ -245,6 +245,17 @@ Skill metadata can declare `compatibleWith`, `dependencies`, and `optionalDepend
 
 See [docs/versioning.md](docs/versioning.md).
 
+## Web Discovery
+
+Agent Skill OS v0.8 adds indexable discovery pages for browsing the registry by target adapter and practical use case:
+
+- `/targets`
+- `/targets/codex`
+- `/use-cases`
+- `/use-cases/developer-productivity`
+
+These pages reuse the generated registry and localized skill metadata. Skill Markdown content remains in its original language.
+
 ## Repository Structure
 
 ~~~txt
@@ -312,9 +323,14 @@ pnpm build
 - `skill-lock.json`
 - Update, uninstall, outdated, and lock commands
 
-### v0.8+
+### v0.8
 
 - Web registry discovery
+- Target adapter pages
+- Use case workflow pages
+
+### v0.9+
+
 - Marketplace foundation
 
 ## Growth Scenarios

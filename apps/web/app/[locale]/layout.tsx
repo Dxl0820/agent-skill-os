@@ -56,6 +56,8 @@ export default async function LocaleLayout({
           <nav aria-label={nav("label")}>
             <Link href="/skills">{nav("skills")}</Link>
             <Link href="/packs">{nav("packs")}</Link>
+            <Link href="/targets">{nav("targets")}</Link>
+            <Link href="/use-cases">{nav("useCases")}</Link>
             <Link href="/showcase">{nav("showcase")}</Link>
             <Link href="/docs">{nav("docs")}</Link>
           </nav>
@@ -68,6 +70,8 @@ export default async function LocaleLayout({
         <nav aria-label={footer("label")}>
           <Link href="/skills">{footer("skills")}</Link>
           <Link href="/packs">{footer("packs")}</Link>
+          <Link href="/targets">{footer("targets")}</Link>
+          <Link href="/use-cases">{footer("useCases")}</Link>
           <Link href="/docs">{footer("docs")}</Link>
         </nav>
       </footer>

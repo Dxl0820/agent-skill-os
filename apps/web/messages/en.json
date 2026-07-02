@@ -7,6 +7,8 @@
     "label": "Primary navigation",
     "skills": "Skills",
     "packs": "Packs",
+    "targets": "Targets",
+    "useCases": "Use cases",
     "showcase": "Showcase",
     "docs": "Docs"
   },
@@ -15,6 +17,8 @@
     "tagline": "Reusable expert skills for AI coding agents.",
     "skills": "Skills",
     "packs": "Packs",
+    "targets": "Targets",
+    "useCases": "Use cases",
     "docs": "Docs"
   },
   "language": {
@@ -84,6 +88,106 @@
       }
     }
   },
+  "targetsPage": {
+    "metadataTitle": "Agent Skill OS Targets",
+    "eyebrow": "Target adapters",
+    "title": "Install skills into the agent you already use.",
+    "description": "Each target adapter writes skill files, runtime metadata, and loader instructions in the format your coding agent expects.",
+    "compatibleSkills": "Compatible skills",
+    "viewTarget": "View target",
+    "targets": {
+      "codex": {
+        "name": "Codex",
+        "summary": "Install skills into `.codex/skills` and update `AGENTS.md` with runtime routing instructions."
+      },
+      "claude": {
+        "name": "Claude",
+        "summary": "Install skills into `.claude/skills` and generate Claude-facing runtime usage guidance."
+      },
+      "cursor": {
+        "name": "Cursor",
+        "summary": "Install skills as Cursor rules with a project-level Agent Skill OS loader."
+      },
+      "generic": {
+        "name": "Generic",
+        "summary": "Install portable Markdown skills into `agent-skills` for any agent or workflow."
+      }
+    }
+  },
+  "targetDetail": {
+    "metadataTitle": "Agent Skill OS for {target}",
+    "eyebrow": "Target adapter",
+    "skillPath": "Skill path",
+    "loader": "Loader",
+    "compatibleSkills": "Compatible skills",
+    "howItWorks": "How it works",
+    "skillsTitle": "Compatible skills",
+    "steps": {
+      "install": {
+        "title": "Install",
+        "body": "The CLI writes the skill, manifest, lockfile, router, and target loader into the project."
+      },
+      "route": {
+        "title": "Route",
+        "body": "The agent reads `.agent-skill-os/router.json` and selects one primary skill for the task."
+      },
+      "load": {
+        "title": "Load",
+        "body": "The agent loads only the selected skill's `SKILL.md`, keeping context focused."
+      }
+    }
+  },
+  "useCasesPage": {
+    "metadataTitle": "Agent Skill OS Use Cases",
+    "eyebrow": "Use cases",
+    "title": "Discover installable workflows by outcome.",
+    "description": "Use cases group skills into practical workflows for code review, repo maintenance, launches, and technical content.",
+    "includedSkills": "Included skills",
+    "viewUseCase": "View workflow",
+    "items": {
+      "developer-productivity": {
+        "name": "Developer Productivity",
+        "summary": "Give a coding agent code review, testing, bug reproduction, refactoring, README, and PR summary skills."
+      },
+      "open-source-launch": {
+        "name": "Open-source Launch",
+        "summary": "Turn a project into launch-ready README, PRD, landing copy, launch posts, and demo plans."
+      },
+      "repo-maintenance": {
+        "name": "Repo Maintenance",
+        "summary": "Keep issues, pull requests, releases, changelogs, and contribution docs moving."
+      },
+      "ai-video-creator": {
+        "name": "AI Video Creator",
+        "summary": "Plan technical demos, short scripts, titles, thumbnails, and source summaries."
+      }
+    }
+  },
+  "useCaseDetail": {
+    "metadataTitle": "{useCase} with Agent Skill OS",
+    "eyebrow": "Installable workflow",
+    "pack": "Pack",
+    "skills": "Skills",
+    "target": "Default target",
+    "includedSkills": "Included skills",
+    "install": {
+      "title": "Install once",
+      "body": "A pack installs related skills together while the runtime still loads only the skill needed for each task."
+    },
+    "output": {
+      "title": "Expected output"
+    },
+    "routing": {
+      "title": "Runtime routing",
+      "body": "The generated router keeps the agent from loading every installed skill by default."
+    },
+    "outputs": {
+      "developer-productivity": "Review findings, regression tests, reproduction steps, refactor plans, README drafts, and PR summaries.",
+      "open-source-launch": "PRD drafts, README improvements, landing copy, launch posts, and demo video plans.",
+      "repo-maintenance": "Issue triage, PR summaries, release notes, changelog drafts, and contribution guide updates.",
+      "ai-video-creator": "Short video scripts, demo outlines, YouTube title ideas, thumbnail copy, and source summaries."
+    }
+  },
   "showcase": {
     "eyebrow": "Showcase",
     "title": "Three installable workflows for the first 30 seconds.",
@@ -123,6 +227,6 @@
     "contributing": "Contributing",
     "contributingBody": "Run <code>pnpm validate</code> and <code>pnpm test</code> before opening a pull request. Use <code>docs/contributing-skill.md</code> for the full skill contribution guide.",
     "roadmap": "Roadmap",
-    "roadmapBody": "v0.2 adds community submission workflow, rating metadata, more adapters, better templates, and skill dependency support."
+    "roadmapBody": "The current v0.8 line adds Web discovery for targets and practical use cases. The next milestone focuses on marketplace trust foundations."
   }
 }

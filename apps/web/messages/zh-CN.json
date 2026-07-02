@@ -7,6 +7,8 @@
     "label": "主导航",
     "skills": "技能",
     "packs": "技能包",
+    "targets": "适配目标",
+    "useCases": "用例",
     "showcase": "场景",
     "docs": "文档"
   },
@@ -15,6 +17,8 @@
     "tagline": "给 AI 编程 Agent 使用的可复用专家技能。",
     "skills": "技能",
     "packs": "技能包",
+    "targets": "适配目标",
+    "useCases": "用例",
     "docs": "文档"
   },
   "language": {
@@ -84,6 +88,106 @@
       }
     }
   },
+  "targetsPage": {
+    "metadataTitle": "Agent Skill OS 适配目标",
+    "eyebrow": "目标适配器",
+    "title": "把技能安装到你正在使用的 Agent。",
+    "description": "每个目标适配器都会按对应 Agent 期望的格式写入技能文件、运行时元数据和加载指令。",
+    "compatibleSkills": "兼容技能",
+    "viewTarget": "查看目标",
+    "targets": {
+      "codex": {
+        "name": "Codex",
+        "summary": "把技能安装到 `.codex/skills`，并更新带运行时路由说明的 `AGENTS.md`。"
+      },
+      "claude": {
+        "name": "Claude",
+        "summary": "把技能安装到 `.claude/skills`，并生成面向 Claude 的运行时使用说明。"
+      },
+      "cursor": {
+        "name": "Cursor",
+        "summary": "把技能安装为 Cursor 规则，并生成项目级 Agent Skill OS 加载器。"
+      },
+      "generic": {
+        "name": "Generic",
+        "summary": "把可移植 Markdown 技能安装到 `agent-skills`，供任意 Agent 或工作流使用。"
+      }
+    }
+  },
+  "targetDetail": {
+    "metadataTitle": "面向 {target} 的 Agent Skill OS",
+    "eyebrow": "目标适配器",
+    "skillPath": "技能路径",
+    "loader": "加载器",
+    "compatibleSkills": "兼容技能",
+    "howItWorks": "工作方式",
+    "skillsTitle": "兼容技能",
+    "steps": {
+      "install": {
+        "title": "安装",
+        "body": "CLI 会把技能、manifest、lockfile、router 和目标加载器写入项目。"
+      },
+      "route": {
+        "title": "路由",
+        "body": "Agent 读取 `.agent-skill-os/router.json`，并为当前任务选择一个主技能。"
+      },
+      "load": {
+        "title": "加载",
+        "body": "Agent 只加载被选中技能的 `SKILL.md`，让上下文保持聚焦。"
+      }
+    }
+  },
+  "useCasesPage": {
+    "metadataTitle": "Agent Skill OS 用例",
+    "eyebrow": "用例",
+    "title": "按目标结果发现可安装工作流。",
+    "description": "用例把技能组合成代码审查、仓库维护、项目发布和技术内容创作等实际工作流。",
+    "includedSkills": "包含技能",
+    "viewUseCase": "查看工作流",
+    "items": {
+      "developer-productivity": {
+        "name": "开发者效率",
+        "summary": "为编程 Agent 配置代码审查、测试、Bug 复现、重构、README 和 PR 摘要技能。"
+      },
+      "open-source-launch": {
+        "name": "开源发布",
+        "summary": "把项目整理成可发布的 README、PRD、落地页文案、发布帖和 Demo 计划。"
+      },
+      "repo-maintenance": {
+        "name": "仓库维护",
+        "summary": "持续推进 Issue、Pull Request、发布、Changelog 和贡献文档。"
+      },
+      "ai-video-creator": {
+        "name": "AI 视频创作者",
+        "summary": "规划技术 Demo、短视频脚本、标题、封面文案和资料摘要。"
+      }
+    }
+  },
+  "useCaseDetail": {
+    "metadataTitle": "使用 Agent Skill OS 完成 {useCase}",
+    "eyebrow": "可安装工作流",
+    "pack": "技能包",
+    "skills": "技能",
+    "target": "默认目标",
+    "includedSkills": "包含技能",
+    "install": {
+      "title": "一次安装",
+      "body": "技能包会一起安装相关技能，但运行时仍然只为每个任务加载需要的技能。"
+    },
+    "output": {
+      "title": "预期产出"
+    },
+    "routing": {
+      "title": "运行时路由",
+      "body": "生成的 router 会避免 Agent 默认加载所有已安装技能。"
+    },
+    "outputs": {
+      "developer-productivity": "代码审查发现、回归测试、复现步骤、重构计划、README 草稿和 PR 摘要。",
+      "open-source-launch": "PRD 草稿、README 改进、落地页文案、发布帖和 Demo 视频计划。",
+      "repo-maintenance": "Issue 分诊、PR 摘要、发布说明、Changelog 草稿和贡献指南更新。",
+      "ai-video-creator": "短视频脚本、Demo 大纲、YouTube 标题创意、封面文案和资料摘要。"
+    }
+  },
   "showcase": {
     "eyebrow": "场景",
     "title": "前三十秒即可安装的三套工作流。",
@@ -123,6 +227,6 @@
     "contributing": "贡献",
     "contributingBody": "提交 PR 前请运行 <code>pnpm validate</code> 和 <code>pnpm test</code>。完整技能贡献指南见 <code>docs/contributing-skill.md</code>。",
     "roadmap": "路线图",
-    "roadmapBody": "v0.2 将加入社区提交流程、评分元数据、更多适配器、更好的模板和技能依赖支持。"
+    "roadmapBody": "当前 v0.8 重点是按适配目标和实际用例提供 Web 发现入口。下一个里程碑聚焦 Marketplace 信任基础。"
   }
 }

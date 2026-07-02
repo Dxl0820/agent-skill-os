@@ -7,6 +7,8 @@
     "label": "メインナビゲーション",
     "skills": "スキル",
     "packs": "パック",
+    "targets": "ターゲット",
+    "useCases": "ユースケース",
     "showcase": "ショーケース",
     "docs": "ドキュメント"
   },
@@ -15,6 +17,8 @@
     "tagline": "AI コーディングエージェント向けの再利用可能な専門スキル。",
     "skills": "スキル",
     "packs": "パック",
+    "targets": "ターゲット",
+    "useCases": "ユースケース",
     "docs": "ドキュメント"
   },
   "language": {
@@ -84,6 +88,106 @@
       }
     }
   },
+  "targetsPage": {
+    "metadataTitle": "Agent Skill OS ターゲット",
+    "eyebrow": "ターゲットアダプター",
+    "title": "今使っているエージェントにスキルをインストールします。",
+    "description": "各ターゲットアダプターは、コーディングエージェントが期待する形式でスキルファイル、ランタイムメタデータ、ローダー指示を書き込みます。",
+    "compatibleSkills": "対応スキル",
+    "viewTarget": "ターゲットを見る",
+    "targets": {
+      "codex": {
+        "name": "Codex",
+        "summary": "スキルを `.codex/skills` にインストールし、ランタイムルーティング指示を含む `AGENTS.md` を更新します。"
+      },
+      "claude": {
+        "name": "Claude",
+        "summary": "スキルを `.claude/skills` にインストールし、Claude 向けのランタイム利用ガイドを生成します。"
+      },
+      "cursor": {
+        "name": "Cursor",
+        "summary": "スキルを Cursor ルールとしてインストールし、プロジェクトレベルの Agent Skill OS ローダーを生成します。"
+      },
+      "generic": {
+        "name": "Generic",
+        "summary": "任意のエージェントやワークフローで使えるポータブルな Markdown スキルを `agent-skills` にインストールします。"
+      }
+    }
+  },
+  "targetDetail": {
+    "metadataTitle": "{target} 向け Agent Skill OS",
+    "eyebrow": "ターゲットアダプター",
+    "skillPath": "スキルパス",
+    "loader": "ローダー",
+    "compatibleSkills": "対応スキル",
+    "howItWorks": "仕組み",
+    "skillsTitle": "対応スキル",
+    "steps": {
+      "install": {
+        "title": "インストール",
+        "body": "CLI はスキル、manifest、lockfile、router、ターゲットローダーをプロジェクトに書き込みます。"
+      },
+      "route": {
+        "title": "ルーティング",
+        "body": "エージェントは `.agent-skill-os/router.json` を読み、タスクに対して 1 つの主スキルを選びます。"
+      },
+      "load": {
+        "title": "ロード",
+        "body": "エージェントは選択されたスキルの `SKILL.md` だけを読み込み、コンテキストを集中させます。"
+      }
+    }
+  },
+  "useCasesPage": {
+    "metadataTitle": "Agent Skill OS ユースケース",
+    "eyebrow": "ユースケース",
+    "title": "成果からインストール可能なワークフローを見つけます。",
+    "description": "ユースケースは、コードレビュー、リポジトリ保守、ローンチ、技術コンテンツ制作の実用ワークフローとしてスキルをまとめます。",
+    "includedSkills": "含まれるスキル",
+    "viewUseCase": "ワークフローを見る",
+    "items": {
+      "developer-productivity": {
+        "name": "開発者生産性",
+        "summary": "コードレビュー、テスト、バグ再現、リファクタリング、README、PR 要約のスキルをエージェントに追加します。"
+      },
+      "open-source-launch": {
+        "name": "OSS ローンチ",
+        "summary": "プロジェクトを README、PRD、ランディングコピー、ローンチ投稿、デモ計画として公開可能にします。"
+      },
+      "repo-maintenance": {
+        "name": "リポジトリ保守",
+        "summary": "Issue、Pull Request、リリース、Changelog、貢献ドキュメントを前に進めます。"
+      },
+      "ai-video-creator": {
+        "name": "AI 動画クリエイター",
+        "summary": "技術デモ、ショート動画脚本、タイトル、サムネイル文言、資料要約を計画します。"
+      }
+    }
+  },
+  "useCaseDetail": {
+    "metadataTitle": "Agent Skill OS で {useCase} を実行",
+    "eyebrow": "インストール可能なワークフロー",
+    "pack": "パック",
+    "skills": "スキル",
+    "target": "既定ターゲット",
+    "includedSkills": "含まれるスキル",
+    "install": {
+      "title": "一度だけインストール",
+      "body": "パックは関連スキルをまとめてインストールしますが、ランタイムは各タスクに必要なスキルだけをロードします。"
+    },
+    "output": {
+      "title": "期待される出力"
+    },
+    "routing": {
+      "title": "ランタイムルーティング",
+      "body": "生成された router は、エージェントがすべてのインストール済みスキルをデフォルトで読むことを防ぎます。"
+    },
+    "outputs": {
+      "developer-productivity": "レビュー指摘、回帰テスト、再現手順、リファクタリング計画、README 草案、PR 要約。",
+      "open-source-launch": "PRD 草案、README 改善、ランディングコピー、ローンチ投稿、デモ動画計画。",
+      "repo-maintenance": "Issue トリアージ、PR 要約、リリースノート、Changelog 草案、貢献ガイド更新。",
+      "ai-video-creator": "ショート動画脚本、デモ構成、YouTube タイトル案、サムネイル文言、資料要約。"
+    }
+  },
   "showcase": {
     "eyebrow": "ショーケース",
     "title": "最初の 30 秒でインストールできる 3 つのワークフロー。",
@@ -123,6 +227,6 @@
     "contributing": "コントリビューション",
     "contributingBody": "Pull Request を開く前に <code>pnpm validate</code> と <code>pnpm test</code> を実行してください。完全なスキル貢献ガイドは <code>docs/contributing-skill.md</code> を参照してください。",
     "roadmap": "ロードマップ",
-    "roadmapBody": "v0.2 ではコミュニティ投稿フロー、評価メタデータ、追加アダプター、より良いテンプレート、スキル依存関係を追加します。"
+    "roadmapBody": "現在の v0.8 系では、ターゲットと実用ユースケースによる Web ディスカバリーを追加します。次のマイルストーンはマーケットプレイスの信頼基盤です。"
   }
 }
