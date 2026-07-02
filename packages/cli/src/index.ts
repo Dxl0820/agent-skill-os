@@ -8,11 +8,14 @@ import {
   buildRegistry,
   createNewSkill,
   getSkillById,
+  getSkillUsePrompt,
+  initializeAgentSkillOS,
   installPack,
   installSkill,
   installTargets,
   loadPacks,
   loadSkills,
+  recommendSkills,
   searchSkills,
   skillCategories,
   validateAllSkills,
@@ -21,7 +24,7 @@ import {
 } from "@agent-skill-os/core";
 
 const program = new Command();
-const cliVersion = "0.1.2";
+const cliVersion = "0.2.0";
 const cliPackageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
 program
@@ -150,6 +153,86 @@ program
   });
 
 program
+  .command("use")
+  .description("Print instructions for loading an installed skill")
+  .argument("<skill-id>")
+  .requiredOption("--target <target>", "target: generic, claude, codex, cursor")
+  .action(async (skillId, options) => {
+    const target = parseTarget(options.target);
+    const skill = getSkillById(await loadCliSkills(), skillId);
+    if (!skill) {
+      fail("Skill not found: " + skillId);
+    }
+    console.log(getSkillUsePrompt(skill, target).trimEnd());
+  });
+
+program
+  .command("use-pack")
+  .description("Print instructions for using an installed skill pack through the runtime router")
+  .argument("<pack-id>")
+  .requiredOption("--target <target>", "target: generic, claude, codex, cursor")
+  .action(async (packId, options) => {
+    const target = parseTarget(options.target);
+    const [skills, packs] = await Promise.all([loadCliSkills(), loadCliPacks()]);
+    const pack = packs.find((candidate) => candidate.id === packId);
+    if (!pack) {
+      fail("Pack not found: " + packId);
+    }
+    console.log("Use the installed " + pack.id + " skill pack.");
+    console.log("");
+    console.log("Target: " + target);
+    console.log("");
+    console.log("Ask your agent:");
+    console.log("");
+    console.log("Read .agent-skill-os/router.json.");
+    console.log("Select one primary skill for the current task.");
+    console.log("Load only the selected skill's SKILL.md and at most two supporting skills.");
+    console.log("State the selected skill before executing.");
+    console.log("");
+    console.log("Pack skills:");
+    for (const skillId of pack.skills) {
+      const skill = getSkillById(skills, skillId);
+      console.log("- " + skillId + (skill ? ": " + skill.metadata.summary : ""));
+    }
+  });
+
+program
+  .command("recommend")
+  .description("Recommend skills for a natural-language task")
+  .argument("<task>")
+  .option("--target <target>", "target: generic, claude, codex, cursor", "codex")
+  .option("--limit <count>", "number of recommendations", "3")
+  .option("--json", "print JSON")
+  .action(async (task, options) => {
+    const target = parseTarget(options.target);
+    const limit = Number.parseInt(options.limit, 10);
+    if (!Number.isFinite(limit) || limit < 1) {
+      fail("Invalid limit: " + options.limit);
+    }
+    const recommendations = recommendSkills(await loadCliSkills(), task, { limit });
+    if (options.json) {
+      printJson(
+        recommendations.map((recommendation) => ({
+          id: recommendation.skill.metadata.id,
+          score: recommendation.score,
+          reason: recommendation.reason,
+          use: "aso use " + recommendation.skill.metadata.id + " --target " + target
+        }))
+      );
+      return;
+    }
+    console.log(pc.bold("Recommended skills"));
+    console.log("");
+    recommendations.forEach((recommendation, index) => {
+      console.log(index + 1 + ". " + pc.green(recommendation.skill.metadata.id));
+      console.log("   Reason: " + recommendation.reason);
+      console.log("   Use:");
+      console.log("   aso use " + recommendation.skill.metadata.id + " --target " + target);
+      console.log("");
+    });
+  });
+
+program
   .command("validate")
   .description("Validate skills and packs")
   .option("--json", "print JSON")
@@ -181,14 +264,7 @@ program
   .option("--dir <dir>", "target project directory", ".")
   .action(async (options) => {
     const target = parseTarget(options.target);
-    const dir = path.resolve(options.dir);
-    await fs.ensureDir(path.join(dir, ".agent-skill-os"));
-    await fs.writeFile(path.join(dir, ".agent-skill-os", "manifest.json"), JSON.stringify({ version: cliVersion, target, installedAt: new Date().toISOString(), skills: [] }, null, 2) + "\n", "utf8");
-    await fs.writeFile(path.join(dir, ".agent-skill-os", "README.md"), "# Agent Skill OS\n\nThis project is ready for Agent Skill OS skills.\n", "utf8");
-    if (target === "generic") await fs.ensureDir(path.join(dir, "agent-skills"));
-    if (target === "claude") await fs.ensureDir(path.join(dir, ".claude", "skills"));
-    if (target === "codex") await fs.ensureDir(path.join(dir, ".codex", "skills"));
-    if (target === "cursor") await fs.ensureDir(path.join(dir, ".cursor", "rules"));
+    await initializeAgentSkillOS(target, options.dir);
     console.log(pc.green("✓ Initialized Agent Skill OS for " + target));
   });
 

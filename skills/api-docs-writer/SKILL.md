@@ -14,7 +14,7 @@ targets:
   - codex
   - cursor
 difficulty: intermediate
-version: 0.1.2
+version: 0.2.0
 author: Agent Skill OS
 license: MIT
 inputs:
@@ -28,6 +28,34 @@ outputs:
 use_cases:
   - Document a public API
   - Create internal integration docs
+capabilities:
+  - "documentation"
+  - "api"
+  - "docs"
+  - "reference"
+triggers:
+  - "API Docs Writer"
+  - "Generate practical API documentation from code or interface notes."
+  - "Document a public API"
+  - "Create internal integration docs"
+routing:
+  primaryFor:
+    - "Document a public API"
+    - "Create internal integration docs"
+  supportingFor:
+    - "api"
+    - "docs"
+    - "reference"
+runtime:
+  maxContextFiles: 8
+  requiresProjectFiles: true
+  outputContract:
+    - "API reference"
+    - "usage examples"
+    - "error notes"
+    - "assumptions"
+    - "validation checklist"
+  failureMode: "Ask for missing required context before generating output. Do not invent unsupported project details."
 ---
 
 # API Docs Writer
@@ -64,8 +92,37 @@ Return concise Markdown with clear headings, bullet points where helpful, and co
 
 A strong result is specific, grounded in the supplied context, easy to verify, and does not invent unsupported product or technical details.
 
-## Example Prompt
+## Runtime Contract
 
+### Required Inputs
+
+- endpoint list
+- request examples
+- response examples
+
+### Execution Steps
+
+1. Inspect the available context and identify missing high-risk inputs.
+2. Select the smallest output structure that satisfies the user goal.
+3. Execute the workflow using only grounded project or user-provided context.
+4. Check the result against the quality bar.
+5. Return the final artifact with assumptions and validation notes.
+
+### Output Contract
+
+Return:
+
+- API reference
+- usage examples
+- error notes
+- assumptions
+- validation checklist
+
+### Failure Mode
+
+If required context is missing, ask for it before generating. Do not invent unsupported project details.
+
+## Example Prompt
 Use api-docs-writer for a new open-source project and produce a practical first draft.
 
 ## Example Output

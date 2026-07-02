@@ -6,7 +6,23 @@ export const skillDifficulties = ["beginner", "intermediate", "advanced"] as con
 
 export type InstallTarget = (typeof installTargets)[number];
 
-export const SkillMetadataSchema = z.object({
+const RuntimeRoutingSchema = z.object({
+  primaryFor: z.array(z.string().min(1)).default([]),
+  supportingFor: z.array(z.string().min(1)).default([])
+});
+
+const RuntimeContractSchema = z.object({
+  maxContextFiles: z.number().int().positive().default(8),
+  requiresProjectFiles: z.boolean().default(true),
+  outputContract: z.array(z.string().min(1)).default(["final artifact", "assumptions", "validation checklist"]),
+  failureMode: z.string().min(1).default("Ask for missing required context before generating output.")
+});
+
+const SkillSupportsSchema = z.object({
+  targets: z.array(z.enum(installTargets)).optional()
+});
+
+const SkillMetadataInputSchema = z.object({
   id: z.string().min(1).regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
   name: z.string().min(1),
   summary: z.string().min(1),
@@ -20,7 +36,34 @@ export const SkillMetadataSchema = z.object({
   license: z.string().min(1),
   inputs: z.array(z.string().min(1)).min(1),
   outputs: z.array(z.string().min(1)).min(1),
-  use_cases: z.array(z.string().min(1)).min(1)
+  use_cases: z.array(z.string().min(1)).min(1),
+  capabilities: z.array(z.string().min(1)).optional(),
+  triggers: z.array(z.string().min(1)).optional(),
+  conflicts: z.array(z.string().min(1)).default([]),
+  supports: SkillSupportsSchema.optional(),
+  routing: RuntimeRoutingSchema.optional(),
+  runtime: RuntimeContractSchema.optional()
+});
+
+export const SkillMetadataSchema = SkillMetadataInputSchema.transform((metadata) => {
+  const capabilities = uniqueNonEmpty(metadata.capabilities && metadata.capabilities.length > 0 ? metadata.capabilities : [metadata.category, ...metadata.tags]);
+  const triggers = uniqueNonEmpty(metadata.triggers && metadata.triggers.length > 0 ? metadata.triggers : [metadata.name, metadata.summary, ...metadata.use_cases]);
+  const routing = {
+    primaryFor: uniqueNonEmpty(metadata.routing?.primaryFor.length ? metadata.routing.primaryFor : metadata.use_cases),
+    supportingFor: uniqueNonEmpty(metadata.routing?.supportingFor.length ? metadata.routing.supportingFor : metadata.tags)
+  };
+  const runtime = RuntimeContractSchema.parse(metadata.runtime || {});
+  return {
+    ...metadata,
+    capabilities,
+    triggers,
+    conflicts: metadata.conflicts || [],
+    supports: {
+      targets: metadata.supports?.targets && metadata.supports.targets.length > 0 ? metadata.supports.targets : metadata.targets
+    },
+    routing,
+    runtime
+  };
 });
 
 export const SkillPackSchema = z.object({
@@ -37,6 +80,7 @@ export const requiredSections = [
   "Workflow",
   "Output Format",
   "Quality Bar",
+  "Runtime Contract",
   "Example Prompt",
   "Example Output",
   "Safety Notes"
@@ -114,4 +158,8 @@ export interface NewSkillResult {
   skillId: string;
   filePath: string;
   created: boolean;
+}
+
+function uniqueNonEmpty(values: string[]): string[] {
+  return [...new Set(values.map((value) => value.trim()).filter(Boolean))];
 }

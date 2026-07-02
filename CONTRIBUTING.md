@@ -30,6 +30,10 @@ Required fields:
 - inputs
 - outputs
 - use_cases
+- capabilities
+- triggers
+- routing
+- runtime
 
 Categories must be one of `documentation`, `coding`, `github`, `product`, `content`, or `research`.
 
@@ -45,9 +49,12 @@ Difficulty must be `beginner`, `intermediate`, or `advanced`.
 - Workflow
 - Output Format
 - Quality Bar
+- Runtime Contract
 - Example Prompt
 - Example Output
 - Safety Notes
+
+Runtime metadata and `Runtime Contract` let Agent Skill OS route, load, execute, and validate skills. Follow the principle: install many, load few.
 
 ## Validate
 

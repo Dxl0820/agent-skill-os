@@ -1,0 +1,55 @@
+{
+  "version": "0.2.0",
+  "target": "codex",
+  "generatedAt": "2026-07-02T00:00:00.000Z",
+  "policy": {
+    "loadAllSkillsByDefault": false,
+    "maxPrimarySkills": 1,
+    "maxSupportingSkills": 2,
+    "maxSkillsPerTask": 3,
+    "stateSkillBeforeExecution": true,
+    "stateSelectedSkillBeforeWork": true
+  },
+  "rules": [
+    {
+      "match": ["review this code", "check this PR", "find bugs", "Review a pull request"],
+      "primarySkill": "code-reviewer",
+      "supportingSkills": ["test-writer", "pr-summarizer"],
+      "maxSupportingSkills": 2
+    },
+    {
+      "match": ["write tests", "add regression tests", "Cover edge cases"],
+      "primarySkill": "test-writer",
+      "supportingSkills": ["bug-reproducer", "code-reviewer"],
+      "maxSupportingSkills": 2
+    },
+    {
+      "match": ["write readme", "improve readme", "document project"],
+      "primarySkill": "readme-writer",
+      "supportingSkills": [],
+      "maxSupportingSkills": 0
+    }
+  ],
+  "skills": [
+    {
+      "id": "code-reviewer",
+      "name": "Code Reviewer",
+      "summary": "Review code for bugs, risks, edge cases, and missing tests.",
+      "category": "coding",
+      "tags": ["review", "quality", "testing"],
+      "path": ".codex/skills/code-reviewer/SKILL.md",
+      "capabilities": ["code_review", "risk_analysis", "test_gap_detection"],
+      "triggers": ["review this code", "check this PR", "find bugs"],
+      "routing": {
+        "primaryFor": ["Review a pull request"],
+        "supportingFor": ["review", "quality", "testing"]
+      },
+      "runtime": {
+        "maxContextFiles": 8,
+        "requiresProjectFiles": true,
+        "outputContract": ["findings", "risk summary", "test suggestions", "assumptions", "validation checklist"],
+        "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      }
+    }
+  ]
+}

@@ -43,6 +43,12 @@ Required fields:
 - `inputs`: context the skill needs.
 - `outputs`: artifacts the skill returns.
 - `use_cases`: common jobs for the skill.
+- `capabilities`: routable capabilities the skill provides.
+- `triggers`: task phrases that should select the skill.
+- `routing`: `primaryFor` and `supportingFor` task contexts.
+- `runtime`: execution limits and output contract.
+
+The runtime principle is: install many, load few. Metadata should help the router choose one primary skill and at most a small number of supporting skills.
 
 ## Required Sections
 
@@ -54,9 +60,17 @@ Every `SKILL.md` must include:
 - `## Workflow`
 - `## Output Format`
 - `## Quality Bar`
+- `## Runtime Contract`
 - `## Example Prompt`
 - `## Example Output`
 - `## Safety Notes`
+
+`## Runtime Contract` should include:
+
+- required inputs
+- execution steps
+- output contract
+- failure mode
 
 ## Good vs Bad Skills
 
@@ -64,6 +78,7 @@ Good:
 
 - Has a clear job and stopping point.
 - States the inputs it needs.
+- Includes routing metadata and a runtime contract.
 - Produces a reusable artifact.
 - Includes safety notes for unsupported claims.
 - Can be validated by another maintainer.

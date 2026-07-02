@@ -14,7 +14,7 @@ targets:
   - codex
   - cursor
 difficulty: beginner
-version: 0.1.2
+version: 0.2.0
 author: Agent Skill OS
 license: MIT
 inputs:
@@ -28,6 +28,40 @@ outputs:
 use_cases:
   - Write PR descriptions
   - Prepare release notes
+capabilities:
+  - "pull_request_summary"
+  - "change_summary"
+  - "risk_summary"
+  - "github"
+  - "pull-request"
+  - "summary"
+  - "review"
+triggers:
+  - "summarize PR"
+  - "pull request summary"
+  - "explain changes"
+  - "PR Summarizer"
+  - "Summarize pull request changes, risks, and review focus areas."
+  - "Write PR descriptions"
+  - "Prepare release notes"
+routing:
+  primaryFor:
+    - "Write PR descriptions"
+    - "Prepare release notes"
+  supportingFor:
+    - "pull-request"
+    - "summary"
+    - "review"
+runtime:
+  maxContextFiles: 8
+  requiresProjectFiles: true
+  outputContract:
+    - "summary"
+    - "risk notes"
+    - "test evidence"
+    - "assumptions"
+    - "validation checklist"
+  failureMode: "Ask for missing required context before generating output. Do not invent unsupported project details."
 ---
 
 # PR Summarizer
@@ -64,8 +98,37 @@ Return concise Markdown with clear headings, bullet points where helpful, and co
 
 A strong result is specific, grounded in the supplied context, easy to verify, and does not invent unsupported product or technical details.
 
-## Example Prompt
+## Runtime Contract
 
+### Required Inputs
+
+- diff
+- PR description
+- tests
+
+### Execution Steps
+
+1. Inspect the available context and identify missing high-risk inputs.
+2. Select the smallest output structure that satisfies the user goal.
+3. Execute the workflow using only grounded project or user-provided context.
+4. Check the result against the quality bar.
+5. Return the final artifact with assumptions and validation notes.
+
+### Output Contract
+
+Return:
+
+- summary
+- risk notes
+- test evidence
+- assumptions
+- validation checklist
+
+### Failure Mode
+
+If required context is missing, ask for it before generating. Do not invent unsupported project details.
+
+## Example Prompt
 Use pr-summarizer for a new open-source project and produce a practical first draft.
 
 ## Example Output

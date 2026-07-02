@@ -30,6 +30,15 @@ describe("installer", () => {
     const manifest = await fs.readJson(path.join(tmpDir, ".agent-skill-os", "manifest.json"));
     expect(manifest.skills).toHaveLength(1);
     expect(manifest.skills[0].id).toBe("readme-writer");
+    const router = await fs.readJson(path.join(tmpDir, ".agent-skill-os", "router.json"));
+    expect(router.version).toBe("0.2.0");
+    expect(router.policy.loadAllSkillsByDefault).toBe(false);
+    expect(router.skills[0].capabilities).toContain("readme");
+    expect(router.skills[0].supports.targets).toContain("generic");
+    expect(router.skills[0].conflicts).toEqual([]);
+    const skillIndex = await fs.readJson(path.join(tmpDir, ".agent-skill-os", "skill-index.json"));
+    expect(skillIndex.skills[0].path).toBe("agent-skills/readme-writer/SKILL.md");
+    expect(await fs.readFile(path.join(tmpDir, ".agent-skill-os", "usage.md"), "utf8")).toContain("Install many. Load few.");
   });
 
   it("does not overwrite existing files without force", async () => {
@@ -37,6 +46,45 @@ describe("installer", () => {
     await installSkill({ skill, target: "generic", dir: tmpDir });
     const second = await installSkill({ skill, target: "generic", dir: tmpDir });
     expect(second.skipped).toBe(true);
+  });
+
+  it("refreshes runtime files for existing skills without overwriting the skill file", async () => {
+    const skill = await getReadmeSkill();
+    await installSkill({ skill, target: "generic", dir: tmpDir });
+    const skillPath = path.join(tmpDir, "agent-skills", "readme-writer", "SKILL.md");
+    await fs.writeFile(skillPath, "local edits", "utf8");
+    await fs.remove(path.join(tmpDir, ".agent-skill-os", "router.json"));
+    await fs.remove(path.join(tmpDir, ".agent-skill-os", "skill-index.json"));
+    await fs.remove(path.join(tmpDir, ".agent-skill-os", "usage.md"));
+    await fs.writeJson(
+      path.join(tmpDir, ".agent-skill-os", "manifest.json"),
+      {
+        version: "0.1.2",
+        target: "generic",
+        installedAt: "2026-01-01T00:00:00.000Z",
+        skills: [
+          {
+            id: "readme-writer",
+            version: "0.1.2",
+            target: "generic",
+            path: "agent-skills/readme-writer/SKILL.md",
+            installedAt: "2026-01-01T00:00:00.000Z"
+          }
+        ]
+      },
+      { spaces: 2 }
+    );
+
+    const second = await installSkill({ skill, target: "generic", dir: tmpDir });
+
+    expect(second.skipped).toBe(true);
+    expect(await fs.readFile(skillPath, "utf8")).toBe("local edits");
+    const manifest = await fs.readJson(path.join(tmpDir, ".agent-skill-os", "manifest.json"));
+    expect(manifest.version).toBe("0.2.0");
+    expect(manifest.skills[0].capabilities).toContain("readme");
+    const router = await fs.readJson(path.join(tmpDir, ".agent-skill-os", "router.json"));
+    expect(router.version).toBe("0.2.0");
+    expect(router.skills[0].runtime.outputContract).toContain("README.md draft");
   });
 
   it("overwrites with force and keeps one manifest entry", async () => {
@@ -62,7 +110,21 @@ describe("installer", () => {
     const skill = await getReadmeSkill();
     await installSkill({ skill, target: "codex", dir: tmpDir });
     expect(await fs.pathExists(path.join(tmpDir, ".codex", "skills", "readme-writer", "SKILL.md"))).toBe(true);
-    expect(await fs.readFile(path.join(tmpDir, ".codex", "AGENTS.md"), "utf8")).toContain("readme-writer");
+    const agents = await fs.readFile(path.join(tmpDir, ".codex", "AGENTS.md"), "utf8");
+    expect(agents).toContain("Read `.agent-skill-os/router.json`.");
+    expect(agents).toContain("Do not load every installed skill by default.");
+    expect(agents).toContain("readme-writer");
+  });
+
+  it("writes target loader instructions for claude and cursor", async () => {
+    const skill = await getReadmeSkill();
+    await installSkill({ skill, target: "claude", dir: path.join(tmpDir, "claude") });
+    await installSkill({ skill, target: "cursor", dir: path.join(tmpDir, "cursor") });
+    const claude = await fs.readFile(path.join(tmpDir, "claude", ".claude", "CLAUDE.md"), "utf8");
+    const cursor = await fs.readFile(path.join(tmpDir, "cursor", ".cursor", "rules", "agent-skill-os.mdc"), "utf8");
+    expect(claude).toContain("Read `.agent-skill-os/router.json`.");
+    expect(cursor).toContain("alwaysApply: true");
+    expect(cursor).toContain("Install many. Load few.");
   });
 });
 

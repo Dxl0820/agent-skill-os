@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-02T02:23:42.503Z",
+  "generatedAt": "2026-07-02T07:37:31.908Z",
   "skills": [
     {
       "id": "api-docs-writer",
@@ -19,7 +19,7 @@
         "cursor"
       ],
       "difficulty": "intermediate",
-      "version": "0.1.2",
+      "version": "0.2.0",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -35,7 +35,51 @@
       "use_cases": [
         "Document a public API",
         "Create internal integration docs"
-      ]
+      ],
+      "capabilities": [
+        "documentation",
+        "api",
+        "docs",
+        "reference"
+      ],
+      "triggers": [
+        "API Docs Writer",
+        "Generate practical API documentation from code or interface notes.",
+        "Document a public API",
+        "Create internal integration docs"
+      ],
+      "conflicts": [],
+      "routing": {
+        "primaryFor": [
+          "Document a public API",
+          "Create internal integration docs"
+        ],
+        "supportingFor": [
+          "api",
+          "docs",
+          "reference"
+        ]
+      },
+      "runtime": {
+        "maxContextFiles": 8,
+        "requiresProjectFiles": true,
+        "outputContract": [
+          "API reference",
+          "usage examples",
+          "error notes",
+          "assumptions",
+          "validation checklist"
+        ],
+        "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "supports": {
+        "targets": [
+          "generic",
+          "claude",
+          "codex",
+          "cursor"
+        ]
+      }
     },
     {
       "id": "bug-reproducer",
@@ -55,7 +99,7 @@
         "cursor"
       ],
       "difficulty": "beginner",
-      "version": "0.1.2",
+      "version": "0.2.0",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -71,7 +115,56 @@
       "use_cases": [
         "Confirm a reported bug",
         "Create a failing test"
-      ]
+      ],
+      "capabilities": [
+        "bug_reproduction",
+        "debugging",
+        "minimal_repro",
+        "coding",
+        "bug",
+        "reproduction"
+      ],
+      "triggers": [
+        "reproduce bug",
+        "create minimal repro",
+        "turn error into failing case",
+        "Bug Reproducer",
+        "Turn a bug report into reproducible steps and a minimal failing case.",
+        "Confirm a reported bug",
+        "Create a failing test"
+      ],
+      "conflicts": [],
+      "routing": {
+        "primaryFor": [
+          "Confirm a reported bug",
+          "Create a failing test"
+        ],
+        "supportingFor": [
+          "bug",
+          "reproduction",
+          "debugging"
+        ]
+      },
+      "runtime": {
+        "maxContextFiles": 8,
+        "requiresProjectFiles": true,
+        "outputContract": [
+          "repro steps",
+          "minimal case",
+          "expected vs actual",
+          "assumptions",
+          "validation checklist"
+        ],
+        "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "supports": {
+        "targets": [
+          "generic",
+          "claude",
+          "codex",
+          "cursor"
+        ]
+      }
     },
     {
       "id": "changelog-writer",
@@ -91,7 +184,7 @@
         "cursor"
       ],
       "difficulty": "beginner",
-      "version": "0.1.2",
+      "version": "0.2.0",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -107,7 +200,51 @@
       "use_cases": [
         "Prepare a release",
         "Summarize repo changes"
-      ]
+      ],
+      "capabilities": [
+        "documentation",
+        "changelog",
+        "release",
+        "commits"
+      ],
+      "triggers": [
+        "Changelog Writer",
+        "Turn commits, PRs, or release notes into a clear changelog.",
+        "Prepare a release",
+        "Summarize repo changes"
+      ],
+      "conflicts": [],
+      "routing": {
+        "primaryFor": [
+          "Prepare a release",
+          "Summarize repo changes"
+        ],
+        "supportingFor": [
+          "changelog",
+          "release",
+          "commits"
+        ]
+      },
+      "runtime": {
+        "maxContextFiles": 8,
+        "requiresProjectFiles": true,
+        "outputContract": [
+          "CHANGELOG entry",
+          "breaking changes",
+          "migration notes",
+          "assumptions",
+          "validation checklist"
+        ],
+        "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "supports": {
+        "targets": [
+          "generic",
+          "claude",
+          "codex",
+          "cursor"
+        ]
+      }
     },
     {
       "id": "code-reviewer",
@@ -127,7 +264,7 @@
         "cursor"
       ],
       "difficulty": "intermediate",
-      "version": "0.1.2",
+      "version": "0.2.0",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -143,7 +280,58 @@
       "use_cases": [
         "Review a pull request",
         "Check a risky change"
-      ]
+      ],
+      "capabilities": [
+        "code_review",
+        "risk_analysis",
+        "test_gap_detection",
+        "coding",
+        "review",
+        "quality",
+        "testing"
+      ],
+      "triggers": [
+        "review this code",
+        "check this PR",
+        "find bugs",
+        "pull request review",
+        "Code Reviewer",
+        "Review code for bugs, risks, edge cases, and missing tests.",
+        "Review a pull request",
+        "Check a risky change"
+      ],
+      "conflicts": [],
+      "routing": {
+        "primaryFor": [
+          "Review a pull request",
+          "Check a risky change"
+        ],
+        "supportingFor": [
+          "review",
+          "quality",
+          "testing"
+        ]
+      },
+      "runtime": {
+        "maxContextFiles": 8,
+        "requiresProjectFiles": true,
+        "outputContract": [
+          "findings",
+          "risk summary",
+          "test suggestions",
+          "assumptions",
+          "validation checklist"
+        ],
+        "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "supports": {
+        "targets": [
+          "generic",
+          "claude",
+          "codex",
+          "cursor"
+        ]
+      }
     },
     {
       "id": "competitor-researcher",
@@ -163,7 +351,7 @@
         "cursor"
       ],
       "difficulty": "intermediate",
-      "version": "0.1.2",
+      "version": "0.2.0",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -179,7 +367,51 @@
       "use_cases": [
         "Study alternatives",
         "Prepare positioning"
-      ]
+      ],
+      "capabilities": [
+        "research",
+        "competitors",
+        "market",
+        "positioning"
+      ],
+      "triggers": [
+        "Competitor Researcher",
+        "Structure competitor research into comparable positioning and feature notes.",
+        "Study alternatives",
+        "Prepare positioning"
+      ],
+      "conflicts": [],
+      "routing": {
+        "primaryFor": [
+          "Study alternatives",
+          "Prepare positioning"
+        ],
+        "supportingFor": [
+          "competitors",
+          "market",
+          "positioning"
+        ]
+      },
+      "runtime": {
+        "maxContextFiles": 8,
+        "requiresProjectFiles": true,
+        "outputContract": [
+          "comparison table",
+          "insights",
+          "opportunities",
+          "assumptions",
+          "validation checklist"
+        ],
+        "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "supports": {
+        "targets": [
+          "generic",
+          "claude",
+          "codex",
+          "cursor"
+        ]
+      }
     },
     {
       "id": "contributing-guide-writer",
@@ -199,7 +431,7 @@
         "cursor"
       ],
       "difficulty": "beginner",
-      "version": "0.1.2",
+      "version": "0.2.0",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -215,7 +447,51 @@
       "use_cases": [
         "Help first-time contributors",
         "Standardize contribution flow"
-      ]
+      ],
+      "capabilities": [
+        "documentation",
+        "contributing",
+        "github",
+        "onboarding"
+      ],
+      "triggers": [
+        "Contributing Guide Writer",
+        "Create contributor onboarding and contribution rules for open-source repositories.",
+        "Help first-time contributors",
+        "Standardize contribution flow"
+      ],
+      "conflicts": [],
+      "routing": {
+        "primaryFor": [
+          "Help first-time contributors",
+          "Standardize contribution flow"
+        ],
+        "supportingFor": [
+          "contributing",
+          "github",
+          "onboarding"
+        ]
+      },
+      "runtime": {
+        "maxContextFiles": 8,
+        "requiresProjectFiles": true,
+        "outputContract": [
+          "CONTRIBUTING.md",
+          "PR checklist",
+          "local setup",
+          "assumptions",
+          "validation checklist"
+        ],
+        "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "supports": {
+        "targets": [
+          "generic",
+          "claude",
+          "codex",
+          "cursor"
+        ]
+      }
     },
     {
       "id": "demo-video-planner",
@@ -235,7 +511,7 @@
         "cursor"
       ],
       "difficulty": "intermediate",
-      "version": "0.1.2",
+      "version": "0.2.0",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -251,7 +527,51 @@
       "use_cases": [
         "Record launch demos",
         "Create walkthrough videos"
-      ]
+      ],
+      "capabilities": [
+        "content",
+        "demo",
+        "video",
+        "screens"
+      ],
+      "triggers": [
+        "Demo Video Planner",
+        "Plan a product demo video with scenes, narration, and screen actions.",
+        "Record launch demos",
+        "Create walkthrough videos"
+      ],
+      "conflicts": [],
+      "routing": {
+        "primaryFor": [
+          "Record launch demos",
+          "Create walkthrough videos"
+        ],
+        "supportingFor": [
+          "demo",
+          "video",
+          "screens"
+        ]
+      },
+      "runtime": {
+        "maxContextFiles": 8,
+        "requiresProjectFiles": true,
+        "outputContract": [
+          "demo outline",
+          "shot list",
+          "narration",
+          "assumptions",
+          "validation checklist"
+        ],
+        "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "supports": {
+        "targets": [
+          "generic",
+          "claude",
+          "codex",
+          "cursor"
+        ]
+      }
     },
     {
       "id": "dependency-upgrade-planner",
@@ -271,7 +591,7 @@
         "cursor"
       ],
       "difficulty": "advanced",
-      "version": "0.1.2",
+      "version": "0.2.0",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -287,7 +607,51 @@
       "use_cases": [
         "Upgrade framework versions",
         "Plan security patching"
-      ]
+      ],
+      "capabilities": [
+        "coding",
+        "dependencies",
+        "upgrade",
+        "risk"
+      ],
+      "triggers": [
+        "Dependency Upgrade Planner",
+        "Analyze dependency upgrade risks and produce a safe rollout plan.",
+        "Upgrade framework versions",
+        "Plan security patching"
+      ],
+      "conflicts": [],
+      "routing": {
+        "primaryFor": [
+          "Upgrade framework versions",
+          "Plan security patching"
+        ],
+        "supportingFor": [
+          "dependencies",
+          "upgrade",
+          "risk"
+        ]
+      },
+      "runtime": {
+        "maxContextFiles": 8,
+        "requiresProjectFiles": true,
+        "outputContract": [
+          "upgrade plan",
+          "risk matrix",
+          "test commands",
+          "assumptions",
+          "validation checklist"
+        ],
+        "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "supports": {
+        "targets": [
+          "generic",
+          "claude",
+          "codex",
+          "cursor"
+        ]
+      }
     },
     {
       "id": "issue-triage",
@@ -307,7 +671,7 @@
         "cursor"
       ],
       "difficulty": "beginner",
-      "version": "0.1.2",
+      "version": "0.2.0",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -324,7 +688,52 @@
       "use_cases": [
         "Triage incoming issues",
         "Prepare maintainer replies"
-      ]
+      ],
+      "capabilities": [
+        "github",
+        "issues",
+        "labels",
+        "triage"
+      ],
+      "triggers": [
+        "Issue Triage",
+        "Summarize issues, classify priority, and suggest labels and next actions.",
+        "Triage incoming issues",
+        "Prepare maintainer replies"
+      ],
+      "conflicts": [],
+      "routing": {
+        "primaryFor": [
+          "Triage incoming issues",
+          "Prepare maintainer replies"
+        ],
+        "supportingFor": [
+          "issues",
+          "labels",
+          "triage"
+        ]
+      },
+      "runtime": {
+        "maxContextFiles": 8,
+        "requiresProjectFiles": true,
+        "outputContract": [
+          "summary",
+          "priority",
+          "labels",
+          "response draft",
+          "assumptions",
+          "validation checklist"
+        ],
+        "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "supports": {
+        "targets": [
+          "generic",
+          "claude",
+          "codex",
+          "cursor"
+        ]
+      }
     },
     {
       "id": "landing-page-copywriter",
@@ -344,7 +753,7 @@
         "cursor"
       ],
       "difficulty": "beginner",
-      "version": "0.1.2",
+      "version": "0.2.0",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -361,7 +770,51 @@
       "use_cases": [
         "Launch a new project",
         "Improve first-screen messaging"
-      ]
+      ],
+      "capabilities": [
+        "product",
+        "landing",
+        "copy",
+        "launch"
+      ],
+      "triggers": [
+        "Landing Page Copywriter",
+        "Write landing page hero copy, sections, CTAs, and conversion messaging.",
+        "Launch a new project",
+        "Improve first-screen messaging"
+      ],
+      "conflicts": [],
+      "routing": {
+        "primaryFor": [
+          "Launch a new project",
+          "Improve first-screen messaging"
+        ],
+        "supportingFor": [
+          "landing",
+          "copy",
+          "launch"
+        ]
+      },
+      "runtime": {
+        "maxContextFiles": 8,
+        "requiresProjectFiles": true,
+        "outputContract": [
+          "hero copy",
+          "section copy",
+          "CTA set",
+          "assumptions",
+          "validation checklist"
+        ],
+        "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "supports": {
+        "targets": [
+          "generic",
+          "claude",
+          "codex",
+          "cursor"
+        ]
+      }
     },
     {
       "id": "launch-post-writer",
@@ -381,7 +834,7 @@
         "cursor"
       ],
       "difficulty": "beginner",
-      "version": "0.1.2",
+      "version": "0.2.0",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -397,7 +850,57 @@
       "use_cases": [
         "Announce an open-source repo",
         "Promote a feature launch"
-      ]
+      ],
+      "capabilities": [
+        "launch_copy",
+        "social_post",
+        "product_launch",
+        "product",
+        "launch",
+        "social",
+        "marketing"
+      ],
+      "triggers": [
+        "prepare launch post",
+        "write launch copy",
+        "announce project",
+        "Launch Post Writer",
+        "Create launch posts for X, Hacker News, Reddit, Juejin, and Zhihu.",
+        "Announce an open-source repo",
+        "Promote a feature launch"
+      ],
+      "conflicts": [],
+      "routing": {
+        "primaryFor": [
+          "Announce an open-source repo",
+          "Promote a feature launch"
+        ],
+        "supportingFor": [
+          "launch",
+          "social",
+          "marketing"
+        ]
+      },
+      "runtime": {
+        "maxContextFiles": 8,
+        "requiresProjectFiles": true,
+        "outputContract": [
+          "platform posts",
+          "hooks",
+          "CTA variants",
+          "assumptions",
+          "validation checklist"
+        ],
+        "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "supports": {
+        "targets": [
+          "generic",
+          "claude",
+          "codex",
+          "cursor"
+        ]
+      }
     },
     {
       "id": "performance-reviewer",
@@ -417,7 +920,7 @@
         "cursor"
       ],
       "difficulty": "advanced",
-      "version": "0.1.2",
+      "version": "0.2.0",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -433,7 +936,51 @@
       "use_cases": [
         "Review slow rendering",
         "Improve batch processing"
-      ]
+      ],
+      "capabilities": [
+        "coding",
+        "performance",
+        "profiling",
+        "optimization"
+      ],
+      "triggers": [
+        "Performance Reviewer",
+        "Identify likely performance bottlenecks and practical optimizations.",
+        "Review slow rendering",
+        "Improve batch processing"
+      ],
+      "conflicts": [],
+      "routing": {
+        "primaryFor": [
+          "Review slow rendering",
+          "Improve batch processing"
+        ],
+        "supportingFor": [
+          "performance",
+          "profiling",
+          "optimization"
+        ]
+      },
+      "runtime": {
+        "maxContextFiles": 8,
+        "requiresProjectFiles": true,
+        "outputContract": [
+          "bottleneck list",
+          "measurement plan",
+          "optimization ideas",
+          "assumptions",
+          "validation checklist"
+        ],
+        "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "supports": {
+        "targets": [
+          "generic",
+          "claude",
+          "codex",
+          "cursor"
+        ]
+      }
     },
     {
       "id": "pr-summarizer",
@@ -453,7 +1000,7 @@
         "cursor"
       ],
       "difficulty": "beginner",
-      "version": "0.1.2",
+      "version": "0.2.0",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -469,7 +1016,57 @@
       "use_cases": [
         "Write PR descriptions",
         "Prepare release notes"
-      ]
+      ],
+      "capabilities": [
+        "pull_request_summary",
+        "change_summary",
+        "risk_summary",
+        "github",
+        "pull-request",
+        "summary",
+        "review"
+      ],
+      "triggers": [
+        "summarize PR",
+        "pull request summary",
+        "explain changes",
+        "PR Summarizer",
+        "Summarize pull request changes, risks, and review focus areas.",
+        "Write PR descriptions",
+        "Prepare release notes"
+      ],
+      "conflicts": [],
+      "routing": {
+        "primaryFor": [
+          "Write PR descriptions",
+          "Prepare release notes"
+        ],
+        "supportingFor": [
+          "pull-request",
+          "summary",
+          "review"
+        ]
+      },
+      "runtime": {
+        "maxContextFiles": 8,
+        "requiresProjectFiles": true,
+        "outputContract": [
+          "summary",
+          "risk notes",
+          "test evidence",
+          "assumptions",
+          "validation checklist"
+        ],
+        "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "supports": {
+        "targets": [
+          "generic",
+          "claude",
+          "codex",
+          "cursor"
+        ]
+      }
     },
     {
       "id": "prd-writer",
@@ -489,7 +1086,7 @@
         "cursor"
       ],
       "difficulty": "intermediate",
-      "version": "0.1.2",
+      "version": "0.2.0",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -506,7 +1103,55 @@
       "use_cases": [
         "Start a new product",
         "Align stakeholders"
-      ]
+      ],
+      "capabilities": [
+        "prd",
+        "product_requirements",
+        "planning",
+        "product",
+        "requirements"
+      ],
+      "triggers": [
+        "write PRD",
+        "product requirements",
+        "turn idea into requirements",
+        "PRD Writer",
+        "Turn a product idea into a crisp product requirements document.",
+        "Start a new product",
+        "Align stakeholders"
+      ],
+      "conflicts": [],
+      "routing": {
+        "primaryFor": [
+          "Start a new product",
+          "Align stakeholders"
+        ],
+        "supportingFor": [
+          "prd",
+          "requirements",
+          "product"
+        ]
+      },
+      "runtime": {
+        "maxContextFiles": 8,
+        "requiresProjectFiles": true,
+        "outputContract": [
+          "PRD",
+          "acceptance criteria",
+          "non-goals",
+          "assumptions",
+          "validation checklist"
+        ],
+        "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "supports": {
+        "targets": [
+          "generic",
+          "claude",
+          "codex",
+          "cursor"
+        ]
+      }
     },
     {
       "id": "readme-writer",
@@ -527,7 +1172,7 @@
         "cursor"
       ],
       "difficulty": "beginner",
-      "version": "0.1.2",
+      "version": "0.2.0",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -545,7 +1190,59 @@
       "use_cases": [
         "Launch a new GitHub repo",
         "Improve open-source project presentation"
-      ]
+      ],
+      "capabilities": [
+        "readme",
+        "documentation",
+        "open-source-launch",
+        "github",
+        "docs",
+        "launch"
+      ],
+      "triggers": [
+        "write readme",
+        "improve readme",
+        "document project",
+        "project intro",
+        "README Writer",
+        "Create high-converting GitHub README files for open-source projects.",
+        "Launch a new GitHub repo",
+        "Improve open-source project presentation"
+      ],
+      "conflicts": [],
+      "routing": {
+        "primaryFor": [
+          "Launch a new GitHub repo",
+          "Improve open-source project presentation"
+        ],
+        "supportingFor": [
+          "readme",
+          "github",
+          "docs",
+          "launch"
+        ]
+      },
+      "runtime": {
+        "maxContextFiles": 8,
+        "requiresProjectFiles": true,
+        "outputContract": [
+          "README.md draft",
+          "feature list",
+          "quick start",
+          "contribution section",
+          "assumptions",
+          "validation checklist"
+        ],
+        "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "supports": {
+        "targets": [
+          "generic",
+          "claude",
+          "codex",
+          "cursor"
+        ]
+      }
     },
     {
       "id": "refactor-planner",
@@ -565,7 +1262,7 @@
         "cursor"
       ],
       "difficulty": "intermediate",
-      "version": "0.1.2",
+      "version": "0.2.0",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -581,7 +1278,51 @@
       "use_cases": [
         "Plan a cleanup",
         "Reduce coupling safely"
-      ]
+      ],
+      "capabilities": [
+        "coding",
+        "refactor",
+        "architecture",
+        "plan"
+      ],
+      "triggers": [
+        "Refactor Planner",
+        "Break a refactor into small, reversible, testable steps.",
+        "Plan a cleanup",
+        "Reduce coupling safely"
+      ],
+      "conflicts": [],
+      "routing": {
+        "primaryFor": [
+          "Plan a cleanup",
+          "Reduce coupling safely"
+        ],
+        "supportingFor": [
+          "refactor",
+          "architecture",
+          "plan"
+        ]
+      },
+      "runtime": {
+        "maxContextFiles": 8,
+        "requiresProjectFiles": true,
+        "outputContract": [
+          "step plan",
+          "risk map",
+          "test plan",
+          "assumptions",
+          "validation checklist"
+        ],
+        "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "supports": {
+        "targets": [
+          "generic",
+          "claude",
+          "codex",
+          "cursor"
+        ]
+      }
     },
     {
       "id": "release-notes-writer",
@@ -601,7 +1342,7 @@
         "cursor"
       ],
       "difficulty": "intermediate",
-      "version": "0.1.2",
+      "version": "0.2.0",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -617,7 +1358,56 @@
       "use_cases": [
         "Publish GitHub releases",
         "Announce product updates"
-      ]
+      ],
+      "capabilities": [
+        "release_notes",
+        "changelog",
+        "launch_notes",
+        "github",
+        "release",
+        "notes"
+      ],
+      "triggers": [
+        "write release notes",
+        "prepare release",
+        "summarize release",
+        "Release Notes Writer",
+        "Create release notes from commits, pull requests, and issues.",
+        "Publish GitHub releases",
+        "Announce product updates"
+      ],
+      "conflicts": [],
+      "routing": {
+        "primaryFor": [
+          "Publish GitHub releases",
+          "Announce product updates"
+        ],
+        "supportingFor": [
+          "release",
+          "notes",
+          "github"
+        ]
+      },
+      "runtime": {
+        "maxContextFiles": 8,
+        "requiresProjectFiles": true,
+        "outputContract": [
+          "release notes",
+          "highlights",
+          "upgrade notes",
+          "assumptions",
+          "validation checklist"
+        ],
+        "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "supports": {
+        "targets": [
+          "generic",
+          "claude",
+          "codex",
+          "cursor"
+        ]
+      }
     },
     {
       "id": "roadmap-planner",
@@ -637,7 +1427,7 @@
         "cursor"
       ],
       "difficulty": "intermediate",
-      "version": "0.1.2",
+      "version": "0.2.0",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -653,7 +1443,51 @@
       "use_cases": [
         "Plan a quarter",
         "Organize backlog themes"
-      ]
+      ],
+      "capabilities": [
+        "github",
+        "roadmap",
+        "planning",
+        "issues"
+      ],
+      "triggers": [
+        "Roadmap Planner",
+        "Convert requirements and feedback into a practical product roadmap.",
+        "Plan a quarter",
+        "Organize backlog themes"
+      ],
+      "conflicts": [],
+      "routing": {
+        "primaryFor": [
+          "Plan a quarter",
+          "Organize backlog themes"
+        ],
+        "supportingFor": [
+          "roadmap",
+          "planning",
+          "issues"
+        ]
+      },
+      "runtime": {
+        "maxContextFiles": 8,
+        "requiresProjectFiles": true,
+        "outputContract": [
+          "roadmap",
+          "milestones",
+          "priorities",
+          "assumptions",
+          "validation checklist"
+        ],
+        "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "supports": {
+        "targets": [
+          "generic",
+          "claude",
+          "codex",
+          "cursor"
+        ]
+      }
     },
     {
       "id": "short-video-script-writer",
@@ -673,7 +1507,7 @@
         "cursor"
       ],
       "difficulty": "beginner",
-      "version": "0.1.2",
+      "version": "0.2.0",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -689,7 +1523,51 @@
       "use_cases": [
         "Create product teasers",
         "Explain a feature quickly"
-      ]
+      ],
+      "capabilities": [
+        "content",
+        "video",
+        "script",
+        "shorts"
+      ],
+      "triggers": [
+        "Short Video Script Writer",
+        "Write 15, 30, and 60 second short-form video scripts.",
+        "Create product teasers",
+        "Explain a feature quickly"
+      ],
+      "conflicts": [],
+      "routing": {
+        "primaryFor": [
+          "Create product teasers",
+          "Explain a feature quickly"
+        ],
+        "supportingFor": [
+          "video",
+          "script",
+          "shorts"
+        ]
+      },
+      "runtime": {
+        "maxContextFiles": 8,
+        "requiresProjectFiles": true,
+        "outputContract": [
+          "script",
+          "shot list",
+          "hook",
+          "assumptions",
+          "validation checklist"
+        ],
+        "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "supports": {
+        "targets": [
+          "generic",
+          "claude",
+          "codex",
+          "cursor"
+        ]
+      }
     },
     {
       "id": "source-summarizer",
@@ -709,7 +1587,7 @@
         "cursor"
       ],
       "difficulty": "beginner",
-      "version": "0.1.2",
+      "version": "0.2.0",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -725,7 +1603,50 @@
       "use_cases": [
         "Digest articles",
         "Prepare research briefs"
-      ]
+      ],
+      "capabilities": [
+        "research",
+        "sources",
+        "summary"
+      ],
+      "triggers": [
+        "Source Summarizer",
+        "Summarize source material into concise, structured, traceable notes.",
+        "Digest articles",
+        "Prepare research briefs"
+      ],
+      "conflicts": [],
+      "routing": {
+        "primaryFor": [
+          "Digest articles",
+          "Prepare research briefs"
+        ],
+        "supportingFor": [
+          "sources",
+          "summary",
+          "research"
+        ]
+      },
+      "runtime": {
+        "maxContextFiles": 8,
+        "requiresProjectFiles": true,
+        "outputContract": [
+          "summary",
+          "key claims",
+          "open questions",
+          "assumptions",
+          "validation checklist"
+        ],
+        "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "supports": {
+        "targets": [
+          "generic",
+          "claude",
+          "codex",
+          "cursor"
+        ]
+      }
     },
     {
       "id": "technical-decision-record",
@@ -745,7 +1666,7 @@
         "cursor"
       ],
       "difficulty": "intermediate",
-      "version": "0.1.2",
+      "version": "0.2.0",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -761,7 +1682,51 @@
       "use_cases": [
         "Document technical choices",
         "Record product architecture"
-      ]
+      ],
+      "capabilities": [
+        "research",
+        "adr",
+        "architecture",
+        "decision"
+      ],
+      "triggers": [
+        "Technical Decision Record",
+        "Write architecture decision records with context, options, and consequences.",
+        "Document technical choices",
+        "Record product architecture"
+      ],
+      "conflicts": [],
+      "routing": {
+        "primaryFor": [
+          "Document technical choices",
+          "Record product architecture"
+        ],
+        "supportingFor": [
+          "adr",
+          "architecture",
+          "decision"
+        ]
+      },
+      "runtime": {
+        "maxContextFiles": 8,
+        "requiresProjectFiles": true,
+        "outputContract": [
+          "ADR",
+          "tradeoffs",
+          "follow-ups",
+          "assumptions",
+          "validation checklist"
+        ],
+        "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "supports": {
+        "targets": [
+          "generic",
+          "claude",
+          "codex",
+          "cursor"
+        ]
+      }
     },
     {
       "id": "test-writer",
@@ -781,7 +1746,7 @@
         "cursor"
       ],
       "difficulty": "intermediate",
-      "version": "0.1.2",
+      "version": "0.2.0",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -797,7 +1762,57 @@
       "use_cases": [
         "Add regression tests",
         "Cover edge cases"
-      ]
+      ],
+      "capabilities": [
+        "test_generation",
+        "edge_cases",
+        "regression_testing",
+        "coding",
+        "testing",
+        "vitest",
+        "regression"
+      ],
+      "triggers": [
+        "write tests",
+        "add regression tests",
+        "cover edge cases",
+        "Test Writer",
+        "Generate unit tests, edge tests, and regression cases from code behavior.",
+        "Add regression tests",
+        "Cover edge cases"
+      ],
+      "conflicts": [],
+      "routing": {
+        "primaryFor": [
+          "Add regression tests",
+          "Cover edge cases"
+        ],
+        "supportingFor": [
+          "testing",
+          "vitest",
+          "regression"
+        ]
+      },
+      "runtime": {
+        "maxContextFiles": 8,
+        "requiresProjectFiles": true,
+        "outputContract": [
+          "test cases",
+          "fixtures",
+          "coverage notes",
+          "assumptions",
+          "validation checklist"
+        ],
+        "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "supports": {
+        "targets": [
+          "generic",
+          "claude",
+          "codex",
+          "cursor"
+        ]
+      }
     },
     {
       "id": "user-story-mapper",
@@ -817,7 +1832,7 @@
         "cursor"
       ],
       "difficulty": "intermediate",
-      "version": "0.1.2",
+      "version": "0.2.0",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -833,7 +1848,51 @@
       "use_cases": [
         "Plan MVP scope",
         "Prepare implementation tickets"
-      ]
+      ],
+      "capabilities": [
+        "product",
+        "stories",
+        "acceptance",
+        "planning"
+      ],
+      "triggers": [
+        "User Story Mapper",
+        "Break requirements into user stories, flows, and acceptance criteria.",
+        "Plan MVP scope",
+        "Prepare implementation tickets"
+      ],
+      "conflicts": [],
+      "routing": {
+        "primaryFor": [
+          "Plan MVP scope",
+          "Prepare implementation tickets"
+        ],
+        "supportingFor": [
+          "stories",
+          "acceptance",
+          "planning"
+        ]
+      },
+      "runtime": {
+        "maxContextFiles": 8,
+        "requiresProjectFiles": true,
+        "outputContract": [
+          "user stories",
+          "journey map",
+          "acceptance criteria",
+          "assumptions",
+          "validation checklist"
+        ],
+        "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "supports": {
+        "targets": [
+          "generic",
+          "claude",
+          "codex",
+          "cursor"
+        ]
+      }
     },
     {
       "id": "youtube-title-thumbnail-ideas",
@@ -853,7 +1912,7 @@
         "cursor"
       ],
       "difficulty": "beginner",
-      "version": "0.1.2",
+      "version": "0.2.0",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -869,7 +1928,51 @@
       "use_cases": [
         "Package a tutorial video",
         "Improve click-through rate"
-      ]
+      ],
+      "capabilities": [
+        "content",
+        "youtube",
+        "thumbnail",
+        "hook"
+      ],
+      "triggers": [
+        "YouTube Title Thumbnail Ideas",
+        "Generate YouTube titles, thumbnail text, and opening hooks.",
+        "Package a tutorial video",
+        "Improve click-through rate"
+      ],
+      "conflicts": [],
+      "routing": {
+        "primaryFor": [
+          "Package a tutorial video",
+          "Improve click-through rate"
+        ],
+        "supportingFor": [
+          "youtube",
+          "thumbnail",
+          "hook"
+        ]
+      },
+      "runtime": {
+        "maxContextFiles": 8,
+        "requiresProjectFiles": true,
+        "outputContract": [
+          "title ideas",
+          "thumbnail text",
+          "hooks",
+          "assumptions",
+          "validation checklist"
+        ],
+        "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "supports": {
+        "targets": [
+          "generic",
+          "claude",
+          "codex",
+          "cursor"
+        ]
+      }
     }
   ],
   "packs": [

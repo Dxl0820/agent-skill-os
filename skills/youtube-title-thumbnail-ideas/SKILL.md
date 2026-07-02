@@ -14,7 +14,7 @@ targets:
   - codex
   - cursor
 difficulty: beginner
-version: 0.1.2
+version: 0.2.0
 author: Agent Skill OS
 license: MIT
 inputs:
@@ -28,6 +28,34 @@ outputs:
 use_cases:
   - Package a tutorial video
   - Improve click-through rate
+capabilities:
+  - "content"
+  - "youtube"
+  - "thumbnail"
+  - "hook"
+triggers:
+  - "YouTube Title Thumbnail Ideas"
+  - "Generate YouTube titles, thumbnail text, and opening hooks."
+  - "Package a tutorial video"
+  - "Improve click-through rate"
+routing:
+  primaryFor:
+    - "Package a tutorial video"
+    - "Improve click-through rate"
+  supportingFor:
+    - "youtube"
+    - "thumbnail"
+    - "hook"
+runtime:
+  maxContextFiles: 8
+  requiresProjectFiles: true
+  outputContract:
+    - "title ideas"
+    - "thumbnail text"
+    - "hooks"
+    - "assumptions"
+    - "validation checklist"
+  failureMode: "Ask for missing required context before generating output. Do not invent unsupported project details."
 ---
 
 # YouTube Title Thumbnail Ideas
@@ -64,8 +92,37 @@ Return concise Markdown with clear headings, bullet points where helpful, and co
 
 A strong result is specific, grounded in the supplied context, easy to verify, and does not invent unsupported product or technical details.
 
-## Example Prompt
+## Runtime Contract
 
+### Required Inputs
+
+- video idea
+- audience
+- angle
+
+### Execution Steps
+
+1. Inspect the available context and identify missing high-risk inputs.
+2. Select the smallest output structure that satisfies the user goal.
+3. Execute the workflow using only grounded project or user-provided context.
+4. Check the result against the quality bar.
+5. Return the final artifact with assumptions and validation notes.
+
+### Output Contract
+
+Return:
+
+- title ideas
+- thumbnail text
+- hooks
+- assumptions
+- validation checklist
+
+### Failure Mode
+
+If required context is missing, ask for it before generating. Do not invent unsupported project details.
+
+## Example Prompt
 Use youtube-title-thumbnail-ideas for a new open-source project and produce a practical first draft.
 
 ## Example Output

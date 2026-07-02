@@ -1,0 +1,27 @@
+{
+  "version": "0.2.0",
+  "target": "codex",
+  "generatedAt": "2026-07-02T00:00:00.000Z",
+  "skills": [
+    {
+      "id": "code-reviewer",
+      "name": "Code Reviewer",
+      "summary": "Review code for bugs, risks, edge cases, and missing tests.",
+      "category": "coding",
+      "tags": ["review", "quality", "testing"],
+      "path": ".codex/skills/code-reviewer/SKILL.md",
+      "capabilities": ["code_review", "risk_analysis", "test_gap_detection"],
+      "triggers": ["review this code", "check this PR", "find bugs"],
+      "routing": {
+        "primaryFor": ["Review a pull request"],
+        "supportingFor": ["review", "quality", "testing"]
+      },
+      "runtime": {
+        "maxContextFiles": 8,
+        "requiresProjectFiles": true,
+        "outputContract": ["findings", "risk summary", "test suggestions", "assumptions", "validation checklist"],
+        "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      }
+    }
+  ]
+}

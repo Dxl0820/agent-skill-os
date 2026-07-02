@@ -2,6 +2,8 @@
 
 Install battle-tested skills into your AI coding agent in 30 seconds.
 
+Install many. Load few.
+
 [![npm version](https://img.shields.io/npm/v/agent-skill-os?color=2563eb)](https://www.npmjs.com/package/agent-skill-os)
 [![CI](https://github.com/Dxl0820/agent-skill-os/actions/workflows/ci.yml/badge.svg)](https://github.com/Dxl0820/agent-skill-os/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-059669.svg)](LICENSE)
@@ -41,6 +43,8 @@ aso install-pack developer-productivity --target codex --dir .
 
 Agent Skill OS turns reusable prompts and workflows into installable Markdown skills with typed metadata, validation, packs, and target adapters.
 
+Agent Skill OS is built around a runtime principle: install as many skills as a project needs, but ask the agent to load only the few skills relevant to the current task.
+
 ## Quick Start
 
 ### Use the CLI
@@ -50,6 +54,8 @@ Install Agent Skill OS and add a reusable skill to a Codex project:
 ~~~bash
 pnpm add -g agent-skill-os
 aso install readme-writer --target codex --dir ./demo
+aso use readme-writer --target codex
+aso recommend "review this pull request"
 ~~~
 
 ### Run this repository locally
@@ -83,6 +89,17 @@ demo/
         SKILL.md
 ```
 
+Runtime files are generated alongside the installed skill:
+
+```txt
+demo/
+  .agent-skill-os/
+    manifest.json
+    router.json
+    skill-index.json
+    usage.md
+```
+
 ## Install a Skill
 
 ~~~bash
@@ -99,9 +116,9 @@ pnpm aso install-pack developer-productivity --target generic --dir ./tmp/demo-p
 ## Works With
 
 - generic: writes to `agent-skills/<skill-id>/SKILL.md`
-- claude: writes to `.claude/skills/<skill-id>/SKILL.md`
+- claude: writes to `.claude/skills/<skill-id>/SKILL.md` and `.claude/CLAUDE.md`
 - codex: writes to `.codex/skills/<skill-id>/SKILL.md` and updates `.codex/AGENTS.md`
-- cursor: writes `.cursor/rules/<skill-id>.mdc`
+- cursor: writes `.cursor/rules/<skill-id>.mdc` and `.cursor/rules/agent-skill-os.mdc`
 
 ## Skills
 
@@ -129,9 +146,22 @@ pnpm aso search readme
 pnpm aso show readme-writer
 pnpm aso install readme-writer --target generic --dir ./tmp/demo
 pnpm aso install-pack developer-productivity --target generic --dir ./tmp/demo-pack
+pnpm aso use readme-writer --target codex
+pnpm aso use-pack developer-productivity --target codex
+pnpm aso recommend "write a README for this repo"
 pnpm aso validate
 pnpm aso doctor --target generic --dir ./tmp/demo
 ~~~
+
+## Runtime
+
+Agent Skill OS v0.2 adds the runtime layer that helps an agent decide which installed skill to use.
+
+- Registry: skill metadata includes capabilities, triggers, routing, and runtime contracts.
+- Router: `.agent-skill-os/router.json` maps tasks to installed skills.
+- Loader: target files such as `.codex/AGENTS.md` tell the agent how to load only the selected skill.
+- Runtime Contract: each `SKILL.md` defines required inputs, execution steps, output contract, and failure mode.
+- Developer Interface: `aso use` prints loading instructions, and `aso recommend` maps a task to recommended skills.
 
 ## Repository Structure
 

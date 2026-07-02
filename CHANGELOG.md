@@ -1,5 +1,31 @@
 # Changelog
 
+## Agent Skill OS v0.2.0
+
+This release adds the Agent Skill Runtime layer.
+
+### Highlights
+
+- Added runtime metadata to built-in skills: capabilities, triggers, routing, and runtime contracts.
+- Added `## Runtime Contract` to every built-in `SKILL.md`.
+- Added `.agent-skill-os/router.json`, `.agent-skill-os/skill-index.json`, and `.agent-skill-os/usage.md` generation during install.
+- Strengthened Codex `.codex/AGENTS.md` so agents read the router, select one primary skill, and avoid loading every skill by default.
+- Added `aso use` for target-specific skill loading instructions.
+- Added `aso use-pack` for pack-level runtime usage guidance.
+- Added `aso recommend` for deterministic task-to-skill recommendations.
+- Updated README and contribution docs around the principle: Install many. Load few.
+
+### Verified
+
+```bash
+pnpm validate
+pnpm test
+pnpm build
+pnpm aso recommend "review this pull request"
+pnpm aso use code-reviewer --target codex
+pnpm aso install-pack developer-productivity --target codex --dir ./tmp/runtime-demo
+```
+
 ## Agent Skill OS v0.1.2
 
 This release focuses on launch readiness, npm package correctness, README clarity, and demo quality.

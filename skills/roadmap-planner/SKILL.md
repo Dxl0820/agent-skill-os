@@ -14,7 +14,7 @@ targets:
   - codex
   - cursor
 difficulty: intermediate
-version: 0.1.2
+version: 0.2.0
 author: Agent Skill OS
 license: MIT
 inputs:
@@ -28,6 +28,34 @@ outputs:
 use_cases:
   - Plan a quarter
   - Organize backlog themes
+capabilities:
+  - "github"
+  - "roadmap"
+  - "planning"
+  - "issues"
+triggers:
+  - "Roadmap Planner"
+  - "Convert requirements and feedback into a practical product roadmap."
+  - "Plan a quarter"
+  - "Organize backlog themes"
+routing:
+  primaryFor:
+    - "Plan a quarter"
+    - "Organize backlog themes"
+  supportingFor:
+    - "roadmap"
+    - "planning"
+    - "issues"
+runtime:
+  maxContextFiles: 8
+  requiresProjectFiles: true
+  outputContract:
+    - "roadmap"
+    - "milestones"
+    - "priorities"
+    - "assumptions"
+    - "validation checklist"
+  failureMode: "Ask for missing required context before generating output. Do not invent unsupported project details."
 ---
 
 # Roadmap Planner
@@ -64,8 +92,37 @@ Return concise Markdown with clear headings, bullet points where helpful, and co
 
 A strong result is specific, grounded in the supplied context, easy to verify, and does not invent unsupported product or technical details.
 
-## Example Prompt
+## Runtime Contract
 
+### Required Inputs
+
+- goals
+- constraints
+- feature ideas
+
+### Execution Steps
+
+1. Inspect the available context and identify missing high-risk inputs.
+2. Select the smallest output structure that satisfies the user goal.
+3. Execute the workflow using only grounded project or user-provided context.
+4. Check the result against the quality bar.
+5. Return the final artifact with assumptions and validation notes.
+
+### Output Contract
+
+Return:
+
+- roadmap
+- milestones
+- priorities
+- assumptions
+- validation checklist
+
+### Failure Mode
+
+If required context is missing, ask for it before generating. Do not invent unsupported project details.
+
+## Example Prompt
 Use roadmap-planner for a new open-source project and produce a practical first draft.
 
 ## Example Output

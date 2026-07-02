@@ -14,7 +14,7 @@ targets:
   - codex
   - cursor
 difficulty: intermediate
-version: 0.1.2
+version: 0.2.0
 author: Agent Skill OS
 license: MIT
 inputs:
@@ -28,6 +28,41 @@ outputs:
 use_cases:
   - Review a pull request
   - Check a risky change
+capabilities:
+  - "code_review"
+  - "risk_analysis"
+  - "test_gap_detection"
+  - "coding"
+  - "review"
+  - "quality"
+  - "testing"
+triggers:
+  - "review this code"
+  - "check this PR"
+  - "find bugs"
+  - "pull request review"
+  - "Code Reviewer"
+  - "Review code for bugs, risks, edge cases, and missing tests."
+  - "Review a pull request"
+  - "Check a risky change"
+routing:
+  primaryFor:
+    - "Review a pull request"
+    - "Check a risky change"
+  supportingFor:
+    - "review"
+    - "quality"
+    - "testing"
+runtime:
+  maxContextFiles: 8
+  requiresProjectFiles: true
+  outputContract:
+    - "findings"
+    - "risk summary"
+    - "test suggestions"
+    - "assumptions"
+    - "validation checklist"
+  failureMode: "Ask for missing required context before generating output. Do not invent unsupported project details."
 ---
 
 # Code Reviewer
@@ -64,8 +99,37 @@ Return concise Markdown with clear headings, bullet points where helpful, and co
 
 A strong result is specific, grounded in the supplied context, easy to verify, and does not invent unsupported product or technical details.
 
-## Example Prompt
+## Runtime Contract
 
+### Required Inputs
+
+- diff
+- requirements
+- test output
+
+### Execution Steps
+
+1. Inspect the available context and identify missing high-risk inputs.
+2. Select the smallest output structure that satisfies the user goal.
+3. Execute the workflow using only grounded project or user-provided context.
+4. Check the result against the quality bar.
+5. Return the final artifact with assumptions and validation notes.
+
+### Output Contract
+
+Return:
+
+- findings
+- risk summary
+- test suggestions
+- assumptions
+- validation checklist
+
+### Failure Mode
+
+If required context is missing, ask for it before generating. Do not invent unsupported project details.
+
+## Example Prompt
 Use code-reviewer for a new open-source project and produce a practical first draft.
 
 ## Example Output

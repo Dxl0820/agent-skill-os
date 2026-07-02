@@ -17,6 +17,10 @@ describe("cli smoke", () => {
     const cli = path.join(cwd, "packages/cli/src/index.ts");
     await expect(execa(tsxBin, [cli, "list"], { cwd })).resolves.toMatchObject({ exitCode: 0 });
     await expect(execa(tsxBin, [cli, "search", "readme"], { cwd })).resolves.toMatchObject({ exitCode: 0 });
+    const useResult = await execa(tsxBin, [cli, "use", "readme-writer", "--target", "codex"], { cwd });
+    expect(useResult.stdout).toContain(".codex/skills/readme-writer/SKILL.md");
+    const recommendResult = await execa(tsxBin, [cli, "recommend", "review this pull request"], { cwd });
+    expect(recommendResult.stdout).toContain("code-reviewer");
     await expect(execa(tsxBin, [cli, "validate"], { cwd })).resolves.toMatchObject({ exitCode: 0 });
   }, 30000);
 

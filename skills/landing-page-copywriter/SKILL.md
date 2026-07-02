@@ -14,7 +14,7 @@ targets:
   - codex
   - cursor
 difficulty: beginner
-version: 0.1.2
+version: 0.2.0
 author: Agent Skill OS
 license: MIT
 inputs:
@@ -29,6 +29,34 @@ outputs:
 use_cases:
   - Launch a new project
   - Improve first-screen messaging
+capabilities:
+  - "product"
+  - "landing"
+  - "copy"
+  - "launch"
+triggers:
+  - "Landing Page Copywriter"
+  - "Write landing page hero copy, sections, CTAs, and conversion messaging."
+  - "Launch a new project"
+  - "Improve first-screen messaging"
+routing:
+  primaryFor:
+    - "Launch a new project"
+    - "Improve first-screen messaging"
+  supportingFor:
+    - "landing"
+    - "copy"
+    - "launch"
+runtime:
+  maxContextFiles: 8
+  requiresProjectFiles: true
+  outputContract:
+    - "hero copy"
+    - "section copy"
+    - "CTA set"
+    - "assumptions"
+    - "validation checklist"
+  failureMode: "Ask for missing required context before generating output. Do not invent unsupported project details."
 ---
 
 # Landing Page Copywriter
@@ -66,8 +94,38 @@ Return concise Markdown with clear headings, bullet points where helpful, and co
 
 A strong result is specific, grounded in the supplied context, easy to verify, and does not invent unsupported product or technical details.
 
-## Example Prompt
+## Runtime Contract
 
+### Required Inputs
+
+- product
+- audience
+- proof
+- CTA
+
+### Execution Steps
+
+1. Inspect the available context and identify missing high-risk inputs.
+2. Select the smallest output structure that satisfies the user goal.
+3. Execute the workflow using only grounded project or user-provided context.
+4. Check the result against the quality bar.
+5. Return the final artifact with assumptions and validation notes.
+
+### Output Contract
+
+Return:
+
+- hero copy
+- section copy
+- CTA set
+- assumptions
+- validation checklist
+
+### Failure Mode
+
+If required context is missing, ask for it before generating. Do not invent unsupported project details.
+
+## Example Prompt
 Use landing-page-copywriter for a new open-source project and produce a practical first draft.
 
 ## Example Output

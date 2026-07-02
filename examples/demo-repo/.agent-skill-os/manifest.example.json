@@ -1,46 +1,46 @@
 {
-  "version": "0.1.0",
+  "version": "0.2.0",
   "target": "codex",
   "installedAt": "2026-06-30T00:00:00.000Z",
   "skills": [
     {
       "id": "code-reviewer",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "target": "codex",
       "path": ".codex/skills/code-reviewer/SKILL.md",
       "installedAt": "2026-06-30T00:00:00.000Z"
     },
     {
       "id": "test-writer",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "target": "codex",
       "path": ".codex/skills/test-writer/SKILL.md",
       "installedAt": "2026-06-30T00:00:00.000Z"
     },
     {
       "id": "bug-reproducer",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "target": "codex",
       "path": ".codex/skills/bug-reproducer/SKILL.md",
       "installedAt": "2026-06-30T00:00:00.000Z"
     },
     {
       "id": "refactor-planner",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "target": "codex",
       "path": ".codex/skills/refactor-planner/SKILL.md",
       "installedAt": "2026-06-30T00:00:00.000Z"
     },
     {
       "id": "readme-writer",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "target": "codex",
       "path": ".codex/skills/readme-writer/SKILL.md",
       "installedAt": "2026-06-30T00:00:00.000Z"
     },
     {
       "id": "pr-summarizer",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "target": "codex",
       "path": ".codex/skills/pr-summarizer/SKILL.md",
       "installedAt": "2026-06-30T00:00:00.000Z"

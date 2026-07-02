@@ -36,7 +36,12 @@ export function searchSkills(skills: Skill[], query: string): Skill[] {
       skill.metadata.description,
       skill.metadata.category,
       skill.metadata.difficulty,
-      ...skill.metadata.tags
+      ...skill.metadata.tags,
+      ...skill.metadata.capabilities,
+      ...skill.metadata.triggers,
+      ...skill.metadata.routing.primaryFor,
+      ...skill.metadata.routing.supportingFor,
+      ...skill.metadata.runtime.outputContract
     ].join(" ").toLowerCase();
     return haystack.includes(normalized);
   });

@@ -18,6 +18,9 @@ pnpm aso install-pack developer-productivity --target codex --dir .
 examples/demo-repo/
   .agent-skill-os/
     manifest.example.json
+    router.json
+    skill-index.json
+    usage.md
   .codex/
     AGENTS.md
     skills/
@@ -37,6 +40,6 @@ examples/demo-repo/
 
 ## How an Agent Uses It
 
-The generated `.codex/AGENTS.md` points the coding agent to installed skills. When a task starts, the agent can load the relevant `SKILL.md` before editing code.
+The generated `.codex/AGENTS.md` points the coding agent to `.agent-skill-os/router.json`. When a task starts, the agent selects one primary skill, loads only that skill's `SKILL.md`, and optionally loads at most two supporting skills.
 
-This keeps repo-specific agent behavior visible, versioned, and easy to review.
+Install many. Load few. This keeps repo-specific agent behavior visible, versioned, and easy to review without loading every skill by default.

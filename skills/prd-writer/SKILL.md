@@ -14,7 +14,7 @@ targets:
   - codex
   - cursor
 difficulty: intermediate
-version: 0.1.2
+version: 0.2.0
 author: Agent Skill OS
 license: MIT
 inputs:
@@ -29,6 +29,38 @@ outputs:
 use_cases:
   - Start a new product
   - Align stakeholders
+capabilities:
+  - "prd"
+  - "product_requirements"
+  - "planning"
+  - "product"
+  - "requirements"
+triggers:
+  - "write PRD"
+  - "product requirements"
+  - "turn idea into requirements"
+  - "PRD Writer"
+  - "Turn a product idea into a crisp product requirements document."
+  - "Start a new product"
+  - "Align stakeholders"
+routing:
+  primaryFor:
+    - "Start a new product"
+    - "Align stakeholders"
+  supportingFor:
+    - "prd"
+    - "requirements"
+    - "product"
+runtime:
+  maxContextFiles: 8
+  requiresProjectFiles: true
+  outputContract:
+    - "PRD"
+    - "acceptance criteria"
+    - "non-goals"
+    - "assumptions"
+    - "validation checklist"
+  failureMode: "Ask for missing required context before generating output. Do not invent unsupported project details."
 ---
 
 # PRD Writer
@@ -66,8 +98,38 @@ Return concise Markdown with clear headings, bullet points where helpful, and co
 
 A strong result is specific, grounded in the supplied context, easy to verify, and does not invent unsupported product or technical details.
 
-## Example Prompt
+## Runtime Contract
 
+### Required Inputs
+
+- idea
+- users
+- goals
+- constraints
+
+### Execution Steps
+
+1. Inspect the available context and identify missing high-risk inputs.
+2. Select the smallest output structure that satisfies the user goal.
+3. Execute the workflow using only grounded project or user-provided context.
+4. Check the result against the quality bar.
+5. Return the final artifact with assumptions and validation notes.
+
+### Output Contract
+
+Return:
+
+- PRD
+- acceptance criteria
+- non-goals
+- assumptions
+- validation checklist
+
+### Failure Mode
+
+If required context is missing, ask for it before generating. Do not invent unsupported project details.
+
+## Example Prompt
 Use prd-writer for a new open-source project and produce a practical first draft.
 
 ## Example Output

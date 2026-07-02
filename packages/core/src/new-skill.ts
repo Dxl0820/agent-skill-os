@@ -23,7 +23,7 @@ tags:
 targets:
   - ${target}
 difficulty: beginner
-version: 0.1.2
+version: 0.2.0
 author: Agent Skill OS contributor
 license: MIT
 inputs:
@@ -34,6 +34,25 @@ outputs:
   - validation notes
 use_cases:
   - Use ${name} in an AI coding workflow
+capabilities:
+  - ${category}
+  - custom-workflow
+triggers:
+  - use ${id}
+  - ${name.toLowerCase()} task
+routing:
+  primaryFor:
+    - Use ${name} in an AI coding workflow
+  supportingFor:
+    - custom workflow support
+runtime:
+  maxContextFiles: 8
+  requiresProjectFiles: true
+  outputContract:
+    - final artifact
+    - assumptions
+    - validation checklist
+  failureMode: Ask for missing required context before generating output.
 ---
 
 # ${name}
@@ -70,6 +89,34 @@ Return Markdown with clear headings, concise bullets, and commands or examples i
 ## Quality Bar
 
 A good result is specific, grounded in the supplied context, easy to verify, and honest about unknowns.
+
+## Runtime Contract
+
+### Required Inputs
+
+- user goal
+- relevant project context
+- constraints
+
+### Execution Steps
+
+1. Inspect the available context.
+2. Select the smallest useful output structure.
+3. Draft the result.
+4. Check it against the quality bar.
+5. Return the final artifact with assumptions and validation notes.
+
+### Output Contract
+
+Return:
+
+- final artifact
+- assumptions
+- validation checklist
+
+### Failure Mode
+
+If required context is missing, ask for it before generating. Do not invent unsupported project details.
 
 ## Example Prompt
 
