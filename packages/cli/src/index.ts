@@ -18,6 +18,7 @@ import {
   loadConfiguredRemoteRegistries,
   loadPacks,
   loadRegistryConfig,
+  loadRemotePackFromRegistry,
   loadRemoteSkillFromRegistry,
   loadRemoteSkillUrl,
   loadSkills,
@@ -34,7 +35,7 @@ import {
 } from "@agent-skill-os/core";
 
 const program = new Command();
-const cliVersion = "0.4.0";
+const cliVersion = "0.5.0";
 const cliPackageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
 program
@@ -189,6 +190,20 @@ program
   .option("--dry-run", "show files without writing")
   .action(async (packId, options) => {
     const target = parseTarget(options.target);
+    if (isRemoteSpecifier(packId)) {
+      const [registryName, remotePackId] = parseRemoteSpecifier(packId);
+      const remotePack = await loadRemotePackFromRegistry(registryName, remotePackId);
+      console.log(pc.yellow("! Installing remote skill pack instructions"));
+      console.log("Registry: " + registryName);
+      console.log("Pack: " + remotePack.pack.id);
+      console.log("Review untrusted skills before use. Agent Skill OS treats remote skills as text instructions and does not execute remote code.");
+      console.log("");
+      const results = await installPack({ skills: remotePack.skills, pack: remotePack.pack, target, dir: options.dir, force: options.force, dryRun: options.dryRun });
+      for (const result of results) {
+        printInstallResult(result);
+      }
+      return;
+    }
     const [skills, packs] = await Promise.all([loadCliSkills(), loadCliPacks()]);
     const pack = packs.find((candidate) => candidate.id === packId);
     if (!pack) {

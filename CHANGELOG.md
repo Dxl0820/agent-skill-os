@@ -1,5 +1,23 @@
 # Changelog
 
+## Agent Skill OS v0.5.0
+
+This release adds team/private registry pack support.
+
+### Highlights
+
+- Added remote pack loading from configured registries.
+- Added `aso install-pack <registry>/<pack-id>` for team skill packs.
+- Added private registry documentation.
+- Preserved the runtime rule that packs install together but skills execute selectively.
+
+### Verified
+
+```bash
+pnpm --filter @agent-skill-os/core build
+pnpm --filter agent-skill-os test
+```
+
 ## Agent Skill OS v0.4.0
 
 This release adds the Agent Skill OS MCP server.

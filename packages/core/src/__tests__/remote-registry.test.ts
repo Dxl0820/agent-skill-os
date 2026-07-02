@@ -6,6 +6,7 @@ import {
   addRegistry,
   loadConfiguredRemoteRegistries,
   loadRegistryConfig,
+  loadRemotePackFromRegistry,
   loadRemoteSkillFromRegistry,
   loadRemoteSkillUrl,
   refreshRemoteRegistries,
@@ -51,9 +52,16 @@ describe("remote registry", () => {
                   type: "file",
                   url: pathToFileURL(skillPath).toString()
                 }
-              }
+            }
             ],
-            packs: []
+            packs: [
+              {
+                id: "frontend-team",
+                name: "Frontend Team",
+                summary: "Frontend team skill pack",
+                skills: ["readme-writer"]
+              }
+            ]
           },
           null,
           2
@@ -75,6 +83,10 @@ describe("remote registry", () => {
 
     const remote = await loadRemoteSkillFromRegistry("official", "readme-writer", { configPath, homeDir: tmpDir });
     expect(remote.skill.metadata.id).toBe("readme-writer");
+
+    const pack = await loadRemotePackFromRegistry("official", "frontend-team", { configPath, homeDir: tmpDir });
+    expect(pack.pack.id).toBe("frontend-team");
+    expect(pack.skills[0].metadata.id).toBe("readme-writer");
 
     const direct = await loadRemoteSkillUrl(toSourceUrl(skillPath));
     expect(direct.metadata.id).toBe("readme-writer");

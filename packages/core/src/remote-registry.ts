@@ -10,7 +10,8 @@ import {
   RemoteRegistry,
   RemoteRegistrySchema,
   RemoteRegistrySkill,
-  Skill
+  Skill,
+  SkillPack
 } from "./schema.js";
 
 export const remoteRegistryVersion = "0.3.0";
@@ -128,12 +129,7 @@ export function searchRemoteRegistrySkills(registries: Array<{ entry: RegistryCo
 }
 
 export async function loadRemoteSkillFromRegistry(registryName: string, skillId: string, options: RegistryConfigOptions = {}): Promise<{ registry: RegistryConfigEntry; skillEntry: RemoteRegistrySkill; skill: Skill }> {
-  const config = await loadRegistryConfig(options);
-  const registryEntry = config.registries.find((entry) => entry.name === registryName);
-  if (!registryEntry) {
-    throw new Error("Remote registry not configured: " + registryName);
-  }
-  const remote = (await loadCachedRemoteRegistry(registryEntry, options.homeDir)) || (await loadRemoteRegistry(registryEntry.url));
+  const { registryEntry, remote } = await loadNamedRemoteRegistry(registryName, options);
   const skillEntry = remote.skills.find((candidate) => candidate.id === skillId);
   if (!skillEntry) {
     throw new Error("Remote skill not found: " + registryName + "/" + skillId);
@@ -143,6 +139,23 @@ export async function loadRemoteSkillFromRegistry(registryName: string, skillId:
     skillEntry,
     skill: await loadRemoteSkill(skillEntry)
   };
+}
+
+export async function loadRemotePackFromRegistry(registryName: string, packId: string, options: RegistryConfigOptions = {}): Promise<{ registry: RegistryConfigEntry; pack: SkillPack; skills: Skill[] }> {
+  const { registryEntry, remote } = await loadNamedRemoteRegistry(registryName, options);
+  const pack = remote.packs.find((candidate) => candidate.id === packId);
+  if (!pack) {
+    throw new Error("Remote pack not found: " + registryName + "/" + packId);
+  }
+  const skills: Skill[] = [];
+  for (const skillId of pack.skills) {
+    const skillEntry = remote.skills.find((candidate) => candidate.id === skillId);
+    if (!skillEntry) {
+      throw new Error("Remote pack " + registryName + "/" + packId + " references missing skill: " + skillId);
+    }
+    skills.push(await loadRemoteSkill(skillEntry));
+  }
+  return { registry: registryEntry, pack, skills };
 }
 
 export async function loadRemoteSkill(skillEntry: RemoteRegistrySkill): Promise<Skill> {
@@ -184,6 +197,18 @@ async function loadCachedRemoteRegistry(entry: RegistryConfigEntry, homeDir = de
   }
   const raw = await fs.readFile(cachePath, "utf8");
   return RemoteRegistrySchema.parse(parseJson(raw));
+}
+
+async function loadNamedRemoteRegistry(registryName: string, options: RegistryConfigOptions): Promise<{ registryEntry: RegistryConfigEntry; remote: RemoteRegistry }> {
+  const config = await loadRegistryConfig(options);
+  const registryEntry = config.registries.find((entry) => entry.name === registryName);
+  if (!registryEntry) {
+    throw new Error("Remote registry not configured: " + registryName);
+  }
+  return {
+    registryEntry,
+    remote: (await loadCachedRemoteRegistry(registryEntry, options.homeDir)) || (await loadRemoteRegistry(registryEntry.url))
+  };
 }
 
 function guessSkillIdFromUrl(url: string): string {

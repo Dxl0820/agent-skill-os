@@ -198,6 +198,19 @@ The MCP server follows the same policy: do not load all skills by default; recom
 
 See [docs/mcp.md](docs/mcp.md).
 
+## Team Registries
+
+Agent Skill OS v0.5 supports team/private registry packs:
+
+~~~bash
+aso registry add company https://github.com/company/private-agent-skills/raw/main/registry.json
+aso registry refresh
+aso install company/security-reviewer --target codex --dir .
+aso install-pack company/frontend-team --target codex --dir .
+~~~
+
+See [docs/private-registry.md](docs/private-registry.md).
+
 ## Repository Structure
 
 ~~~txt
@@ -253,6 +266,7 @@ pnpm build
 ### v0.5+
 
 - Team/private registries
+- Remote team pack install
 - Quality and trust checks
 - Skill dependencies and versioning
 - Web registry discovery
@@ -266,7 +280,7 @@ pnpm build
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md), [docs/contributing-skill.md](docs/contributing-skill.md), and [docs/registry.md](docs/registry.md).
+See [CONTRIBUTING.md](CONTRIBUTING.md), [docs/contributing-skill.md](docs/contributing-skill.md), [docs/registry.md](docs/registry.md), [docs/mcp.md](docs/mcp.md), and [docs/private-registry.md](docs/private-registry.md).
 
 ## License
 

@@ -58,7 +58,14 @@ describe("cli smoke", () => {
             }
           }
         ],
-        packs: []
+        packs: [
+          {
+            id: "frontend-team",
+            name: "Frontend Team",
+            summary: "Frontend team skill pack",
+            skills: ["readme-writer"]
+          }
+        ]
       },
       { spaces: 2 }
     );
@@ -73,5 +80,7 @@ describe("cli smoke", () => {
     expect(await fs.pathExists(path.join(tmpCwd, "install-url-demo", ".agent-skill-os", "router.json"))).toBe(true);
     await expect(execa(tsxBin, [cli, "install", "official/readme-writer", "--target", "codex", "--dir", path.join(tmpCwd, "registry-demo")], { cwd, env })).resolves.toMatchObject({ exitCode: 0 });
     expect(await fs.pathExists(path.join(tmpCwd, "registry-demo", ".codex", "skills", "readme-writer", "SKILL.md"))).toBe(true);
+    await expect(execa(tsxBin, [cli, "install-pack", "official/frontend-team", "--target", "codex", "--dir", path.join(tmpCwd, "registry-pack-demo")], { cwd, env })).resolves.toMatchObject({ exitCode: 0 });
+    expect(await fs.pathExists(path.join(tmpCwd, "registry-pack-demo", ".agent-skill-os", "router.json"))).toBe(true);
   }, 45000);
 });
