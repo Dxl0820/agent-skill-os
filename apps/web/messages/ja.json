@@ -9,6 +9,7 @@
     "packs": "パック",
     "targets": "ターゲット",
     "useCases": "ユースケース",
+    "marketplace": "マーケットプレイス",
     "showcase": "ショーケース",
     "docs": "ドキュメント"
   },
@@ -19,6 +20,7 @@
     "packs": "パック",
     "targets": "ターゲット",
     "useCases": "ユースケース",
+    "marketplace": "マーケットプレイス",
     "docs": "ドキュメント"
   },
   "language": {
@@ -63,7 +65,22 @@
     "targets": "対応ターゲット",
     "tags": "タグ",
     "related": "関連スキル",
-    "originalLanguageNotice": "スキル本文は現在、元の言語で表示されています。"
+    "originalLanguageNotice": "スキル本文は現在、元の言語で表示されています。",
+    "trust": {
+      "source": "ソース",
+      "quality": "品質",
+      "license": "ライセンス",
+      "report": "安全でないスキルを報告",
+      "sourceLevels": {
+        "official": "公式",
+        "community": "コミュニティ",
+        "private": "プライベート"
+      },
+      "safety": {
+        "pass": "安全チェック合格",
+        "warn": "確認が必要"
+      }
+    }
   },
   "packsPage": {
     "eyebrow": "スキルパック",
@@ -186,6 +203,41 @@
       "open-source-launch": "PRD 草案、README 改善、ランディングコピー、ローンチ投稿、デモ動画計画。",
       "repo-maintenance": "Issue トリアージ、PR 要約、リリースノート、Changelog 草案、貢献ガイド更新。",
       "ai-video-creator": "ショート動画脚本、デモ構成、YouTube タイトル案、サムネイル文言、資料要約。"
+    }
+  },
+  "marketplacePage": {
+    "metadataTitle": "Agent Skill OS マーケットプレイス基盤",
+    "eyebrow": "マーケットプレイス基盤",
+    "title": "ソース、品質、ライセンス、報告シグナル付きでスキルを閲覧します。",
+    "description": "これは有料マーケットプレイスではありません。再利用可能な AI エージェントスキルを安全に見つけるための信頼基盤です。",
+    "unknown": "不明",
+    "grade": "グレード",
+    "safetyLabel": "安全性",
+    "license": "ライセンス",
+    "viewSkill": "スキルを見る",
+    "report": "報告",
+    "sourceLevels": {
+      "official": "公式",
+      "community": "コミュニティ",
+      "private": "プライベート"
+    },
+    "safety": {
+      "pass": "合格",
+      "warn": "確認"
+    },
+    "signals": {
+      "official": {
+        "title": "ソースレベル",
+        "body": "組み込みスキルは公式として表示されます。外部レジストリは今後ラベル付けできます。"
+      },
+      "quality": {
+        "title": "静的品質",
+        "body": "グレードは決定的な `aso quality` チェックを再利用します。"
+      },
+      "report": {
+        "title": "安全性レポート",
+        "body": "安全でない、または誤解を招くスキルは専用 Issue テンプレートから報告できます。"
+      }
     }
   },
   "showcase": {

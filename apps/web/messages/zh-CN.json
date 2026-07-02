@@ -9,6 +9,7 @@
     "packs": "技能包",
     "targets": "适配目标",
     "useCases": "用例",
+    "marketplace": "市场",
     "showcase": "场景",
     "docs": "文档"
   },
@@ -19,6 +20,7 @@
     "packs": "技能包",
     "targets": "适配目标",
     "useCases": "用例",
+    "marketplace": "市场",
     "docs": "文档"
   },
   "language": {
@@ -63,7 +65,22 @@
     "targets": "适配目标",
     "tags": "标签",
     "related": "相关技能",
-    "originalLanguageNotice": "技能正文暂时以原始语言显示。"
+    "originalLanguageNotice": "技能正文暂时以原始语言显示。",
+    "trust": {
+      "source": "来源",
+      "quality": "质量",
+      "license": "许可",
+      "report": "举报不安全技能",
+      "sourceLevels": {
+        "official": "官方",
+        "community": "社区",
+        "private": "私有"
+      },
+      "safety": {
+        "pass": "安全检查通过",
+        "warn": "需要复核"
+      }
+    }
   },
   "packsPage": {
     "eyebrow": "技能包",
@@ -186,6 +203,41 @@
       "open-source-launch": "PRD 草稿、README 改进、落地页文案、发布帖和 Demo 视频计划。",
       "repo-maintenance": "Issue 分诊、PR 摘要、发布说明、Changelog 草稿和贡献指南更新。",
       "ai-video-creator": "短视频脚本、Demo 大纲、YouTube 标题创意、封面文案和资料摘要。"
+    }
+  },
+  "marketplacePage": {
+    "metadataTitle": "Agent Skill OS 市场基础",
+    "eyebrow": "市场基础",
+    "title": "按来源、质量、许可和举报信号浏览技能。",
+    "description": "这不是付费市场，而是安全发现可复用 AI Agent 技能的信任基础。",
+    "unknown": "未知",
+    "grade": "等级",
+    "safetyLabel": "安全",
+    "license": "许可",
+    "viewSkill": "查看技能",
+    "report": "举报",
+    "sourceLevels": {
+      "official": "官方",
+      "community": "社区",
+      "private": "私有"
+    },
+    "safety": {
+      "pass": "通过",
+      "warn": "复核"
+    },
+    "signals": {
+      "official": {
+        "title": "来源级别",
+        "body": "内置技能标记为官方；外部 registry 后续可以标记为社区或私有。"
+      },
+      "quality": {
+        "title": "静态质量",
+        "body": "等级复用确定性的 `aso quality` 检查。"
+      },
+      "report": {
+        "title": "安全举报",
+        "body": "不安全或误导性的技能可以通过专用 issue 模板举报。"
+      }
     }
   },
   "showcase": {

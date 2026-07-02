@@ -1,6 +1,6 @@
 {
   "name": "agent-skill-os",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "type": "module",
   "description": "CLI installer for Agent Skill OS.",
   "main": "dist/index.js",

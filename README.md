@@ -256,6 +256,18 @@ Agent Skill OS v0.8 adds indexable discovery pages for browsing the registry by 
 
 These pages reuse the generated registry and localized skill metadata. Skill Markdown content remains in its original language.
 
+## Marketplace Foundation
+
+Agent Skill OS v0.9 adds trust signals without accounts, payments, ratings, or hosted submissions:
+
+- official/community/private source level
+- publisher and license
+- deterministic `aso quality` grade
+- unsafe skill reporting workflow
+- `/marketplace` discovery page
+
+See [docs/marketplace.md](docs/marketplace.md).
+
 ## Repository Structure
 
 ~~~txt
@@ -329,9 +341,16 @@ pnpm build
 - Target adapter pages
 - Use case workflow pages
 
-### v0.9+
+### v0.9
 
 - Marketplace foundation
+- Trust profiles
+- Unsafe skill reporting
+
+### v1.0
+
+- Stable platform documentation
+- Migration and release guarantees
 
 ## Growth Scenarios
 
@@ -341,7 +360,7 @@ pnpm build
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md), [docs/contributing-skill.md](docs/contributing-skill.md), [docs/registry.md](docs/registry.md), [docs/mcp.md](docs/mcp.md), [docs/private-registry.md](docs/private-registry.md), [docs/quality.md](docs/quality.md), and [docs/versioning.md](docs/versioning.md).
+See [CONTRIBUTING.md](CONTRIBUTING.md), [docs/contributing-skill.md](docs/contributing-skill.md), [docs/registry.md](docs/registry.md), [docs/mcp.md](docs/mcp.md), [docs/private-registry.md](docs/private-registry.md), [docs/quality.md](docs/quality.md), [docs/versioning.md](docs/versioning.md), and [docs/marketplace.md](docs/marketplace.md).
 
 ## License
 

@@ -1,5 +1,28 @@
 # Changelog
 
+## Agent Skill OS v0.9.0
+
+This release adds marketplace trust foundations without adding accounts, payments, ratings, or hosted submissions.
+
+### Highlights
+
+- Added core trust profiles with source level, publisher, license, quality report, and unsafe-skill report URL.
+- Added `/marketplace` Web page with source, quality, license, and reporting signals.
+- Added trust summary to skill detail pages.
+- Added unsafe skill GitHub issue template.
+- Added `docs/marketplace.md`.
+- Bumped package and CLI versions to `0.9.0`.
+
+### Verified
+
+```bash
+pnpm validate
+pnpm test
+pnpm build
+pnpm pack --dry-run
+pnpm publish --dry-run --no-git-checks
+```
+
 ## Agent Skill OS v0.8.0
 
 This release adds Web registry discovery for target adapters and practical workflows.

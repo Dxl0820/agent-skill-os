@@ -7,6 +7,7 @@ import { SkillCard } from "../../../../components/SkillCard";
 import { routing, type Locale } from "../../../../i18n/routing";
 import { findSkill, relatedSkills, skills } from "../../../../lib/registry";
 import { localizeSkill, localizeSkills } from "../../../../lib/skill-i18n";
+import { findTrustProfile } from "../../../../lib/trust";
 
 export function generateStaticParams() {
   return routing.locales.flatMap((locale) => skills.map((skill) => ({ locale, id: skill.id })));
@@ -21,6 +22,7 @@ export default async function SkillDetailPage({ params }: { params: Promise<{ lo
   const activeLocale = locale as Locale;
   const localizedSkill = localizeSkill(skill, activeLocale);
   const localizedRelated = localizeSkills(relatedSkills(skill), activeLocale);
+  const trust = await findTrustProfile(skill.id);
 
   const filePath = path.join(process.cwd(), "..", "..", "skills", skill.id, "SKILL.md");
   const raw = fs.readFileSync(filePath, "utf8");
@@ -39,6 +41,14 @@ export default async function SkillDetailPage({ params }: { params: Promise<{ lo
         <div><strong>{t("targets")}</strong><span>{skill.targets.join(", ")}</span></div>
         <div><strong>{t("tags")}</strong><span>{localizedSkill.tagLabels.join(", ")}</span></div>
       </section>
+      {trust ? (
+        <section className="trust-summary">
+          <div><strong>{t("trust.source")}</strong><span>{t(`trust.sourceLevels.${trust.sourceLevel}`)}</span></div>
+          <div><strong>{t("trust.quality")}</strong><span>{trust.quality.grade} / {t(`trust.safety.${trust.quality.safety}`)}</span></div>
+          <div><strong>{t("trust.license")}</strong><span>{trust.license}</span></div>
+          <a href={trust.reportUrl}>{t("trust.report")}</a>
+        </section>
+      ) : null}
       <p className="language-note">{t("originalLanguageNotice")}</p>
       <MarkdownBlock body={body} />
       <section className="section">

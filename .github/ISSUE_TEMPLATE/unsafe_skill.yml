@@ -1,0 +1,49 @@
+name: Unsafe skill report
+description: Report a skill that may be unsafe, misleading, or harmful
+title: "[Skill Safety]: "
+labels: ["security", "skill-safety"]
+body:
+  - type: input
+    id: skill
+    attributes:
+      label: Skill id or registry URL
+      placeholder: readme-writer or https://example.com/skills/custom-skill/SKILL.md
+    validations:
+      required: true
+  - type: dropdown
+    id: source
+    attributes:
+      label: Source
+      options:
+        - Agent Skill OS official registry
+        - Community registry
+        - Private registry
+        - Direct URL
+        - Unknown
+    validations:
+      required: true
+  - type: textarea
+    id: concern
+    attributes:
+      label: Safety concern
+      description: Describe the unsafe instruction, misleading claim, data access concern, or harmful workflow.
+      placeholder: The skill asks the agent to access secrets without approval.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Paste the relevant excerpt or link. Remove secrets and private code.
+    validations:
+      required: false
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      value: |
+        - agent-skill-os version:
+        - Target adapter:
+        - Install command:
+    validations:
+      required: false

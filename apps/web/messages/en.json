@@ -9,6 +9,7 @@
     "packs": "Packs",
     "targets": "Targets",
     "useCases": "Use cases",
+    "marketplace": "Marketplace",
     "showcase": "Showcase",
     "docs": "Docs"
   },
@@ -19,6 +20,7 @@
     "packs": "Packs",
     "targets": "Targets",
     "useCases": "Use cases",
+    "marketplace": "Marketplace",
     "docs": "Docs"
   },
   "language": {
@@ -63,7 +65,22 @@
     "targets": "Targets",
     "tags": "Tags",
     "related": "Related Skills",
-    "originalLanguageNotice": "Skill content is currently shown in its original language."
+    "originalLanguageNotice": "Skill content is currently shown in its original language.",
+    "trust": {
+      "source": "Source",
+      "quality": "Quality",
+      "license": "License",
+      "report": "Report unsafe skill",
+      "sourceLevels": {
+        "official": "Official",
+        "community": "Community",
+        "private": "Private"
+      },
+      "safety": {
+        "pass": "Safety pass",
+        "warn": "Needs review"
+      }
+    }
   },
   "packsPage": {
     "eyebrow": "Skill Packs",
@@ -186,6 +203,41 @@
       "open-source-launch": "PRD drafts, README improvements, landing copy, launch posts, and demo video plans.",
       "repo-maintenance": "Issue triage, PR summaries, release notes, changelog drafts, and contribution guide updates.",
       "ai-video-creator": "Short video scripts, demo outlines, YouTube title ideas, thumbnail copy, and source summaries."
+    }
+  },
+  "marketplacePage": {
+    "metadataTitle": "Agent Skill OS Marketplace Foundation",
+    "eyebrow": "Marketplace foundation",
+    "title": "Browse skills with source, quality, license, and reporting signals.",
+    "description": "This is not a paid marketplace. It is the trust foundation for discovering reusable AI agent skills safely.",
+    "unknown": "Unknown",
+    "grade": "Grade",
+    "safetyLabel": "Safety",
+    "license": "License",
+    "viewSkill": "View skill",
+    "report": "Report",
+    "sourceLevels": {
+      "official": "Official",
+      "community": "Community",
+      "private": "Private"
+    },
+    "safety": {
+      "pass": "pass",
+      "warn": "review"
+    },
+    "signals": {
+      "official": {
+        "title": "Source level",
+        "body": "Built-in skills are marked official; external registries can be labeled later."
+      },
+      "quality": {
+        "title": "Static quality",
+        "body": "Grades reuse the deterministic `aso quality` checks."
+      },
+      "report": {
+        "title": "Safety reports",
+        "body": "Unsafe or misleading skills can be reported through a dedicated issue template."
+      }
     }
   },
   "showcase": {

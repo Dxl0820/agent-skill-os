@@ -58,6 +58,7 @@ export default async function LocaleLayout({
             <Link href="/packs">{nav("packs")}</Link>
             <Link href="/targets">{nav("targets")}</Link>
             <Link href="/use-cases">{nav("useCases")}</Link>
+            <Link href="/marketplace">{nav("marketplace")}</Link>
             <Link href="/showcase">{nav("showcase")}</Link>
             <Link href="/docs">{nav("docs")}</Link>
           </nav>
@@ -72,6 +73,7 @@ export default async function LocaleLayout({
           <Link href="/packs">{footer("packs")}</Link>
           <Link href="/targets">{footer("targets")}</Link>
           <Link href="/use-cases">{footer("useCases")}</Link>
+          <Link href="/marketplace">{footer("marketplace")}</Link>
           <Link href="/docs">{footer("docs")}</Link>
         </nav>
       </footer>
