@@ -155,6 +155,7 @@ pnpm aso registry refresh
 pnpm aso search readme --remote
 pnpm aso install official/readme-writer --target codex --dir ./tmp/demo
 pnpm aso install-url https://example.com/skills/readme-writer/SKILL.md --target codex --dir ./tmp/demo
+pnpm aso mcp
 pnpm aso validate
 pnpm aso doctor --target generic --dir ./tmp/demo
 ~~~
@@ -182,6 +183,20 @@ aso install-url https://example.com/skills/readme-writer/SKILL.md --target codex
 ~~~
 
 Remote skills are treated as text instructions, not executable code. The CLI prints the source URL before installing remote skills so you can review untrusted content.
+
+## MCP Server
+
+Agent Skill OS v0.4 exposes the runtime through MCP:
+
+~~~bash
+aso mcp
+~~~
+
+MCP tools include `agent_skill_search`, `agent_skill_recommend`, `agent_skill_load`, `agent_skill_list_installed`, `agent_skill_install`, and `agent_skill_validate`.
+
+The MCP server follows the same policy: do not load all skills by default; recommend one primary skill and at most two supporting skills.
+
+See [docs/mcp.md](docs/mcp.md).
 
 ## Repository Structure
 
@@ -233,6 +248,7 @@ pnpm build
 
 - MCP server runtime interface
 - Dynamic skill search, recommend, load, install, and validate tools
+- Stdio JSON-RPC transport through `aso mcp`
 
 ### v0.5+
 

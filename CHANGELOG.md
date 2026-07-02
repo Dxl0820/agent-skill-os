@@ -1,5 +1,24 @@
 # Changelog
 
+## Agent Skill OS v0.4.0
+
+This release adds the Agent Skill OS MCP server.
+
+### Highlights
+
+- Added `aso mcp`, a local MCP stdio server for Agent Skill OS runtime operations.
+- Added MCP tools: `agent_skill_search`, `agent_skill_recommend`, `agent_skill_load`, `agent_skill_list_installed`, `agent_skill_install`, and `agent_skill_validate`.
+- Kept MCP aligned with the runtime policy: one primary skill, at most two supporting skills, never load all skills by default.
+- Added `docs/mcp.md`.
+- Added MCP tests for initialization, tool discovery, recommendation, and skill loading.
+
+### Verified
+
+```bash
+pnpm --filter agent-skill-os test
+pnpm --filter agent-skill-os build
+```
+
 ## Agent Skill OS v0.3.0
 
 This release adds local-first remote registry support.

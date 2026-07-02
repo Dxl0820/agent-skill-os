@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 import fs from "fs-extra";
 import pc from "picocolors";
 import { Command } from "commander";
+import { runMcpServer } from "./mcp.js";
 import {
   buildRegistry,
   createNewSkill,
@@ -33,7 +34,7 @@ import {
 } from "@agent-skill-os/core";
 
 const program = new Command();
-const cliVersion = "0.3.0";
+const cliVersion = "0.4.0";
 const cliPackageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
 program
@@ -276,7 +277,14 @@ program
       console.log("   Use:");
       console.log("   aso use " + recommendation.skill.metadata.id + " --target " + target);
       console.log("");
+      });
     });
+
+program
+  .command("mcp")
+  .description("Run the Agent Skill OS MCP server over stdio")
+  .action(async () => {
+    await runMcpServer(getRegistryOptions());
   });
 
 program
