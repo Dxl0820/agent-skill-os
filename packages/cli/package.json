@@ -1,6 +1,6 @@
 {
   "name": "agent-skill-os",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "type": "module",
   "description": "CLI installer for Agent Skill OS.",
   "main": "dist/index.js",
@@ -10,20 +10,27 @@
     "agent-skill-os": "dist/index.js"
   },
   "files": [
-    "dist"
+    "dist",
+    "generated",
+    "packs",
+    "skills"
   ],
   "scripts": {
-    "build": "tsup",
+    "build": "tsx scripts/build.ts",
     "dev": "tsx src/index.ts",
+    "prepack": "tsx scripts/build.ts",
     "test": "vitest run"
   },
   "dependencies": {
-    "@agent-skill-os/core": "workspace:*",
     "chalk": "latest",
     "commander": "latest",
+    "fast-glob": "latest",
     "fs-extra": "latest",
+    "gray-matter": "latest",
     "ora": "latest",
-    "picocolors": "latest"
+    "picocolors": "latest",
+    "slugify": "latest",
+    "zod": "latest"
   },
   "devDependencies": {
     "@types/fs-extra": "latest",

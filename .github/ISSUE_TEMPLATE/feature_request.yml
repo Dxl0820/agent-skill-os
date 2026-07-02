@@ -7,11 +7,53 @@ body:
     id: problem
     attributes:
       label: Problem
+      description: What workflow is hard or missing today?
     validations:
       required: true
   - type: textarea
     id: proposal
     attributes:
       label: Proposal
+      description: What should Agent Skill OS do differently?
     validations:
       required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      placeholder: Describe the desired CLI, Web, skill, pack, or target adapter behavior.
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - CLI
+        - Web
+        - Skill
+        - Skill pack
+        - Target adapter
+        - Documentation
+        - Release/package
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Optional, but useful for CLI or target adapter requests.
+      value: |
+        - OS:
+        - Node.js:
+        - pnpm:
+        - agent-skill-os:
+    validations:
+      required: false
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs, screenshots, or examples
+      description: Add terminal output, generated files, screenshots, or comparable tools if relevant.
+    validations:
+      required: false

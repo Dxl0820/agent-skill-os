@@ -10,7 +10,7 @@ const validMetadata = {
   tags: ["readme"],
   targets: ["generic", "codex"],
   difficulty: "beginner",
-  version: "0.1.0",
+  version: "0.1.2",
   author: "Agent Skill OS",
   license: "MIT",
   inputs: ["repo name"],

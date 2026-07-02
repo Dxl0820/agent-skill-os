@@ -23,7 +23,7 @@ tags:
 targets:
   - ${target}
 difficulty: beginner
-version: 0.1.0
+version: 0.1.2
 author: Agent Skill OS contributor
 license: MIT
 inputs:

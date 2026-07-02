@@ -7,11 +7,64 @@ body:
     id: description
     attributes:
       label: What happened?
+      description: Describe the bug clearly.
+      placeholder: The command failed when installing a skill into a Codex project.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      placeholder: The skill should be installed and manifest files should be updated.
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      placeholder: The command exited with an error or generated the wrong files.
     validations:
       required: true
   - type: textarea
     id: steps
     attributes:
       label: Reproduction steps
+      placeholder: |
+        1. Run `aso install readme-writer --target codex --dir ./demo`
+        2. Inspect `./demo/.codex`
+        3. See the error
     validations:
       required: true
+  - type: dropdown
+    id: target
+    attributes:
+      label: Target adapter
+      options:
+        - generic
+        - claude
+        - codex
+        - cursor
+        - not target-specific
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include versions that matter.
+      value: |
+        - OS:
+        - Node.js:
+        - pnpm:
+        - agent-skill-os:
+        - Install method:
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or output
+      description: Paste relevant terminal output. Remove secrets and private paths if needed.
+      render: shell
+    validations:
+      required: false

@@ -64,24 +64,33 @@ importers:
 
   packages/cli:
     dependencies:
-      '@agent-skill-os/core':
-        specifier: workspace:*
-        version: link:../core
       chalk:
         specifier: latest
         version: 5.6.2
       commander:
         specifier: latest
         version: 15.0.0
+      fast-glob:
+        specifier: latest
+        version: 3.3.3
       fs-extra:
         specifier: latest
         version: 11.3.5
+      gray-matter:
+        specifier: latest
+        version: 4.0.3
       ora:
         specifier: latest
         version: 9.4.1
       picocolors:
         specifier: latest
         version: 1.1.1
+      slugify:
+        specifier: latest
+        version: 1.6.9
+      zod:
+        specifier: latest
+        version: 4.4.3
     devDependencies:
       '@types/fs-extra':
         specifier: latest

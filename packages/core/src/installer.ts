@@ -19,7 +19,7 @@ interface Manifest {
   skills: ManifestSkill[];
 }
 
-const manifestVersion = "0.1.0";
+const manifestVersion = "0.1.2";
 
 export async function installSkill(options: InstallSkillOptions): Promise<InstallResult> {
   const targetDir = path.resolve(options.dir);

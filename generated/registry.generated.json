@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-30T14:31:42.548Z",
+  "generatedAt": "2026-07-02T02:23:42.503Z",
   "skills": [
     {
       "id": "api-docs-writer",
@@ -19,7 +19,7 @@
         "cursor"
       ],
       "difficulty": "intermediate",
-      "version": "0.1.0",
+      "version": "0.1.2",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -55,7 +55,7 @@
         "cursor"
       ],
       "difficulty": "beginner",
-      "version": "0.1.0",
+      "version": "0.1.2",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -91,7 +91,7 @@
         "cursor"
       ],
       "difficulty": "beginner",
-      "version": "0.1.0",
+      "version": "0.1.2",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -127,7 +127,7 @@
         "cursor"
       ],
       "difficulty": "intermediate",
-      "version": "0.1.0",
+      "version": "0.1.2",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -163,7 +163,7 @@
         "cursor"
       ],
       "difficulty": "intermediate",
-      "version": "0.1.0",
+      "version": "0.1.2",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -199,7 +199,7 @@
         "cursor"
       ],
       "difficulty": "beginner",
-      "version": "0.1.0",
+      "version": "0.1.2",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -235,7 +235,7 @@
         "cursor"
       ],
       "difficulty": "intermediate",
-      "version": "0.1.0",
+      "version": "0.1.2",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -271,7 +271,7 @@
         "cursor"
       ],
       "difficulty": "advanced",
-      "version": "0.1.0",
+      "version": "0.1.2",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -307,7 +307,7 @@
         "cursor"
       ],
       "difficulty": "beginner",
-      "version": "0.1.0",
+      "version": "0.1.2",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -344,7 +344,7 @@
         "cursor"
       ],
       "difficulty": "beginner",
-      "version": "0.1.0",
+      "version": "0.1.2",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -381,7 +381,7 @@
         "cursor"
       ],
       "difficulty": "beginner",
-      "version": "0.1.0",
+      "version": "0.1.2",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -417,7 +417,7 @@
         "cursor"
       ],
       "difficulty": "advanced",
-      "version": "0.1.0",
+      "version": "0.1.2",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -453,7 +453,7 @@
         "cursor"
       ],
       "difficulty": "beginner",
-      "version": "0.1.0",
+      "version": "0.1.2",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -489,7 +489,7 @@
         "cursor"
       ],
       "difficulty": "intermediate",
-      "version": "0.1.0",
+      "version": "0.1.2",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -527,7 +527,7 @@
         "cursor"
       ],
       "difficulty": "beginner",
-      "version": "0.1.0",
+      "version": "0.1.2",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -565,7 +565,7 @@
         "cursor"
       ],
       "difficulty": "intermediate",
-      "version": "0.1.0",
+      "version": "0.1.2",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -601,7 +601,7 @@
         "cursor"
       ],
       "difficulty": "intermediate",
-      "version": "0.1.0",
+      "version": "0.1.2",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -637,7 +637,7 @@
         "cursor"
       ],
       "difficulty": "intermediate",
-      "version": "0.1.0",
+      "version": "0.1.2",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -673,7 +673,7 @@
         "cursor"
       ],
       "difficulty": "beginner",
-      "version": "0.1.0",
+      "version": "0.1.2",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -709,7 +709,7 @@
         "cursor"
       ],
       "difficulty": "beginner",
-      "version": "0.1.0",
+      "version": "0.1.2",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -745,7 +745,7 @@
         "cursor"
       ],
       "difficulty": "intermediate",
-      "version": "0.1.0",
+      "version": "0.1.2",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -781,7 +781,7 @@
         "cursor"
       ],
       "difficulty": "intermediate",
-      "version": "0.1.0",
+      "version": "0.1.2",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -817,7 +817,7 @@
         "cursor"
       ],
       "difficulty": "intermediate",
-      "version": "0.1.0",
+      "version": "0.1.2",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [
@@ -853,7 +853,7 @@
         "cursor"
       ],
       "difficulty": "beginner",
-      "version": "0.1.0",
+      "version": "0.1.2",
       "author": "Agent Skill OS",
       "license": "MIT",
       "inputs": [

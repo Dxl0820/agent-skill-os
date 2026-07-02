@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import fs from "fs-extra";
 import pc from "picocolors";
 import { Command } from "commander";
@@ -20,11 +21,13 @@ import {
 } from "@agent-skill-os/core";
 
 const program = new Command();
+const cliVersion = "0.1.2";
+const cliPackageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
 program
   .name("aso")
   .description("Install battle-tested skills into your AI coding agent in 30 seconds.")
-  .version("0.1.1");
+  .version(cliVersion);
 
 program
   .command("list")
@@ -33,7 +36,7 @@ program
   .option("--tag <tag>", "filter by tag")
   .option("--json", "print JSON")
   .action(async (options) => {
-    const skills = await loadSkills();
+    const skills = await loadCliSkills();
     const filtered = skills.filter((skill) => {
       const categoryOk = !options.category || skill.metadata.category === options.category;
       const tagOk = !options.tag || skill.metadata.tags.includes(options.tag);
@@ -67,7 +70,7 @@ program
   .argument("<query>")
   .option("--json", "print JSON")
   .action(async (query, options) => {
-    const results = searchSkills(await loadSkills(), query);
+    const results = searchSkills(await loadCliSkills(), query);
     if (options.json) {
       printJson(results.map((skill) => skill.metadata));
       return;
@@ -85,7 +88,7 @@ program
   .option("--raw", "print raw SKILL.md")
   .option("--json", "print JSON")
   .action(async (skillId, options) => {
-    const skill = getSkillById(await loadSkills(), skillId);
+    const skill = getSkillById(await loadCliSkills(), skillId);
     if (!skill) {
       fail("Skill not found: " + skillId);
     }
@@ -117,7 +120,7 @@ program
   .option("--dry-run", "show files without writing")
   .action(async (skillId, options) => {
     const target = parseTarget(options.target);
-    const skill = getSkillById(await loadSkills(), skillId);
+    const skill = getSkillById(await loadCliSkills(), skillId);
     if (!skill) {
       fail("Skill not found: " + skillId);
     }
@@ -135,7 +138,7 @@ program
   .option("--dry-run", "show files without writing")
   .action(async (packId, options) => {
     const target = parseTarget(options.target);
-    const [skills, packs] = await Promise.all([loadSkills(), loadPacks()]);
+    const [skills, packs] = await Promise.all([loadCliSkills(), loadCliPacks()]);
     const pack = packs.find((candidate) => candidate.id === packId);
     if (!pack) {
       fail("Pack not found: " + packId);
@@ -151,7 +154,7 @@ program
   .description("Validate skills and packs")
   .option("--json", "print JSON")
   .action(async (options) => {
-    const [skills, packs] = await Promise.all([loadSkills(), loadPacks()]);
+    const [skills, packs] = await Promise.all([loadCliSkills(), loadCliPacks()]);
     const results = [...validateAllSkills(skills), ...validatePacks(packs, skills)];
     if (options.json) {
       printJson(results);
@@ -180,7 +183,7 @@ program
     const target = parseTarget(options.target);
     const dir = path.resolve(options.dir);
     await fs.ensureDir(path.join(dir, ".agent-skill-os"));
-    await fs.writeFile(path.join(dir, ".agent-skill-os", "manifest.json"), JSON.stringify({ version: "0.1.0", target, installedAt: new Date().toISOString(), skills: [] }, null, 2) + "\n", "utf8");
+    await fs.writeFile(path.join(dir, ".agent-skill-os", "manifest.json"), JSON.stringify({ version: cliVersion, target, installedAt: new Date().toISOString(), skills: [] }, null, 2) + "\n", "utf8");
     await fs.writeFile(path.join(dir, ".agent-skill-os", "README.md"), "# Agent Skill OS\n\nThis project is ready for Agent Skill OS skills.\n", "utf8");
     if (target === "generic") await fs.ensureDir(path.join(dir, "agent-skills"));
     if (target === "claude") await fs.ensureDir(path.join(dir, ".claude", "skills"));
@@ -208,7 +211,7 @@ program
   .description("Export registry")
   .option("--format <format>", "json or markdown", "json")
   .action(async (options) => {
-    const registry = await buildRegistry();
+    const registry = await buildRegistry(getRegistryOptions());
     if (options.format === "json") {
       printJson(registry);
       return;
@@ -249,6 +252,21 @@ program
 program.parseAsync(process.argv).catch((error) => {
   fail(error instanceof Error ? error.message : String(error));
 });
+
+function getRegistryOptions(): { rootDir: string } | undefined {
+  if (fs.existsSync(path.join(cliPackageRoot, "skills")) && fs.existsSync(path.join(cliPackageRoot, "packs"))) {
+    return { rootDir: cliPackageRoot };
+  }
+  return undefined;
+}
+
+function loadCliSkills() {
+  return loadSkills(getRegistryOptions());
+}
+
+function loadCliPacks() {
+  return loadPacks(getRegistryOptions());
+}
 
 function parseTarget(value: string): InstallTarget {
   if ((installTargets as readonly string[]).includes(value)) {

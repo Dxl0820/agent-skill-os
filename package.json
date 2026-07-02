@@ -1,6 +1,6 @@
 {
   "name": "agent-skill-os-monorepo",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "description": "Install battle-tested skills into your AI coding agent in 30 seconds.",
   "type": "module",
@@ -10,11 +10,12 @@
   },
   "scripts": {
     "dev": "pnpm --filter @agent-skill-os/web dev",
-    "build": "pnpm --filter @agent-skill-os/core build && pnpm build:registry && pnpm --filter agent-skill-os build && pnpm --filter @agent-skill-os/web build",
+    "build": "tsx scripts/build.ts",
     "build:registry": "tsx scripts/build-registry.ts",
-    "validate": "pnpm --filter @agent-skill-os/core build && tsx scripts/validate-skills.ts",
-    "test": "pnpm --filter @agent-skill-os/core build && pnpm -r test",
-    "aso": "pnpm --filter @agent-skill-os/core build && tsx packages/cli/src/index.ts"
+    "check:demo": "tsx scripts/check-demo.ts",
+    "validate": "tsx scripts/validate.ts",
+    "test": "tsx scripts/test.ts",
+    "aso": "tsx scripts/aso.ts"
   },
   "devDependencies": {
     "@types/fs-extra": "latest",

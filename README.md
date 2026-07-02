@@ -43,22 +43,44 @@ Agent Skill OS turns reusable prompts and workflows into installable Markdown sk
 
 ## Quick Start
 
+### Use the CLI
+
+Install Agent Skill OS and add a reusable skill to a Codex project:
+
+~~~bash
+pnpm add -g agent-skill-os
+aso install readme-writer --target codex --dir ./demo
+~~~
+
+### Run this repository locally
+
 ~~~bash
 pnpm install
-pnpm aso list
+pnpm validate
+pnpm test
+pnpm build
 pnpm aso install-pack developer-productivity --target codex --dir .
 ~~~
 
 ## Demo
 
-<p align="center">
-  <img src="assets/demo.gif" alt="Agent Skill OS demo" width="900" />
-</p>
-
 Install a reusable skill into Codex in seconds:
 
 ```bash
 aso install readme-writer --target codex --dir ./demo
+```
+
+Generated structure:
+
+```txt
+demo/
+  .agent-skill-os/
+    manifest.json
+  .codex/
+    AGENTS.md
+    skills/
+      readme-writer/
+        SKILL.md
 ```
 
 ## Install a Skill

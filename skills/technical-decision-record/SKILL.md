@@ -14,7 +14,7 @@ targets:
   - codex
   - cursor
 difficulty: intermediate
-version: 0.1.0
+version: 0.1.2
 author: Agent Skill OS
 license: MIT
 inputs:

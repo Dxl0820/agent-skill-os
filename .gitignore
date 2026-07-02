@@ -4,6 +4,9 @@ dist
 out
 coverage
 tmp
+packages/cli/generated
+packages/cli/packs
+packages/cli/skills
 *.tsbuildinfo
 .env
 .env.*
