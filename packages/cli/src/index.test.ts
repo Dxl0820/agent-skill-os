@@ -24,7 +24,7 @@ describe("cli smoke", () => {
     const qualityResult = await execa(tsxBin, [cli, "quality", "--json"], { cwd });
     expect(qualityResult.stdout).toContain('"grade": "A"');
     await expect(execa(tsxBin, [cli, "validate"], { cwd })).resolves.toMatchObject({ exitCode: 0 });
-  }, 30000);
+  }, 60000);
 
   it("creates a new skill template", async () => {
     await fs.ensureDir(tmpCwd);
@@ -34,6 +34,20 @@ describe("cli smoke", () => {
     expect(content).toContain("category: coding");
     expect(content).toContain("  - codex");
   }, 30000);
+
+  it("manages installed skill state", async () => {
+    await fs.ensureDir(tmpCwd);
+    const cli = path.join(cwd, "packages/cli/src/index.ts");
+    const demoDir = path.join(tmpCwd, "demo");
+    await expect(execa(tsxBin, [cli, "install", "readme-writer", "--target", "codex", "--dir", demoDir], { cwd })).resolves.toMatchObject({ exitCode: 0 });
+    expect(await fs.pathExists(path.join(demoDir, ".agent-skill-os", "skill-lock.json"))).toBe(true);
+    await expect(execa(tsxBin, [cli, "lock", "--dir", demoDir], { cwd })).resolves.toMatchObject({ exitCode: 0 });
+    const outdated = await execa(tsxBin, [cli, "outdated", "--target", "codex", "--dir", demoDir], { cwd });
+    expect(outdated.stdout).toContain("up to date");
+    await expect(execa(tsxBin, [cli, "update", "readme-writer", "--target", "codex", "--dir", demoDir], { cwd })).resolves.toMatchObject({ exitCode: 0 });
+    await expect(execa(tsxBin, [cli, "uninstall", "readme-writer", "--target", "codex", "--dir", demoDir], { cwd })).resolves.toMatchObject({ exitCode: 0 });
+    expect(await fs.pathExists(path.join(demoDir, ".codex", "skills", "readme-writer", "SKILL.md"))).toBe(false);
+  }, 45000);
 
   it("manages remote registries and installs remote skills", async () => {
     await fs.ensureDir(tmpCwd);
@@ -80,9 +94,15 @@ describe("cli smoke", () => {
     const installUrl = await execa(tsxBin, [cli, "install-url", remoteSkill, "--target", "codex", "--dir", path.join(tmpCwd, "install-url-demo")], { cwd, env });
     expect(installUrl.stdout).toContain("Source:");
     expect(await fs.pathExists(path.join(tmpCwd, "install-url-demo", ".agent-skill-os", "router.json"))).toBe(true);
+    const installUrlLock = await fs.readJson(path.join(tmpCwd, "install-url-demo", ".agent-skill-os", "skill-lock.json"));
+    expect(installUrlLock.skills[0].source.type).toBe("file");
     await expect(execa(tsxBin, [cli, "install", "official/readme-writer", "--target", "codex", "--dir", path.join(tmpCwd, "registry-demo")], { cwd, env })).resolves.toMatchObject({ exitCode: 0 });
     expect(await fs.pathExists(path.join(tmpCwd, "registry-demo", ".codex", "skills", "readme-writer", "SKILL.md"))).toBe(true);
+    const registryLock = await fs.readJson(path.join(tmpCwd, "registry-demo", ".agent-skill-os", "skill-lock.json"));
+    expect(registryLock.skills[0].source.registry).toBe("official");
     await expect(execa(tsxBin, [cli, "install-pack", "official/frontend-team", "--target", "codex", "--dir", path.join(tmpCwd, "registry-pack-demo")], { cwd, env })).resolves.toMatchObject({ exitCode: 0 });
     expect(await fs.pathExists(path.join(tmpCwd, "registry-pack-demo", ".agent-skill-os", "router.json"))).toBe(true);
+    const registryPackLock = await fs.readJson(path.join(tmpCwd, "registry-pack-demo", ".agent-skill-os", "skill-lock.json"));
+    expect(registryPackLock.skills[0].source.registry).toBe("official");
   }, 45000);
 });

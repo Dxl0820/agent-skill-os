@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-02T12:06:43.307Z",
+  "generatedAt": "2026-07-02T12:35:15.655Z",
   "skills": [
     {
       "id": "api-docs-writer",
@@ -49,6 +49,8 @@
         "Create internal integration docs"
       ],
       "conflicts": [],
+      "dependencies": [],
+      "optionalDependencies": [],
       "routing": {
         "primaryFor": [
           "Document a public API",
@@ -71,6 +73,9 @@
           "validation checklist"
         ],
         "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "compatibleWith": {
+        "aso": ">=0.2.0"
       },
       "supports": {
         "targets": [
@@ -134,6 +139,8 @@
         "Create a failing test"
       ],
       "conflicts": [],
+      "dependencies": [],
+      "optionalDependencies": [],
       "routing": {
         "primaryFor": [
           "Confirm a reported bug",
@@ -156,6 +163,9 @@
           "validation checklist"
         ],
         "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "compatibleWith": {
+        "aso": ">=0.2.0"
       },
       "supports": {
         "targets": [
@@ -214,6 +224,8 @@
         "Summarize repo changes"
       ],
       "conflicts": [],
+      "dependencies": [],
+      "optionalDependencies": [],
       "routing": {
         "primaryFor": [
           "Prepare a release",
@@ -236,6 +248,9 @@
           "validation checklist"
         ],
         "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "compatibleWith": {
+        "aso": ">=0.2.0"
       },
       "supports": {
         "targets": [
@@ -301,6 +316,8 @@
         "Check a risky change"
       ],
       "conflicts": [],
+      "dependencies": [],
+      "optionalDependencies": [],
       "routing": {
         "primaryFor": [
           "Review a pull request",
@@ -323,6 +340,9 @@
           "validation checklist"
         ],
         "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "compatibleWith": {
+        "aso": ">=0.2.0"
       },
       "supports": {
         "targets": [
@@ -381,6 +401,8 @@
         "Prepare positioning"
       ],
       "conflicts": [],
+      "dependencies": [],
+      "optionalDependencies": [],
       "routing": {
         "primaryFor": [
           "Study alternatives",
@@ -403,6 +425,9 @@
           "validation checklist"
         ],
         "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "compatibleWith": {
+        "aso": ">=0.2.0"
       },
       "supports": {
         "targets": [
@@ -461,6 +486,8 @@
         "Standardize contribution flow"
       ],
       "conflicts": [],
+      "dependencies": [],
+      "optionalDependencies": [],
       "routing": {
         "primaryFor": [
           "Help first-time contributors",
@@ -483,6 +510,9 @@
           "validation checklist"
         ],
         "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "compatibleWith": {
+        "aso": ">=0.2.0"
       },
       "supports": {
         "targets": [
@@ -541,6 +571,8 @@
         "Create walkthrough videos"
       ],
       "conflicts": [],
+      "dependencies": [],
+      "optionalDependencies": [],
       "routing": {
         "primaryFor": [
           "Record launch demos",
@@ -563,6 +595,9 @@
           "validation checklist"
         ],
         "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "compatibleWith": {
+        "aso": ">=0.2.0"
       },
       "supports": {
         "targets": [
@@ -621,6 +656,8 @@
         "Plan security patching"
       ],
       "conflicts": [],
+      "dependencies": [],
+      "optionalDependencies": [],
       "routing": {
         "primaryFor": [
           "Upgrade framework versions",
@@ -643,6 +680,9 @@
           "validation checklist"
         ],
         "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "compatibleWith": {
+        "aso": ">=0.2.0"
       },
       "supports": {
         "targets": [
@@ -702,6 +742,8 @@
         "Prepare maintainer replies"
       ],
       "conflicts": [],
+      "dependencies": [],
+      "optionalDependencies": [],
       "routing": {
         "primaryFor": [
           "Triage incoming issues",
@@ -725,6 +767,9 @@
           "validation checklist"
         ],
         "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "compatibleWith": {
+        "aso": ">=0.2.0"
       },
       "supports": {
         "targets": [
@@ -784,6 +829,8 @@
         "Improve first-screen messaging"
       ],
       "conflicts": [],
+      "dependencies": [],
+      "optionalDependencies": [],
       "routing": {
         "primaryFor": [
           "Launch a new project",
@@ -806,6 +853,9 @@
           "validation checklist"
         ],
         "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "compatibleWith": {
+        "aso": ">=0.2.0"
       },
       "supports": {
         "targets": [
@@ -870,6 +920,8 @@
         "Promote a feature launch"
       ],
       "conflicts": [],
+      "dependencies": [],
+      "optionalDependencies": [],
       "routing": {
         "primaryFor": [
           "Announce an open-source repo",
@@ -892,6 +944,9 @@
           "validation checklist"
         ],
         "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "compatibleWith": {
+        "aso": ">=0.2.0"
       },
       "supports": {
         "targets": [
@@ -950,6 +1005,8 @@
         "Improve batch processing"
       ],
       "conflicts": [],
+      "dependencies": [],
+      "optionalDependencies": [],
       "routing": {
         "primaryFor": [
           "Review slow rendering",
@@ -972,6 +1029,9 @@
           "validation checklist"
         ],
         "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "compatibleWith": {
+        "aso": ">=0.2.0"
       },
       "supports": {
         "targets": [
@@ -1036,6 +1096,8 @@
         "Prepare release notes"
       ],
       "conflicts": [],
+      "dependencies": [],
+      "optionalDependencies": [],
       "routing": {
         "primaryFor": [
           "Write PR descriptions",
@@ -1058,6 +1120,9 @@
           "validation checklist"
         ],
         "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "compatibleWith": {
+        "aso": ">=0.2.0"
       },
       "supports": {
         "targets": [
@@ -1121,6 +1186,8 @@
         "Align stakeholders"
       ],
       "conflicts": [],
+      "dependencies": [],
+      "optionalDependencies": [],
       "routing": {
         "primaryFor": [
           "Start a new product",
@@ -1143,6 +1210,9 @@
           "validation checklist"
         ],
         "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "compatibleWith": {
+        "aso": ">=0.2.0"
       },
       "supports": {
         "targets": [
@@ -1210,6 +1280,8 @@
         "Improve open-source project presentation"
       ],
       "conflicts": [],
+      "dependencies": [],
+      "optionalDependencies": [],
       "routing": {
         "primaryFor": [
           "Launch a new GitHub repo",
@@ -1234,6 +1306,9 @@
           "validation checklist"
         ],
         "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "compatibleWith": {
+        "aso": ">=0.2.0"
       },
       "supports": {
         "targets": [
@@ -1292,6 +1367,8 @@
         "Reduce coupling safely"
       ],
       "conflicts": [],
+      "dependencies": [],
+      "optionalDependencies": [],
       "routing": {
         "primaryFor": [
           "Plan a cleanup",
@@ -1314,6 +1391,9 @@
           "validation checklist"
         ],
         "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "compatibleWith": {
+        "aso": ">=0.2.0"
       },
       "supports": {
         "targets": [
@@ -1377,6 +1457,8 @@
         "Announce product updates"
       ],
       "conflicts": [],
+      "dependencies": [],
+      "optionalDependencies": [],
       "routing": {
         "primaryFor": [
           "Publish GitHub releases",
@@ -1399,6 +1481,9 @@
           "validation checklist"
         ],
         "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "compatibleWith": {
+        "aso": ">=0.2.0"
       },
       "supports": {
         "targets": [
@@ -1457,6 +1542,8 @@
         "Organize backlog themes"
       ],
       "conflicts": [],
+      "dependencies": [],
+      "optionalDependencies": [],
       "routing": {
         "primaryFor": [
           "Plan a quarter",
@@ -1479,6 +1566,9 @@
           "validation checklist"
         ],
         "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "compatibleWith": {
+        "aso": ">=0.2.0"
       },
       "supports": {
         "targets": [
@@ -1537,6 +1627,8 @@
         "Explain a feature quickly"
       ],
       "conflicts": [],
+      "dependencies": [],
+      "optionalDependencies": [],
       "routing": {
         "primaryFor": [
           "Create product teasers",
@@ -1559,6 +1651,9 @@
           "validation checklist"
         ],
         "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "compatibleWith": {
+        "aso": ">=0.2.0"
       },
       "supports": {
         "targets": [
@@ -1616,6 +1711,8 @@
         "Prepare research briefs"
       ],
       "conflicts": [],
+      "dependencies": [],
+      "optionalDependencies": [],
       "routing": {
         "primaryFor": [
           "Digest articles",
@@ -1638,6 +1735,9 @@
           "validation checklist"
         ],
         "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "compatibleWith": {
+        "aso": ">=0.2.0"
       },
       "supports": {
         "targets": [
@@ -1696,6 +1796,8 @@
         "Record product architecture"
       ],
       "conflicts": [],
+      "dependencies": [],
+      "optionalDependencies": [],
       "routing": {
         "primaryFor": [
           "Document technical choices",
@@ -1718,6 +1820,9 @@
           "validation checklist"
         ],
         "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "compatibleWith": {
+        "aso": ">=0.2.0"
       },
       "supports": {
         "targets": [
@@ -1782,6 +1887,8 @@
         "Cover edge cases"
       ],
       "conflicts": [],
+      "dependencies": [],
+      "optionalDependencies": [],
       "routing": {
         "primaryFor": [
           "Add regression tests",
@@ -1804,6 +1911,9 @@
           "validation checklist"
         ],
         "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "compatibleWith": {
+        "aso": ">=0.2.0"
       },
       "supports": {
         "targets": [
@@ -1862,6 +1972,8 @@
         "Prepare implementation tickets"
       ],
       "conflicts": [],
+      "dependencies": [],
+      "optionalDependencies": [],
       "routing": {
         "primaryFor": [
           "Plan MVP scope",
@@ -1884,6 +1996,9 @@
           "validation checklist"
         ],
         "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "compatibleWith": {
+        "aso": ">=0.2.0"
       },
       "supports": {
         "targets": [
@@ -1942,6 +2057,8 @@
         "Improve click-through rate"
       ],
       "conflicts": [],
+      "dependencies": [],
+      "optionalDependencies": [],
       "routing": {
         "primaryFor": [
           "Package a tutorial video",
@@ -1964,6 +2081,9 @@
           "validation checklist"
         ],
         "failureMode": "Ask for missing required context before generating output. Do not invent unsupported project details."
+      },
+      "compatibleWith": {
+        "aso": ">=0.2.0"
       },
       "supports": {
         "targets": [

@@ -1,5 +1,30 @@
 # Changelog
 
+## Agent Skill OS v0.7.0
+
+This release adds installed skill versioning, dependency metadata, and lockfile-based project state.
+
+### Highlights
+
+- Added `compatibleWith`, `dependencies`, and `optionalDependencies` skill metadata.
+- Added `.agent-skill-os/skill-lock.json` generation for installs, packs, updates, initialization, and uninstall.
+- Added `aso outdated`, `aso update`, `aso update-pack`, `aso uninstall`, and `aso lock`.
+- Recorded built-in, registry, URL, GitHub, and local file install sources in project state.
+- Added dependency-first built-in skill installation.
+- Added `docs/versioning.md`.
+
+### Verified
+
+```bash
+pnpm validate
+pnpm test
+pnpm build
+pnpm --filter @agent-skill-os/core test
+pnpm --filter agent-skill-os test
+pnpm pack --dry-run
+pnpm publish --dry-run --no-git-checks
+```
+
 ## Agent Skill OS v0.6.0
 
 This release adds deterministic skill quality and trust checks.

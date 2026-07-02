@@ -2,7 +2,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import fs from "fs-extra";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { getSkillById, installPack, installSkill, loadPacks, loadSkills } from "../index.js";
+import { getSkillById, installPack, installSkill, listOutdatedSkills, loadPacks, loadSkills, rebuildSkillLock, uninstallSkill } from "../index.js";
 
 const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../../..");
 const tmpDir = path.join(rootDir, "tmp", "core-tests");
@@ -38,6 +38,12 @@ describe("installer", () => {
     expect(router.skills[0].conflicts).toEqual([]);
     const skillIndex = await fs.readJson(path.join(tmpDir, ".agent-skill-os", "skill-index.json"));
     expect(skillIndex.skills[0].path).toBe("agent-skills/readme-writer/SKILL.md");
+    expect(skillIndex.skills[0].compatibleWith.aso).toBe(">=0.2.0");
+    expect(skillIndex.skills[0].dependencies).toEqual([]);
+    const lock = await fs.readJson(path.join(tmpDir, ".agent-skill-os", "skill-lock.json"));
+    expect(lock.version).toBe("0.7.0");
+    expect(lock.skills[0].source.type).toBe("builtin");
+    expect(lock.skills[0].path).toBe("agent-skills/readme-writer/SKILL.md");
     expect(await fs.readFile(path.join(tmpDir, ".agent-skill-os", "usage.md"), "utf8")).toContain("Install many. Load few.");
   });
 
@@ -82,9 +88,12 @@ describe("installer", () => {
     const manifest = await fs.readJson(path.join(tmpDir, ".agent-skill-os", "manifest.json"));
     expect(manifest.version).toBe("0.2.0");
     expect(manifest.skills[0].capabilities).toContain("readme");
+    expect(manifest.skills[0].source.type).toBe("builtin");
     const router = await fs.readJson(path.join(tmpDir, ".agent-skill-os", "router.json"));
     expect(router.version).toBe("0.2.0");
     expect(router.skills[0].runtime.outputContract).toContain("README.md draft");
+    const lock = await fs.readJson(path.join(tmpDir, ".agent-skill-os", "skill-lock.json"));
+    expect(lock.skills[0].version).toBe(skill.metadata.version);
   });
 
   it("overwrites with force and keeps one manifest entry", async () => {
@@ -104,6 +113,72 @@ describe("installer", () => {
     expect(results).toHaveLength(6);
     const manifest = await fs.readJson(path.join(tmpDir, ".agent-skill-os", "manifest.json"));
     expect(manifest.skills).toHaveLength(6);
+    const lock = await fs.readJson(path.join(tmpDir, ".agent-skill-os", "skill-lock.json"));
+    expect(lock.skills).toHaveLength(6);
+  });
+
+  it("installs required pack dependencies first", async () => {
+    const readme = await getReadmeSkill();
+    const dependent = {
+      ...readme,
+      metadata: {
+        ...readme.metadata,
+        id: "dependent-skill",
+        name: "Dependent Skill",
+        dependencies: ["readme-writer"]
+      },
+      filePath: path.join(rootDir, "skills", "dependent-skill", "SKILL.md")
+    };
+    const results = await installPack({
+      skills: [dependent, readme],
+      pack: {
+        id: "dependency-pack",
+        name: "Dependency Pack",
+        summary: "Tests dependency-first pack installation.",
+        skills: ["dependent-skill"]
+      },
+      target: "generic",
+      dir: tmpDir
+    });
+    expect(results.map((result) => result.skillId)).toEqual(["readme-writer", "dependent-skill"]);
+    const manifest = await fs.readJson(path.join(tmpDir, ".agent-skill-os", "manifest.json"));
+    expect(manifest.skills.map((skill: { id: string }) => skill.id).sort()).toEqual(["dependent-skill", "readme-writer"]);
+  });
+
+  it("uninstalls a skill and refreshes lock and runtime files", async () => {
+    const skill = await getReadmeSkill();
+    await installSkill({ skill, target: "generic", dir: tmpDir });
+    const result = await uninstallSkill({ skillId: "readme-writer", target: "generic", dir: tmpDir });
+    expect(result.skipped).toBe(false);
+    expect(await fs.pathExists(path.join(tmpDir, "agent-skills", "readme-writer", "SKILL.md"))).toBe(false);
+    const manifest = await fs.readJson(path.join(tmpDir, ".agent-skill-os", "manifest.json"));
+    expect(manifest.skills).toEqual([]);
+    const lock = await fs.readJson(path.join(tmpDir, ".agent-skill-os", "skill-lock.json"));
+    expect(lock.skills).toEqual([]);
+    const router = await fs.readJson(path.join(tmpDir, ".agent-skill-os", "router.json"));
+    expect(router.skills).toEqual([]);
+  });
+
+  it("detects outdated built-in skills and rebuilds the lockfile", async () => {
+    const skill = await getReadmeSkill();
+    await installSkill({ skill, target: "generic", dir: tmpDir });
+    const manifestPath = path.join(tmpDir, ".agent-skill-os", "manifest.json");
+    const manifest = await fs.readJson(manifestPath);
+    manifest.skills[0].version = "0.0.1";
+    await fs.writeJson(manifestPath, manifest, { spaces: 2 });
+
+    const outdated = await listOutdatedSkills({ dir: tmpDir, target: "generic", skills: await loadSkills({ rootDir }) });
+    expect(outdated).toEqual([
+      expect.objectContaining({
+        id: "readme-writer",
+        currentVersion: "0.0.1",
+        latestVersion: skill.metadata.version
+      })
+    ]);
+
+    await rebuildSkillLock(tmpDir);
+    const lock = await fs.readJson(path.join(tmpDir, ".agent-skill-os", "skill-lock.json"));
+    expect(lock.skills[0].version).toBe("0.0.1");
   });
 
   it("writes codex AGENTS.md", async () => {

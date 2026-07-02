@@ -46,6 +46,9 @@ describe("SkillMetadataSchema", () => {
     expect(result.triggers).toContain("Launch a repo");
     expect(result.routing.primaryFor).toContain("Launch a repo");
     expect(result.runtime.outputContract).toContain("validation checklist");
+    expect(result.compatibleWith.aso).toBe(">=0.2.0");
+    expect(result.dependencies).toEqual([]);
+    expect(result.optionalDependencies).toEqual([]);
   });
 
   it("rejects missing required fields", () => {

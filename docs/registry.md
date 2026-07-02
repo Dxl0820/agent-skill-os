@@ -76,4 +76,4 @@ The CLI prints the source URL before installing remote skills. Review untrusted 
 
 Do not silently install skills from unknown registries.
 
-Checksums are reserved for a future release.
+Checksums are recorded in `.agent-skill-os/skill-lock.json` when a registry provides them. Content verification is reserved for a future release.

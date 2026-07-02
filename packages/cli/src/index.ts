@@ -14,6 +14,9 @@ import {
   installPack,
   installSkill,
   installTargets,
+  uninstallSkill,
+  listOutdatedSkills,
+  rebuildSkillLock,
   addRegistry,
   loadConfiguredRemoteRegistries,
   loadPacks,
@@ -32,11 +35,14 @@ import {
   toSourceUrl,
   validateAllSkills,
   validatePacks,
-  type InstallTarget
+  type InstallSource,
+  type InstallTarget,
+  type Skill,
+  type UninstallResult
 } from "@agent-skill-os/core";
 
 const program = new Command();
-const cliVersion = "0.6.0";
+const cliVersion = "0.7.0";
 const cliPackageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
 program
@@ -152,16 +158,27 @@ program
       const [registryName, remoteSkillId] = parseRemoteSpecifier(skillId);
       const remote = await loadRemoteSkillFromRegistry(registryName, remoteSkillId);
       printRemoteInstallWarning(remote.skillEntry.source.url);
-      const result = await installSkill({ skill: remote.skill, target, dir: options.dir, force: options.force, dryRun: options.dryRun });
+      const result = await installSkill({
+        skill: remote.skill,
+        target,
+        dir: options.dir,
+        force: options.force,
+        dryRun: options.dryRun,
+        source: registrySource(registryName, remote.skillEntry.source.url, remote.skillEntry.source.checksum)
+      });
       printInstallResult(result);
       return;
     }
-    const skill = getSkillById(await loadCliSkills(), skillId);
+    const skills = await loadCliSkills();
+    const skill = getSkillById(skills, skillId);
     if (!skill) {
       fail("Skill not found: " + skillId);
     }
-    const result = await installSkill({ skill, target, dir: options.dir, force: options.force, dryRun: options.dryRun });
-    printInstallResult(result);
+    const installPlan = resolveSkillDependencyClosure(skill, skills);
+    for (const plannedSkill of installPlan) {
+      const result = await installSkill({ skill: plannedSkill, target, dir: options.dir, force: options.force, dryRun: options.dryRun, source: builtinSource() });
+      printInstallResult(result);
+    }
   });
 
 program
@@ -177,7 +194,7 @@ program
     const sourceUrl = toSourceUrl(url);
     printRemoteInstallWarning(sourceUrl);
     const skill = await loadRemoteSkillUrl(sourceUrl);
-    const result = await installSkill({ skill, target, dir: options.dir, force: options.force, dryRun: options.dryRun });
+    const result = await installSkill({ skill, target, dir: options.dir, force: options.force, dryRun: options.dryRun, source: directSource(sourceUrl) });
     printInstallResult(result);
   });
 
@@ -199,7 +216,7 @@ program
       console.log("Pack: " + remotePack.pack.id);
       console.log("Review untrusted skills before use. Agent Skill OS treats remote skills as text instructions and does not execute remote code.");
       console.log("");
-      const results = await installPack({ skills: remotePack.skills, pack: remotePack.pack, target, dir: options.dir, force: options.force, dryRun: options.dryRun });
+      const results = await installPack({ skills: remotePack.skills, pack: remotePack.pack, target, dir: options.dir, force: options.force, dryRun: options.dryRun, sources: remotePack.sources });
       for (const result of results) {
         printInstallResult(result);
       }
@@ -214,6 +231,98 @@ program
     for (const result of results) {
       printInstallResult(result);
     }
+  });
+
+program
+  .command("uninstall")
+  .description("Uninstall an installed skill")
+  .argument("<skill-id>")
+  .requiredOption("--target <target>", "target: generic, claude, codex, cursor")
+  .option("--dir <dir>", "target project directory", ".")
+  .option("--force", "remove even if another installed skill depends on it")
+  .action(async (skillId, options) => {
+    const target = parseTarget(options.target);
+    const result = await uninstallSkill({ skillId, target, dir: options.dir, force: options.force });
+    printUninstallResult(result);
+  });
+
+program
+  .command("outdated")
+  .description("List installed built-in skills that have newer bundled versions")
+  .option("--target <target>", "target filter")
+  .option("--dir <dir>", "target project directory", ".")
+  .option("--json", "print JSON")
+  .action(async (options) => {
+    const target = options.target ? parseTarget(options.target) : undefined;
+    const outdated = await listOutdatedSkills({ dir: options.dir, target, skills: await loadCliSkills() });
+    if (options.json) {
+      printJson(outdated);
+      return;
+    }
+    if (outdated.length === 0) {
+      console.log(pc.green("✓ Installed built-in skills are up to date"));
+      return;
+    }
+    console.log(pc.bold("Outdated skills"));
+    console.log("");
+    for (const skill of outdated) {
+      console.log(skill.id + " " + skill.currentVersion + " -> " + skill.latestVersion + " (" + skill.target + ")");
+    }
+  });
+
+program
+  .command("update")
+  .description("Update an installed built-in skill")
+  .argument("<skill-id>")
+  .requiredOption("--target <target>", "target: generic, claude, codex, cursor")
+  .option("--dir <dir>", "target project directory", ".")
+  .action(async (skillId, options) => {
+    const target = parseTarget(options.target);
+    const skills = await loadCliSkills();
+    const skill = getSkillById(skills, skillId);
+    if (!skill) {
+      fail("Built-in skill not found: " + skillId);
+    }
+    for (const plannedSkill of resolveSkillDependencyClosure(skill, skills)) {
+      printInstallResult(await installSkill({ skill: plannedSkill, target, dir: options.dir, force: true, source: builtinSource() }));
+    }
+  });
+
+program
+  .command("update-pack")
+  .description("Update an installed built-in or remote registry skill pack")
+  .argument("<pack-id>")
+  .requiredOption("--target <target>", "target: generic, claude, codex, cursor")
+  .option("--dir <dir>", "target project directory", ".")
+  .action(async (packId, options) => {
+    const target = parseTarget(options.target);
+    if (isRemoteSpecifier(packId)) {
+      const [registryName, remotePackId] = parseRemoteSpecifier(packId);
+      const remotePack = await loadRemotePackFromRegistry(registryName, remotePackId);
+      const results = await installPack({ skills: remotePack.skills, pack: remotePack.pack, target, dir: options.dir, force: true, sources: remotePack.sources });
+      for (const result of results) {
+        printInstallResult(result);
+      }
+      return;
+    }
+    const [skills, packs] = await Promise.all([loadCliSkills(), loadCliPacks()]);
+    const pack = packs.find((candidate) => candidate.id === packId);
+    if (!pack) {
+      fail("Pack not found: " + packId);
+    }
+    const results = await installPack({ skills, pack, target, dir: options.dir, force: true });
+    for (const result of results) {
+      printInstallResult(result);
+    }
+  });
+
+program
+  .command("lock")
+  .description("Rebuild .agent-skill-os/skill-lock.json from the installed manifest")
+  .option("--dir <dir>", "target project directory", ".")
+  .action(async (options) => {
+    const lockPath = await rebuildSkillLock(options.dir);
+    console.log(pc.green("✓ Rebuilt " + lockPath));
   });
 
 program
@@ -495,6 +604,54 @@ function loadCliPacks() {
   return loadPacks(getRegistryOptions());
 }
 
+function resolveSkillDependencyClosure(skill: Skill, availableSkills: Skill[]): Skill[] {
+  const byId = new Map(availableSkills.map((candidate) => [candidate.metadata.id, candidate]));
+  const resolved: Skill[] = [];
+  const visiting = new Set<string>();
+  const visited = new Set<string>();
+
+  function visit(current: Skill): void {
+    if (visited.has(current.metadata.id)) {
+      return;
+    }
+    if (visiting.has(current.metadata.id)) {
+      fail("Circular skill dependency detected: " + [...visiting, current.metadata.id].join(" -> "));
+    }
+    visiting.add(current.metadata.id);
+    for (const dependencyId of current.metadata.dependencies) {
+      const dependency = byId.get(dependencyId);
+      if (!dependency) {
+        fail("Missing dependency for " + current.metadata.id + ": " + dependencyId);
+      }
+      visit(dependency);
+    }
+    visiting.delete(current.metadata.id);
+    visited.add(current.metadata.id);
+    resolved.push(current);
+  }
+
+  visit(skill);
+  return resolved;
+}
+
+function builtinSource(): InstallSource {
+  return { type: "builtin" };
+}
+
+function registrySource(registry: string, url: string, checksum?: string): InstallSource {
+  return { type: "registry", registry, url, checksum };
+}
+
+function directSource(sourceUrl: string): InstallSource {
+  if (/^file:\/\//i.test(sourceUrl)) {
+    return { type: "file", url: sourceUrl };
+  }
+  if (/githubusercontent\.com|github\.com/i.test(sourceUrl)) {
+    return { type: "github", url: sourceUrl };
+  }
+  return { type: "url", url: sourceUrl };
+}
+
 function parseTarget(value: string): InstallTarget {
   if ((installTargets as readonly string[]).includes(value)) {
     return value as InstallTarget;
@@ -545,6 +702,16 @@ function printInstallResult(result: InstallResultLike): void {
   }
   for (const file of result.writtenFiles) {
     console.log(pc.green("✓") + " " + (file.endsWith("manifest.json") ? "Updated " : "Installed " + result.skillId + " to ") + file);
+  }
+}
+
+function printUninstallResult(result: UninstallResult): void {
+  if (result.skipped) {
+    console.log(pc.yellow("- Skipped " + result.skillId + " because it is " + result.reason));
+    return;
+  }
+  for (const file of result.removedFiles) {
+    console.log(pc.green("✓") + " Removed " + file);
   }
 }
 

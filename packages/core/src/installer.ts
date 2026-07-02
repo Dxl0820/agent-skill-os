@@ -3,7 +3,7 @@ import fs from "fs-extra";
 import { getSkillRelativePath, renderSkillForTarget } from "./targets.js";
 import { toPosixPath } from "./fs-utils.js";
 import { buildRuntimeRouter, buildSkillIndex, metadataToRuntimeEntry, renderUsageMarkdown, runtimeVersion, type RuntimeSkillEntry } from "./runtime.js";
-import { InstallPackOptions, InstallResult, InstallSkillOptions, InstallTarget, SkillMetadata } from "./schema.js";
+import { InstallPackOptions, InstallResult, InstallSkillOptions, InstallSource, InstallTarget, Skill, SkillMetadata, UninstallResult, UninstallSkillOptions } from "./schema.js";
 
 interface ManifestSkill {
   id: string;
@@ -15,12 +15,16 @@ interface ManifestSkill {
   summary?: string;
   category?: string;
   tags?: string[];
+  compatibleWith?: SkillMetadata["compatibleWith"];
+  dependencies?: string[];
+  optionalDependencies?: string[];
   capabilities?: string[];
   triggers?: string[];
   conflicts?: string[];
   supports?: SkillMetadata["supports"];
   routing?: SkillMetadata["routing"];
   runtime?: SkillMetadata["runtime"];
+  source?: InstallSource;
 }
 
 interface Manifest {
@@ -30,7 +34,41 @@ interface Manifest {
   skills: ManifestSkill[];
 }
 
+interface SkillLock {
+  version: string;
+  generatedAt: string;
+  skills: SkillLockEntry[];
+}
+
+interface SkillLockEntry {
+  id: string;
+  version: string;
+  target: InstallTarget;
+  path: string;
+  installedAt: string;
+  source: InstallSource;
+  compatibleWith?: SkillMetadata["compatibleWith"];
+  dependencies: string[];
+  optionalDependencies: string[];
+}
+
+export interface ListOutdatedSkillsOptions {
+  dir: string;
+  target?: InstallTarget;
+  skills: Skill[];
+}
+
+export interface OutdatedSkill {
+  id: string;
+  target: InstallTarget;
+  currentVersion: string;
+  latestVersion: string;
+  path: string;
+  source: InstallSource;
+}
+
 const manifestVersion = runtimeVersion;
+const lockfileVersion = "0.7.0";
 
 export async function installSkill(options: InstallSkillOptions): Promise<InstallResult> {
   const targetDir = path.resolve(options.dir);
@@ -39,15 +77,17 @@ export async function installSkill(options: InstallSkillOptions): Promise<Instal
   const manifestPath = path.join(targetDir, ".agent-skill-os", "manifest.json");
   const runtimeFiles = getRuntimeWrittenFiles(options.target);
   const plannedFiles = [toPosixPath(relativePath), ...runtimeFiles];
+  const source = options.source || builtinSource();
 
   const manifest = await readManifest(manifestPath, options.target);
   const alreadyInManifest = manifest.skills.some((item) => item.id === options.skill.metadata.id && item.target === options.target);
   const outputExists = await fs.pathExists(outputPath);
   if ((alreadyInManifest || outputExists) && !options.force) {
     if (!options.dryRun) {
-      refreshManifestSkill(manifest, options.skill.metadata, options.target, relativePath);
+      refreshManifestSkill(manifest, options.skill.metadata, options.target, relativePath, source);
       await writeManifest(manifestPath, manifest);
       const targetSkills = manifest.skills.filter((item) => item.target === options.target);
+      await writeSkillLock(targetDir, manifest.skills);
       await writeRuntimeFiles(targetDir, options.target, targetSkills);
       await writeTargetLoader(targetDir, options.target, targetSkills);
     }
@@ -75,9 +115,10 @@ export async function installSkill(options: InstallSkillOptions): Promise<Instal
   manifest.version = manifestVersion;
   manifest.target = options.target;
   manifest.skills = manifest.skills.filter((item) => !(item.id === options.skill.metadata.id && item.target === options.target));
-  manifest.skills.push(createManifestSkill(options.skill.metadata, options.target, relativePath, installedAt));
+  manifest.skills.push(createManifestSkill(options.skill.metadata, options.target, relativePath, installedAt, source));
   manifest.skills.sort((a, b) => a.id.localeCompare(b.id));
   await writeManifest(manifestPath, manifest);
+  await writeSkillLock(targetDir, manifest.skills);
   await writeRuntimeFiles(targetDir, options.target, manifest.skills.filter((item) => item.target === options.target));
   await writeTargetLoader(targetDir, options.target, manifest.skills.filter((item) => item.target === options.target));
 
@@ -92,12 +133,14 @@ export async function installSkill(options: InstallSkillOptions): Promise<Instal
 export async function initializeAgentSkillOS(target: InstallTarget, dir: string): Promise<void> {
   const targetDir = path.resolve(dir);
   const manifestPath = path.join(targetDir, ".agent-skill-os", "manifest.json");
-  await writeManifest(manifestPath, {
+  const manifest = {
     version: manifestVersion,
     target,
     installedAt: new Date().toISOString(),
     skills: []
-  });
+  };
+  await writeManifest(manifestPath, manifest);
+  await writeSkillLock(targetDir, manifest.skills);
   await writeRuntimeFiles(targetDir, target, []);
   if (target === "generic") await fs.ensureDir(path.join(targetDir, "agent-skills"));
   if (target === "claude") await fs.ensureDir(path.join(targetDir, ".claude", "skills"));
@@ -110,7 +153,7 @@ export async function initializeAgentSkillOS(target: InstallTarget, dir: string)
 
 export async function installPack(options: InstallPackOptions): Promise<InstallResult[]> {
   const results: InstallResult[] = [];
-  for (const skillId of options.pack.skills) {
+  for (const skillId of resolvePackSkillIds(options.pack.id, options.pack.skills, options.skills)) {
     const skill = options.skills.find((candidate) => candidate.metadata.id === skillId);
     if (!skill) {
       throw new Error("Pack " + options.pack.id + " references missing skill: " + skillId);
@@ -120,10 +163,125 @@ export async function installPack(options: InstallPackOptions): Promise<InstallR
       target: options.target,
       dir: options.dir,
       force: options.force,
-      dryRun: options.dryRun
+      dryRun: options.dryRun,
+      source: options.sources?.[skillId]
     }));
   }
   return results;
+}
+
+function resolvePackSkillIds(packId: string, skillIds: string[], skills: Skill[]): string[] {
+  const byId = new Map(skills.map((skill) => [skill.metadata.id, skill]));
+  const resolved: string[] = [];
+  const visiting = new Set<string>();
+  const visited = new Set<string>();
+
+  function visit(skillId: string): void {
+    if (visited.has(skillId)) {
+      return;
+    }
+    if (visiting.has(skillId)) {
+      throw new Error("Circular skill dependency detected: " + [...visiting, skillId].join(" -> "));
+    }
+    const skill = byId.get(skillId);
+    if (!skill) {
+      throw new Error("Pack " + packId + " references missing skill: " + skillId);
+    }
+    visiting.add(skillId);
+    for (const dependencyId of skill.metadata.dependencies) {
+      visit(dependencyId);
+    }
+    visiting.delete(skillId);
+    visited.add(skillId);
+    resolved.push(skillId);
+  }
+
+  for (const skillId of skillIds) {
+    visit(skillId);
+  }
+  return resolved;
+}
+
+export async function uninstallSkill(options: UninstallSkillOptions): Promise<UninstallResult> {
+  const targetDir = path.resolve(options.dir);
+  const manifestPath = path.join(targetDir, ".agent-skill-os", "manifest.json");
+  const manifest = await readManifest(manifestPath, options.target);
+  const installed = manifest.skills.find((item) => item.id === options.skillId && item.target === options.target);
+  if (!installed) {
+    return {
+      skillId: options.skillId,
+      target: options.target,
+      removedFiles: [],
+      skipped: true,
+      reason: "not installed"
+    };
+  }
+
+  const dependents = manifest.skills
+    .filter((item) => item.target === options.target && item.id !== options.skillId && (item.dependencies || []).includes(options.skillId))
+    .map((item) => item.id);
+  if (dependents.length > 0 && !options.force) {
+    return {
+      skillId: options.skillId,
+      target: options.target,
+      removedFiles: [],
+      skipped: true,
+      reason: "required by " + dependents.join(", ") + "; use --force to remove anyway"
+    };
+  }
+
+  const removedFiles: string[] = [];
+  const skillPath = path.join(targetDir, installed.path);
+  await removeInstalledSkillPath(targetDir, skillPath);
+  removedFiles.push(installed.path);
+
+  manifest.version = manifestVersion;
+  manifest.target = options.target;
+  manifest.skills = manifest.skills.filter((item) => !(item.id === options.skillId && item.target === options.target));
+  await writeManifest(manifestPath, manifest);
+  await writeSkillLock(targetDir, manifest.skills);
+  const targetSkills = manifest.skills.filter((item) => item.target === options.target);
+  await writeRuntimeFiles(targetDir, options.target, targetSkills);
+  await writeTargetLoader(targetDir, options.target, targetSkills);
+
+  return {
+    skillId: options.skillId,
+    target: options.target,
+    removedFiles,
+    skipped: false
+  };
+}
+
+export async function listOutdatedSkills(options: ListOutdatedSkillsOptions): Promise<OutdatedSkill[]> {
+  const targetDir = path.resolve(options.dir);
+  const manifest = await readManifest(path.join(targetDir, ".agent-skill-os", "manifest.json"), options.target || "generic");
+  const latestById = new Map(options.skills.map((skill) => [skill.metadata.id, skill]));
+  return manifest.skills
+    .filter((skill) => !options.target || skill.target === options.target)
+    .filter((skill) => !skill.source || skill.source.type === "builtin")
+    .map((skill) => {
+      const latest = latestById.get(skill.id);
+      if (!latest || latest.metadata.version === skill.version) {
+        return undefined;
+      }
+      return {
+        id: skill.id,
+        target: skill.target,
+        currentVersion: skill.version,
+        latestVersion: latest.metadata.version,
+        path: skill.path,
+        source: skill.source || builtinSource()
+      };
+    })
+    .filter((item): item is OutdatedSkill => Boolean(item))
+    .sort((a, b) => a.id.localeCompare(b.id));
+}
+
+export async function rebuildSkillLock(dir: string): Promise<string> {
+  const targetDir = path.resolve(dir);
+  const manifest = await readManifest(path.join(targetDir, ".agent-skill-os", "manifest.json"), "generic");
+  await writeSkillLock(targetDir, manifest.skills);
+  return ".agent-skill-os/skill-lock.json";
 }
 
 async function readManifest(manifestPath: string, target: InstallTarget): Promise<Manifest> {
@@ -141,7 +299,7 @@ async function readManifest(manifestPath: string, target: InstallTarget): Promis
     version: manifest.version || manifestVersion,
     target: manifest.target || target,
     installedAt: manifest.installedAt || new Date().toISOString(),
-    skills: Array.isArray(manifest.skills) ? manifest.skills : []
+    skills: Array.isArray(manifest.skills) ? manifest.skills.map(normalizeManifestSkill) : []
   };
 }
 
@@ -150,15 +308,63 @@ async function writeManifest(manifestPath: string, manifest: Manifest): Promise<
   await fs.writeFile(manifestPath, JSON.stringify(manifest, null, 2) + "\n", "utf8");
 }
 
-function refreshManifestSkill(manifest: Manifest, metadata: SkillMetadata, target: InstallTarget, relativePath: string): void {
+async function writeSkillLock(targetDir: string, skills: ManifestSkill[]): Promise<void> {
+  const lock: SkillLock = {
+    version: lockfileVersion,
+    generatedAt: new Date().toISOString(),
+    skills: skills
+      .map((skill) => ({
+        id: skill.id,
+        version: skill.version,
+        target: skill.target,
+        path: skill.path,
+        installedAt: skill.installedAt,
+        source: skill.source || builtinSource(),
+        compatibleWith: skill.compatibleWith,
+        dependencies: skill.dependencies || [],
+        optionalDependencies: skill.optionalDependencies || []
+      }))
+      .sort((a, b) => a.target.localeCompare(b.target) || a.id.localeCompare(b.id))
+  };
+  const lockPath = path.join(targetDir, ".agent-skill-os", "skill-lock.json");
+  await fs.ensureDir(path.dirname(lockPath));
+  await fs.writeFile(lockPath, JSON.stringify(lock, null, 2) + "\n", "utf8");
+}
+
+function normalizeManifestSkill(skill: ManifestSkill): ManifestSkill {
+  return {
+    ...skill,
+    path: toPosixPath(skill.path),
+    compatibleWith: skill.compatibleWith || { aso: ">=0.2.0" },
+    dependencies: skill.dependencies || [],
+    optionalDependencies: skill.optionalDependencies || [],
+    source: skill.source || builtinSource()
+  };
+}
+
+async function removeInstalledSkillPath(targetDir: string, skillPath: string): Promise<void> {
+  const resolvedTarget = path.resolve(targetDir);
+  const resolvedSkillPath = path.resolve(skillPath);
+  if (!resolvedSkillPath.startsWith(resolvedTarget + path.sep)) {
+    throw new Error("Refusing to remove path outside target directory: " + resolvedSkillPath);
+  }
+  const removePath = path.basename(resolvedSkillPath).toLowerCase() === "skill.md" ? path.dirname(resolvedSkillPath) : resolvedSkillPath;
+  await fs.remove(removePath);
+}
+
+function builtinSource(): InstallSource {
+  return { type: "builtin" };
+}
+
+function refreshManifestSkill(manifest: Manifest, metadata: SkillMetadata, target: InstallTarget, relativePath: string, source: InstallSource): void {
   manifest.version = manifestVersion;
   manifest.target = target;
   manifest.skills = manifest.skills.filter((item) => !(item.id === metadata.id && item.target === target));
-  manifest.skills.push(createManifestSkill(metadata, target, relativePath, new Date().toISOString()));
+  manifest.skills.push(createManifestSkill(metadata, target, relativePath, new Date().toISOString(), source));
   manifest.skills.sort((a, b) => a.id.localeCompare(b.id));
 }
 
-function createManifestSkill(metadata: SkillMetadata, target: InstallTarget, relativePath: string, installedAt: string): ManifestSkill {
+function createManifestSkill(metadata: SkillMetadata, target: InstallTarget, relativePath: string, installedAt: string, source: InstallSource): ManifestSkill {
   return {
     id: metadata.id,
     version: metadata.version,
@@ -169,18 +375,23 @@ function createManifestSkill(metadata: SkillMetadata, target: InstallTarget, rel
     summary: metadata.summary,
     category: metadata.category,
     tags: metadata.tags,
+    compatibleWith: metadata.compatibleWith,
+    dependencies: metadata.dependencies,
+    optionalDependencies: metadata.optionalDependencies,
     capabilities: metadata.capabilities,
     triggers: metadata.triggers,
     conflicts: metadata.conflicts,
     supports: metadata.supports,
     routing: metadata.routing,
-    runtime: metadata.runtime
+    runtime: metadata.runtime,
+    source
   };
 }
 
 function getRuntimeWrittenFiles(target: InstallTarget): string[] {
   const files = [
     ".agent-skill-os/manifest.json",
+    ".agent-skill-os/skill-lock.json",
     ".agent-skill-os/router.json",
     ".agent-skill-os/skill-index.json",
     ".agent-skill-os/usage.md"
@@ -292,6 +503,9 @@ function manifestSkillToRuntimeEntry(skill: ManifestSkill, target: InstallTarget
       category: skill.category,
       tags: skill.tags,
       path: skill.path,
+      compatibleWith: skill.compatibleWith || { aso: ">=0.2.0" },
+      dependencies: skill.dependencies || [],
+      optionalDependencies: skill.optionalDependencies || [],
       capabilities: skill.capabilities,
       triggers: skill.triggers,
       conflicts: skill.conflicts || [],
@@ -316,6 +530,9 @@ function manifestSkillToRuntimeEntry(skill: ManifestSkill, target: InstallTarget
       inputs: ["user task"],
       outputs: ["task result"],
       use_cases: [skill.summary || skill.id],
+      compatibleWith: skill.compatibleWith || { aso: ">=0.2.0" },
+      dependencies: skill.dependencies || [],
+      optionalDependencies: skill.optionalDependencies || [],
       capabilities: skill.capabilities || [skill.id],
       triggers: skill.triggers || [skill.id],
       conflicts: skill.conflicts || [],

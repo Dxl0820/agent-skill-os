@@ -155,6 +155,11 @@ pnpm aso registry refresh
 pnpm aso search readme --remote
 pnpm aso install official/readme-writer --target codex --dir ./tmp/demo
 pnpm aso install-url https://example.com/skills/readme-writer/SKILL.md --target codex --dir ./tmp/demo
+pnpm aso outdated --dir ./tmp/demo
+pnpm aso update readme-writer --target codex --dir ./tmp/demo
+pnpm aso update-pack developer-productivity --target codex --dir ./tmp/demo-pack
+pnpm aso uninstall readme-writer --target codex --dir ./tmp/demo
+pnpm aso lock --dir ./tmp/demo
 pnpm aso mcp
 pnpm aso quality
 pnpm aso validate
@@ -224,6 +229,22 @@ aso quality --min-grade A
 
 The checker reports grade, safety, routing quality, runtime contract completeness, and issues. See [docs/quality.md](docs/quality.md).
 
+## Versioning and Lockfiles
+
+Agent Skill OS v0.7 records installed skill versions and sources in `.agent-skill-os/skill-lock.json`.
+
+~~~bash
+aso outdated --dir .
+aso update readme-writer --target codex --dir .
+aso update-pack developer-productivity --target codex --dir .
+aso uninstall readme-writer --target codex --dir .
+aso lock --dir .
+~~~
+
+Skill metadata can declare `compatibleWith`, `dependencies`, and `optionalDependencies`. Built-in skill dependencies are installed first; optional dependencies are recorded but not installed automatically.
+
+See [docs/versioning.md](docs/versioning.md).
+
 ## Repository Structure
 
 ~~~txt
@@ -276,12 +297,23 @@ pnpm build
 - Dynamic skill search, recommend, load, install, and validate tools
 - Stdio JSON-RPC transport through `aso mcp`
 
-### v0.5+
+### v0.5
 
 - Team/private registries
 - Remote team pack install
+
+### v0.6
+
 - Quality and trust checks
+
+### v0.7
+
 - Skill dependencies and versioning
+- `skill-lock.json`
+- Update, uninstall, outdated, and lock commands
+
+### v0.8+
+
 - Web registry discovery
 - Marketplace foundation
 
@@ -293,7 +325,7 @@ pnpm build
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md), [docs/contributing-skill.md](docs/contributing-skill.md), [docs/registry.md](docs/registry.md), [docs/mcp.md](docs/mcp.md), [docs/private-registry.md](docs/private-registry.md), and [docs/quality.md](docs/quality.md).
+See [CONTRIBUTING.md](CONTRIBUTING.md), [docs/contributing-skill.md](docs/contributing-skill.md), [docs/registry.md](docs/registry.md), [docs/mcp.md](docs/mcp.md), [docs/private-registry.md](docs/private-registry.md), [docs/quality.md](docs/quality.md), and [docs/versioning.md](docs/versioning.md).
 
 ## License
 

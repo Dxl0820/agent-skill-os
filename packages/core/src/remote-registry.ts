@@ -7,6 +7,7 @@ import {
   RegistryConfig,
   RegistryConfigEntry,
   RegistryConfigSchema,
+  InstallSource,
   RemoteRegistry,
   RemoteRegistrySchema,
   RemoteRegistrySkill,
@@ -141,21 +142,28 @@ export async function loadRemoteSkillFromRegistry(registryName: string, skillId:
   };
 }
 
-export async function loadRemotePackFromRegistry(registryName: string, packId: string, options: RegistryConfigOptions = {}): Promise<{ registry: RegistryConfigEntry; pack: SkillPack; skills: Skill[] }> {
+export async function loadRemotePackFromRegistry(registryName: string, packId: string, options: RegistryConfigOptions = {}): Promise<{ registry: RegistryConfigEntry; pack: SkillPack; skills: Skill[]; sources: Record<string, InstallSource> }> {
   const { registryEntry, remote } = await loadNamedRemoteRegistry(registryName, options);
   const pack = remote.packs.find((candidate) => candidate.id === packId);
   if (!pack) {
     throw new Error("Remote pack not found: " + registryName + "/" + packId);
   }
   const skills: Skill[] = [];
+  const sources: Record<string, InstallSource> = {};
   for (const skillId of pack.skills) {
     const skillEntry = remote.skills.find((candidate) => candidate.id === skillId);
     if (!skillEntry) {
       throw new Error("Remote pack " + registryName + "/" + packId + " references missing skill: " + skillId);
     }
     skills.push(await loadRemoteSkill(skillEntry));
+    sources[skillId] = {
+      type: "registry",
+      registry: registryName,
+      url: skillEntry.source.url,
+      checksum: skillEntry.source.checksum
+    };
   }
-  return { registry: registryEntry, pack, skills };
+  return { registry: registryEntry, pack, skills, sources };
 }
 
 export async function loadRemoteSkill(skillEntry: RemoteRegistrySkill): Promise<Skill> {

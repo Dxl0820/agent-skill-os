@@ -23,6 +23,10 @@ const SkillSupportsSchema = z.object({
   targets: z.array(z.enum(installTargets)).optional()
 });
 
+const SkillCompatibilitySchema = z.object({
+  aso: z.string().min(1).optional()
+});
+
 const SkillMetadataInputSchema = z.object({
   id: z.string().min(1).regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
   name: z.string().min(1),
@@ -41,6 +45,9 @@ const SkillMetadataInputSchema = z.object({
   capabilities: z.array(z.string().min(1)).optional(),
   triggers: z.array(z.string().min(1)).optional(),
   conflicts: z.array(z.string().min(1)).default([]),
+  compatibleWith: SkillCompatibilitySchema.optional(),
+  dependencies: z.array(z.string().min(1)).default([]),
+  optionalDependencies: z.array(z.string().min(1)).default([]),
   supports: SkillSupportsSchema.optional(),
   routing: RuntimeRoutingSchema.optional(),
   runtime: RuntimeContractSchema.optional()
@@ -59,6 +66,9 @@ export const SkillMetadataSchema = SkillMetadataInputSchema.transform((metadata)
     capabilities,
     triggers,
     conflicts: metadata.conflicts || [],
+    compatibleWith: metadata.compatibleWith || { aso: ">=0.2.0" },
+    dependencies: metadata.dependencies || [],
+    optionalDependencies: metadata.optionalDependencies || [],
     supports: {
       targets: metadata.supports?.targets && metadata.supports.targets.length > 0 ? metadata.supports.targets : metadata.targets
     },
@@ -170,6 +180,7 @@ export interface InstallSkillOptions {
   dir: string;
   force?: boolean;
   dryRun?: boolean;
+  source?: InstallSource;
 }
 
 export interface InstallPackOptions {
@@ -179,12 +190,35 @@ export interface InstallPackOptions {
   dir: string;
   force?: boolean;
   dryRun?: boolean;
+  sources?: Record<string, InstallSource>;
 }
 
 export interface InstallResult {
   skillId: string;
   target: InstallTarget;
   writtenFiles: string[];
+  skipped: boolean;
+  reason?: string;
+}
+
+export interface InstallSource {
+  type: "builtin" | "registry" | "url" | "file" | "github";
+  registry?: string;
+  url?: string;
+  checksum?: string;
+}
+
+export interface UninstallSkillOptions {
+  skillId: string;
+  target: InstallTarget;
+  dir: string;
+  force?: boolean;
+}
+
+export interface UninstallResult {
+  skillId: string;
+  target: InstallTarget;
+  removedFiles: string[];
   skipped: boolean;
   reason?: string;
 }

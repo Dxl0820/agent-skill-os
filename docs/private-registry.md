@@ -62,4 +62,4 @@ Packs remain installation units. Agents should still route and load individual s
 - Review every private skill before installing it.
 - Do not put secrets in registry URLs, skill files, or examples.
 - Prefer private Git repositories with normal team access controls.
-- Checksums and lock files are planned for a future release.
+- Installed private registry skills are recorded in `.agent-skill-os/skill-lock.json`; registry checksums are recorded when present.

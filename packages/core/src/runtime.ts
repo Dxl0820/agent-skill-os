@@ -20,6 +20,9 @@ export interface RuntimeSkillEntry {
   category: string;
   tags: string[];
   path: string;
+  compatibleWith: SkillMetadata["compatibleWith"];
+  dependencies: string[];
+  optionalDependencies: string[];
   capabilities: string[];
   triggers: string[];
   conflicts: string[];
@@ -190,6 +193,9 @@ export function metadataToRuntimeEntry(metadata: SkillMetadata, skillPath: strin
     category: metadata.category,
     tags: metadata.tags,
     path: skillPath,
+    compatibleWith: metadata.compatibleWith,
+    dependencies: metadata.dependencies,
+    optionalDependencies: metadata.optionalDependencies,
     capabilities: metadata.capabilities,
     triggers: metadata.triggers,
     conflicts: metadata.conflicts,
