@@ -5,6 +5,10 @@ import { Skill, SkillMetadataSchema, ValidationResult, requiredSections } from "
 
 export async function parseSkillFile(filePath: string): Promise<Skill> {
   const raw = await fs.readFile(filePath, "utf8");
+  return parseSkillMarkdown(raw, filePath);
+}
+
+export function parseSkillMarkdown(raw: string, filePath: string): Skill {
   const parsed = matter(raw);
   const metadata = SkillMetadataSchema.parse(parsed.data);
   return {

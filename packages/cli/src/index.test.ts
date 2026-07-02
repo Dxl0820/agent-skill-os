@@ -32,4 +32,46 @@ describe("cli smoke", () => {
     expect(content).toContain("category: coding");
     expect(content).toContain("  - codex");
   }, 30000);
+
+  it("manages remote registries and installs remote skills", async () => {
+    await fs.ensureDir(tmpCwd);
+    const remoteRoot = path.join(tmpCwd, "remote");
+    const remoteSkill = path.join(remoteRoot, "skills", "readme-writer", "SKILL.md");
+    const remoteRegistry = path.join(remoteRoot, "registry.json");
+    await fs.ensureDir(path.dirname(remoteSkill));
+    await fs.copyFile(path.join(cwd, "skills", "readme-writer", "SKILL.md"), remoteSkill);
+    await fs.writeJson(
+      remoteRegistry,
+      {
+        version: "0.3.0",
+        name: "official",
+        description: "CLI smoke registry",
+        skills: [
+          {
+            id: "readme-writer",
+            version: "0.2.0",
+            summary: "Create README files",
+            tags: ["readme"],
+            source: {
+              type: "file",
+              url: "file:///" + remoteSkill.replace(/\\/g, "/")
+            }
+          }
+        ],
+        packs: []
+      },
+      { spaces: 2 }
+    );
+    const cli = path.join(cwd, "packages/cli/src/index.ts");
+    const env = { ...process.env, AGENT_SKILL_OS_HOME: tmpCwd, NO_COLOR: "1" };
+    await expect(execa(tsxBin, [cli, "registry", "add", "official", remoteRegistry], { cwd, env })).resolves.toMatchObject({ exitCode: 0 });
+    await expect(execa(tsxBin, [cli, "registry", "refresh"], { cwd, env })).resolves.toMatchObject({ exitCode: 0 });
+    const remoteSearch = await execa(tsxBin, [cli, "search", "readme", "--remote"], { cwd, env });
+    expect(remoteSearch.stdout).toContain("official/readme-writer");
+    const installUrl = await execa(tsxBin, [cli, "install-url", remoteSkill, "--target", "codex", "--dir", path.join(tmpCwd, "install-url-demo")], { cwd, env });
+    expect(installUrl.stdout).toContain("Source:");
+    expect(await fs.pathExists(path.join(tmpCwd, "install-url-demo", ".agent-skill-os", "router.json"))).toBe(true);
+    await expect(execa(tsxBin, [cli, "install", "official/readme-writer", "--target", "codex", "--dir", path.join(tmpCwd, "registry-demo")], { cwd, env })).resolves.toMatchObject({ exitCode: 0 });
+    expect(await fs.pathExists(path.join(tmpCwd, "registry-demo", ".codex", "skills", "readme-writer", "SKILL.md"))).toBe(true);
+  }, 45000);
 });

@@ -3,6 +3,7 @@ import { z } from "zod";
 export const installTargets = ["generic", "claude", "codex", "cursor"] as const;
 export const skillCategories = ["documentation", "coding", "github", "product", "content", "research"] as const;
 export const skillDifficulties = ["beginner", "intermediate", "advanced"] as const;
+export const remoteSourceTypes = ["github", "url", "file"] as const;
 
 export type InstallTarget = (typeof installTargets)[number];
 
@@ -73,6 +74,43 @@ export const SkillPackSchema = z.object({
   skills: z.array(z.string().min(1)).min(1)
 });
 
+export const RemoteSkillSourceSchema = z.object({
+  type: z.enum(remoteSourceTypes),
+  url: z.string().min(1),
+  checksum: z.string().min(1).optional()
+});
+
+export const RemoteRegistrySkillSchema = z.object({
+  id: z.string().min(1).regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
+  version: z.string().min(1),
+  name: z.string().min(1).optional(),
+  summary: z.string().min(1).optional(),
+  description: z.string().min(1).optional(),
+  tags: z.array(z.string().min(1)).default([]),
+  capabilities: z.array(z.string().min(1)).default([]),
+  triggers: z.array(z.string().min(1)).default([]),
+  source: RemoteSkillSourceSchema
+});
+
+export const RemoteRegistrySchema = z.object({
+  version: z.string().min(1),
+  name: z.string().min(1),
+  description: z.string().min(1).default("Agent Skill OS remote registry"),
+  skills: z.array(RemoteRegistrySkillSchema).default([]),
+  packs: z.array(SkillPackSchema).default([])
+});
+
+export const RegistryConfigSchema = z.object({
+  version: z.string().min(1).default("0.3.0"),
+  registries: z.array(
+    z.object({
+      name: z.string().min(1).regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
+      url: z.string().min(1),
+      refreshedAt: z.string().min(1).optional()
+    })
+  ).default([])
+});
+
 export const requiredSections = [
   "Role",
   "When to Use",
@@ -88,6 +126,11 @@ export const requiredSections = [
 
 export type SkillMetadata = z.infer<typeof SkillMetadataSchema>;
 export type SkillPack = z.infer<typeof SkillPackSchema>;
+export type RemoteRegistry = z.infer<typeof RemoteRegistrySchema>;
+export type RemoteRegistrySkill = z.infer<typeof RemoteRegistrySkillSchema>;
+export type RegistryConfig = z.infer<typeof RegistryConfigSchema>;
+export type RegistryConfigEntry = RegistryConfig["registries"][number];
+export type RemoteSkillSource = z.infer<typeof RemoteSkillSourceSchema>;
 
 export interface Skill {
   metadata: SkillMetadata;

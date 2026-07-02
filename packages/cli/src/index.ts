@@ -13,18 +13,27 @@ import {
   installPack,
   installSkill,
   installTargets,
+  addRegistry,
+  loadConfiguredRemoteRegistries,
   loadPacks,
+  loadRegistryConfig,
+  loadRemoteSkillFromRegistry,
+  loadRemoteSkillUrl,
   loadSkills,
+  refreshRemoteRegistries,
+  removeRegistry,
+  searchRemoteRegistrySkills,
   recommendSkills,
   searchSkills,
   skillCategories,
+  toSourceUrl,
   validateAllSkills,
   validatePacks,
   type InstallTarget
 } from "@agent-skill-os/core";
 
 const program = new Command();
-const cliVersion = "0.2.0";
+const cliVersion = "0.3.0";
 const cliPackageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
 program
@@ -71,8 +80,21 @@ program
   .command("search")
   .description("Search skills")
   .argument("<query>")
+  .option("--remote", "search configured remote registries")
   .option("--json", "print JSON")
   .action(async (query, options) => {
+    if (options.remote) {
+      const results = searchRemoteRegistrySkills(await loadConfiguredRemoteRegistries(), query);
+      if (options.json) {
+        printJson(results);
+        return;
+      }
+      console.log(results.length + " remote skills found");
+      for (const result of results) {
+        console.log(pc.green(result.registry + "/" + result.skill.id) + " - " + (result.skill.summary || result.skill.source.url));
+      }
+      return;
+    }
     const results = searchSkills(await loadCliSkills(), query);
     if (options.json) {
       printJson(results.map((skill) => skill.metadata));
@@ -123,10 +145,35 @@ program
   .option("--dry-run", "show files without writing")
   .action(async (skillId, options) => {
     const target = parseTarget(options.target);
+    if (isRemoteSpecifier(skillId)) {
+      const [registryName, remoteSkillId] = parseRemoteSpecifier(skillId);
+      const remote = await loadRemoteSkillFromRegistry(registryName, remoteSkillId);
+      printRemoteInstallWarning(remote.skillEntry.source.url);
+      const result = await installSkill({ skill: remote.skill, target, dir: options.dir, force: options.force, dryRun: options.dryRun });
+      printInstallResult(result);
+      return;
+    }
     const skill = getSkillById(await loadCliSkills(), skillId);
     if (!skill) {
       fail("Skill not found: " + skillId);
     }
+    const result = await installSkill({ skill, target, dir: options.dir, force: options.force, dryRun: options.dryRun });
+    printInstallResult(result);
+  });
+
+program
+  .command("install-url")
+  .description("Install a skill directly from a raw SKILL.md URL or local file")
+  .argument("<url>")
+  .requiredOption("--target <target>", "target: generic, claude, codex, cursor")
+  .option("--dir <dir>", "target project directory", ".")
+  .option("--force", "overwrite existing files")
+  .option("--dry-run", "show files without writing")
+  .action(async (url, options) => {
+    const target = parseTarget(options.target);
+    const sourceUrl = toSourceUrl(url);
+    printRemoteInstallWarning(sourceUrl);
+    const skill = await loadRemoteSkillUrl(sourceUrl);
     const result = await installSkill({ skill, target, dir: options.dir, force: options.force, dryRun: options.dryRun });
     printInstallResult(result);
   });
@@ -257,6 +304,58 @@ program
     console.log(pc.green("✓ All skills and packs are valid"));
   });
 
+const registryCommand = program
+  .command("registry")
+  .description("Manage remote skill registries");
+
+registryCommand
+  .command("list")
+  .description("List configured remote registries")
+  .option("--json", "print JSON")
+  .action(async (options) => {
+    const config = await loadRegistryConfig();
+    if (options.json) {
+      printJson(config);
+      return;
+    }
+    console.log(config.registries.length + " registries configured");
+    for (const registry of config.registries) {
+      console.log("- " + registry.name + " -> " + registry.url + (registry.refreshedAt ? " (refreshed " + registry.refreshedAt + ")" : ""));
+    }
+  });
+
+registryCommand
+  .command("add")
+  .description("Add or update a remote registry")
+  .argument("<name>")
+  .argument("<url>")
+  .action(async (name, url) => {
+    const sourceUrl = toSourceUrl(url);
+    await addRegistry(name, sourceUrl);
+    console.log(pc.green("✓ Added registry " + name));
+    console.log("Source: " + sourceUrl);
+  });
+
+registryCommand
+  .command("remove")
+  .description("Remove a remote registry")
+  .argument("<name>")
+  .action(async (name) => {
+    const removed = await removeRegistry(name);
+    if (!removed) {
+      fail("Registry not found: " + name);
+    }
+    console.log(pc.green("✓ Removed registry " + name));
+  });
+
+registryCommand
+  .command("refresh")
+  .description("Fetch and cache configured remote registries")
+  .action(async () => {
+    const refreshed = await refreshRemoteRegistries();
+    console.log(pc.green("✓ Refreshed " + refreshed.length + " registries"));
+  });
+
 program
   .command("init")
   .description("Initialize Agent Skill OS metadata in a project")
@@ -356,6 +455,25 @@ function parseCategory(value: string): (typeof skillCategories)[number] {
     return value as (typeof skillCategories)[number];
   }
   fail("Invalid category: " + value + ". Expected one of " + skillCategories.join(", "));
+}
+
+function isRemoteSpecifier(value: string): boolean {
+  return /^[a-z0-9]+(?:-[a-z0-9]+)*\/[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value);
+}
+
+function parseRemoteSpecifier(value: string): [string, string] {
+  const [registryName, skillId] = value.split("/");
+  if (!registryName || !skillId) {
+    fail("Invalid remote skill specifier: " + value + ". Expected <registry>/<skill-id>");
+  }
+  return [registryName, skillId];
+}
+
+function printRemoteInstallWarning(sourceUrl: string): void {
+  console.log(pc.yellow("! Installing remote skill instructions"));
+  console.log("Source: " + sourceUrl);
+  console.log("Review untrusted skills before use. Agent Skill OS treats remote skills as text instructions and does not execute remote code.");
+  console.log("");
 }
 
 function printInstallResult(result: InstallResultLike): void {

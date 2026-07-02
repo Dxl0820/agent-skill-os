@@ -1,5 +1,30 @@
 # Changelog
 
+## Agent Skill OS v0.3.0
+
+This release adds local-first remote registry support.
+
+### Highlights
+
+- Added remote registry config support at `~/.agent-skill-os/config.json`.
+- Added `aso registry list`, `aso registry add`, `aso registry remove`, and `aso registry refresh`.
+- Added `aso search <query> --remote` for configured remote registries.
+- Added `aso install <registry>/<skill-id>` for installing from a registry JSON index.
+- Added `aso install-url <url>` for installing a raw remote or local `SKILL.md`.
+- Added source URL warnings before installing remote skills.
+- Added remote registry core tests and CLI smoke coverage.
+
+### Verified
+
+```bash
+pnpm --filter @agent-skill-os/core test
+pnpm --filter agent-skill-os test
+pnpm validate
+pnpm test
+pnpm build
+pnpm --filter agent-skill-os pack --dry-run
+```
+
 ## Agent Skill OS v0.2.0
 
 This release adds the Agent Skill Runtime layer.

@@ -132,6 +132,7 @@ Every skill lives at `skills/<skill-id>/SKILL.md` and includes frontmatter plus 
 - When to Use
 - Inputs
 - Workflow
+- Runtime Contract
 - Output Format
 - Quality Bar
 - Example Prompt
@@ -149,6 +150,11 @@ pnpm aso install-pack developer-productivity --target generic --dir ./tmp/demo-p
 pnpm aso use readme-writer --target codex
 pnpm aso use-pack developer-productivity --target codex
 pnpm aso recommend "write a README for this repo"
+pnpm aso registry add official https://example.com/registry.json
+pnpm aso registry refresh
+pnpm aso search readme --remote
+pnpm aso install official/readme-writer --target codex --dir ./tmp/demo
+pnpm aso install-url https://example.com/skills/readme-writer/SKILL.md --target codex --dir ./tmp/demo
 pnpm aso validate
 pnpm aso doctor --target generic --dir ./tmp/demo
 ~~~
@@ -162,6 +168,20 @@ Agent Skill OS v0.2 adds the runtime layer that helps an agent decide which inst
 - Loader: target files such as `.codex/AGENTS.md` tell the agent how to load only the selected skill.
 - Runtime Contract: each `SKILL.md` defines required inputs, execution steps, output contract, and failure mode.
 - Developer Interface: `aso use` prints loading instructions, and `aso recommend` maps a task to recommended skills.
+
+## Remote Registry
+
+Agent Skill OS v0.3 adds local-first remote registry support. A registry is a JSON index that points to raw `SKILL.md` files.
+
+~~~bash
+aso registry add official https://example.com/registry.json
+aso registry refresh
+aso search readme --remote
+aso install official/readme-writer --target codex --dir .
+aso install-url https://example.com/skills/readme-writer/SKILL.md --target codex --dir .
+~~~
+
+Remote skills are treated as text instructions, not executable code. The CLI prints the source URL before installing remote skills so you can review untrusted content.
 
 ## Repository Structure
 
@@ -195,18 +215,32 @@ pnpm build
 
 ### v0.2
 
-- Community skill submission workflow
-- Skill rating metadata
-- More target adapters
-- Better Codex/Cursor/Claude templates
-- Skill dependency support
+- Agent Skill Runtime
+- Runtime router and skill index
+- Stronger target loaders
+- Runtime Contract in every built-in skill
+- `aso use`, `aso use-pack`, and `aso recommend`
 
 ### v0.3
 
-- MCP server
-- Local desktop app
-- Skill execution preview
-- Team skill registry
+- Remote registry config
+- Registry add/list/remove/refresh
+- Remote search
+- Install from registry skill IDs
+- Install from raw SKILL.md URLs
+
+### v0.4
+
+- MCP server runtime interface
+- Dynamic skill search, recommend, load, install, and validate tools
+
+### v0.5+
+
+- Team/private registries
+- Quality and trust checks
+- Skill dependencies and versioning
+- Web registry discovery
+- Marketplace foundation
 
 ## Growth Scenarios
 
@@ -216,7 +250,7 @@ pnpm build
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) and [docs/contributing-skill.md](docs/contributing-skill.md).
+See [CONTRIBUTING.md](CONTRIBUTING.md), [docs/contributing-skill.md](docs/contributing-skill.md), and [docs/registry.md](docs/registry.md).
 
 ## License
 

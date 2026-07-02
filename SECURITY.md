@@ -6,7 +6,9 @@ Agent Skill OS is pre-1.0. Security fixes are provided for the latest released v
 
 | Version | Supported |
 | --- | --- |
-| 0.1.x | Yes |
+| 0.3.x | Yes |
+| 0.2.x | Yes |
+| 0.1.x | No |
 
 ## Reporting a Vulnerability
 
@@ -27,6 +29,7 @@ Include:
 Security-sensitive areas include:
 
 - CLI install paths and target adapters.
+- Remote registry source URLs and remote skill installation.
 - Skill and pack validation.
 - Generated manifest files.
 - npm package contents and install-time behavior.
