@@ -105,6 +105,30 @@
       }
     }
   },
+  "packDetail": {
+    "metadataTitle": "{pack} パック",
+    "eyebrow": "スキルパック",
+    "installUnit": "インストール単位",
+    "executionUnit": "実行単位",
+    "includedSkills": "含まれるスキル",
+    "pack": "パック",
+    "skill": "スキル",
+    "skillsTitle": "含まれるスキル",
+    "principle": {
+      "install": {
+        "title": "まとめてインストール",
+        "body": "パックは関連スキルを 1 つのコマンドでインストールします。"
+      },
+      "route": {
+        "title": "選択的にルーティング",
+        "body": "ランタイム router が各タスクに関連するスキルを選びます。"
+      },
+      "load": {
+        "title": "少なくロード",
+        "body": "エージェントは選択されたスキルと最大 2 つの補助スキルだけを読み込むべきです。"
+      }
+    }
+  },
   "targetsPage": {
     "metadataTitle": "Agent Skill OS ターゲット",
     "eyebrow": "ターゲットアダプター",
@@ -162,6 +186,10 @@
     "includedSkills": "含まれるスキル",
     "viewUseCase": "ワークフローを見る",
     "items": {
+      "code-review": {
+        "name": "コードレビュー",
+        "summary": "Pull Request ワークフロー向けに、レビュー、テスト不足、バグ再現、PR 要約のスキルをインストールします。"
+      },
       "developer-productivity": {
         "name": "開発者生産性",
         "summary": "コードレビュー、テスト、バグ再現、リファクタリング、README、PR 要約のスキルをエージェントに追加します。"
@@ -199,6 +227,7 @@
       "body": "生成された router は、エージェントがすべてのインストール済みスキルをデフォルトで読むことを防ぎます。"
     },
     "outputs": {
+      "code-review": "構造化されたレビュー指摘、リスクレベル、不足テストの提案、再現メモ、PR 要約。",
       "developer-productivity": "レビュー指摘、回帰テスト、再現手順、リファクタリング計画、README 草案、PR 要約。",
       "open-source-launch": "PRD 草案、README 改善、ランディングコピー、ローンチ投稿、デモ動画計画。",
       "repo-maintenance": "Issue トリアージ、PR 要約、リリースノート、Changelog 草案、貢献ガイド更新。",
@@ -279,6 +308,33 @@
     "contributing": "コントリビューション",
     "contributingBody": "Pull Request を開く前に <code>pnpm validate</code> と <code>pnpm test</code> を実行してください。完全なスキル貢献ガイドは <code>docs/contributing-skill.md</code> を参照してください。",
     "roadmap": "ロードマップ",
-    "roadmapBody": "現在の v0.8 系では、ターゲットと実用ユースケースによる Web ディスカバリーを追加します。次のマイルストーンはマーケットプレイスの信頼基盤です。"
+    "roadmapBody": "v1.0 は安定した schema、CLI、ランタイムファイル、ターゲットアダプター、MCP server、品質チェック、移行ガイド、安全性の基盤を定義します。"
+  },
+  "docsDetail": {
+    "eyebrow": "ドキュメント",
+    "concept": "コンセプト",
+    "commands": "コマンド",
+    "stableContract": "安定契約",
+    "repoDocs": "リポジトリ文書",
+    "pages": {
+      "runtime": {
+        "title": "ランタイム",
+        "summary": "エージェントがすべてを読まずに、インストール済みスキルをルーティング、選択、ロードする仕組み。",
+        "concept": "ランタイムは router.json、skill-index.json、usage.md、ターゲットローダーで構成されます。方針は install many, load few です。",
+        "contract": "エージェントは主スキルを 1 つ、補助スキルを最大 2 つ選び、選択を明示し、関連する SKILL.md だけを読み、Runtime Contract で検証します。"
+      },
+      "registry": {
+        "title": "Registry",
+        "summary": "ローカルおよびリモート registry がスキルとパックを記述する方法。",
+        "concept": "Registry は型付きメタデータと skill/pack エントリです。リモート registry は raw SKILL.md を指す JSON インデックスです。",
+        "contract": "リモートスキルは実行コードではなくテキスト指示です。CLI は source URL を表示し、lockfile にソース情報を書き込みます。"
+      },
+      "mcp": {
+        "title": "MCP Server",
+        "summary": "エージェントが MCP 経由でスキルを発見、推薦、ロード、インストール、検証する方法。",
+        "concept": "MCP server は stdio JSON-RPC で Agent Skill OS のランタイム操作を公開します。",
+        "contract": "MCP tools は CLI と同じランタイム方針に従い、主スキルを 1 つ推薦し、すべてのインストール済みスキルをデフォルトで読みません。"
+      }
+    }
   }
 }

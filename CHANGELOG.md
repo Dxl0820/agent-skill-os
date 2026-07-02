@@ -1,5 +1,30 @@
 # Changelog
 
+## Agent Skill OS v1.0.0
+
+This release establishes Agent Skill OS as a stable platform baseline for AI agent skills.
+
+### Highlights
+
+- Bumped project packages and CLI version to `1.0.0`.
+- Added stable platform documentation.
+- Added migration guide from v0.1-v0.9 to v1.0.
+- Added security documentation for reviewing and reporting unsafe skills.
+- Added concept docs for Skills, Packs, Router, and Runtime Contract.
+- Added target docs for Codex, Claude, Cursor, and Generic adapters.
+- Added Web pack detail pages and docs detail pages for Runtime, Registry, and MCP.
+- Added `/use-cases/code-review` discovery route.
+
+### Verified
+
+```bash
+pnpm validate
+pnpm test
+pnpm build
+pnpm pack --dry-run
+pnpm publish --dry-run --no-git-checks
+```
+
 ## Agent Skill OS v0.9.0
 
 This release adds marketplace trust foundations without adding accounts, payments, ratings, or hosted submissions.

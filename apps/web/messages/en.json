@@ -105,6 +105,30 @@
       }
     }
   },
+  "packDetail": {
+    "metadataTitle": "{pack} Pack",
+    "eyebrow": "Skill pack",
+    "installUnit": "Install unit",
+    "executionUnit": "Execution unit",
+    "includedSkills": "Included skills",
+    "pack": "Pack",
+    "skill": "Skill",
+    "skillsTitle": "Included skills",
+    "principle": {
+      "install": {
+        "title": "Install together",
+        "body": "A pack installs related skills with one command."
+      },
+      "route": {
+        "title": "Route selectively",
+        "body": "The runtime router chooses the relevant skill for each task."
+      },
+      "load": {
+        "title": "Load few",
+        "body": "Agents should load only the selected skill and at most two supporting skills."
+      }
+    }
+  },
   "targetsPage": {
     "metadataTitle": "Agent Skill OS Targets",
     "eyebrow": "Target adapters",
@@ -162,6 +186,10 @@
     "includedSkills": "Included skills",
     "viewUseCase": "View workflow",
     "items": {
+      "code-review": {
+        "name": "Code Review",
+        "summary": "Install focused review, test gap, bug reproduction, and PR summary skills for pull request workflows."
+      },
       "developer-productivity": {
         "name": "Developer Productivity",
         "summary": "Give a coding agent code review, testing, bug reproduction, refactoring, README, and PR summary skills."
@@ -199,6 +227,7 @@
       "body": "The generated router keeps the agent from loading every installed skill by default."
     },
     "outputs": {
+      "code-review": "Structured review findings, risk levels, missing test recommendations, reproduction notes, and PR summaries.",
       "developer-productivity": "Review findings, regression tests, reproduction steps, refactor plans, README drafts, and PR summaries.",
       "open-source-launch": "PRD drafts, README improvements, landing copy, launch posts, and demo video plans.",
       "repo-maintenance": "Issue triage, PR summaries, release notes, changelog drafts, and contribution guide updates.",
@@ -279,6 +308,33 @@
     "contributing": "Contributing",
     "contributingBody": "Run <code>pnpm validate</code> and <code>pnpm test</code> before opening a pull request. Use <code>docs/contributing-skill.md</code> for the full skill contribution guide.",
     "roadmap": "Roadmap",
-    "roadmapBody": "The current v0.8 line adds Web discovery for targets and practical use cases. The next milestone focuses on marketplace trust foundations."
+    "roadmapBody": "v1.0 establishes the stable schema, CLI, runtime files, target adapters, MCP server, quality checks, migration guide, and security baseline."
+  },
+  "docsDetail": {
+    "eyebrow": "Docs",
+    "concept": "Concept",
+    "commands": "Commands",
+    "stableContract": "Stable contract",
+    "repoDocs": "Repository docs",
+    "pages": {
+      "runtime": {
+        "title": "Runtime",
+        "summary": "How agents route, select, and load installed skills without reading everything.",
+        "concept": "The runtime is the local layer made of router.json, skill-index.json, usage.md, and target loaders. Its policy is install many, load few.",
+        "contract": "Agents select one primary skill, at most two supporting skills, state the selection, load only relevant SKILL.md files, and validate against the Runtime Contract."
+      },
+      "registry": {
+        "title": "Registry",
+        "summary": "How local and remote registries describe skills and packs.",
+        "concept": "A registry is typed metadata plus skill and pack entries. Remote registries are JSON indexes that point to raw SKILL.md files.",
+        "contract": "Remote skills are text instructions, not executable code. The CLI shows source URLs and writes source information to the lockfile."
+      },
+      "mcp": {
+        "title": "MCP Server",
+        "summary": "How agents can discover, recommend, load, install, and validate skills through MCP.",
+        "concept": "The MCP server exposes Agent Skill OS runtime operations over stdio JSON-RPC.",
+        "contract": "MCP tools follow the same runtime policy as the CLI: recommend one primary skill and avoid loading every installed skill by default."
+      }
+    }
   }
 }

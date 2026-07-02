@@ -2,13 +2,13 @@
 
 ## Supported Versions
 
-Agent Skill OS is pre-1.0. Security fixes are provided for the latest released version.
+Security fixes are provided for the latest stable release line.
 
 | Version | Supported |
 | --- | --- |
-| 0.3.x | Yes |
-| 0.2.x | Yes |
-| 0.1.x | No |
+| 1.0.x | Yes |
+| 0.9.x | Security fixes only until the next 1.0.x patch |
+| < 0.9 | No |
 
 ## Reporting a Vulnerability
 

@@ -105,6 +105,30 @@
       }
     }
   },
+  "packDetail": {
+    "metadataTitle": "{pack} 技能包",
+    "eyebrow": "技能包",
+    "installUnit": "安装单位",
+    "executionUnit": "执行单位",
+    "includedSkills": "包含技能",
+    "pack": "技能包",
+    "skill": "技能",
+    "skillsTitle": "包含技能",
+    "principle": {
+      "install": {
+        "title": "一起安装",
+        "body": "技能包用一条命令安装一组相关技能。"
+      },
+      "route": {
+        "title": "选择路由",
+        "body": "运行时 router 会为每个任务选择相关技能。"
+      },
+      "load": {
+        "title": "少量加载",
+        "body": "Agent 应只加载选中的技能，最多再加载两个辅助技能。"
+      }
+    }
+  },
   "targetsPage": {
     "metadataTitle": "Agent Skill OS 适配目标",
     "eyebrow": "目标适配器",
@@ -162,6 +186,10 @@
     "includedSkills": "包含技能",
     "viewUseCase": "查看工作流",
     "items": {
+      "code-review": {
+        "name": "代码审查",
+        "summary": "为 Pull Request 工作流安装代码审查、测试缺口、Bug 复现和 PR 摘要技能。"
+      },
       "developer-productivity": {
         "name": "开发者效率",
         "summary": "为编程 Agent 配置代码审查、测试、Bug 复现、重构、README 和 PR 摘要技能。"
@@ -199,6 +227,7 @@
       "body": "生成的 router 会避免 Agent 默认加载所有已安装技能。"
     },
     "outputs": {
+      "code-review": "结构化审查发现、风险等级、缺失测试建议、复现说明和 PR 摘要。",
       "developer-productivity": "代码审查发现、回归测试、复现步骤、重构计划、README 草稿和 PR 摘要。",
       "open-source-launch": "PRD 草稿、README 改进、落地页文案、发布帖和 Demo 视频计划。",
       "repo-maintenance": "Issue 分诊、PR 摘要、发布说明、Changelog 草稿和贡献指南更新。",
@@ -279,6 +308,33 @@
     "contributing": "贡献",
     "contributingBody": "提交 PR 前请运行 <code>pnpm validate</code> 和 <code>pnpm test</code>。完整技能贡献指南见 <code>docs/contributing-skill.md</code>。",
     "roadmap": "路线图",
-    "roadmapBody": "当前 v0.8 重点是按适配目标和实际用例提供 Web 发现入口。下一个里程碑聚焦 Marketplace 信任基础。"
+    "roadmapBody": "v1.0 建立稳定的 schema、CLI、运行时文件、目标适配器、MCP server、质量检查、迁移指南和安全基线。"
+  },
+  "docsDetail": {
+    "eyebrow": "文档",
+    "concept": "概念",
+    "commands": "命令",
+    "stableContract": "稳定契约",
+    "repoDocs": "仓库文档",
+    "pages": {
+      "runtime": {
+        "title": "运行时",
+        "summary": "Agent 如何在不读取全部技能的前提下路由、选择和加载已安装技能。",
+        "concept": "运行时由 router.json、skill-index.json、usage.md 和目标加载器组成。核心策略是 install many, load few。",
+        "contract": "Agent 选择一个主技能，最多两个辅助技能，说明选择理由，只加载相关 SKILL.md，并按 Runtime Contract 验证。"
+      },
+      "registry": {
+        "title": "Registry",
+        "summary": "本地和远程 registry 如何描述技能与技能包。",
+        "concept": "Registry 是类型化元数据与 skill/pack 条目。远程 registry 是指向原始 SKILL.md 文件的 JSON 索引。",
+        "contract": "远程技能是文本指令，不是可执行代码。CLI 会显示 source URL，并把来源信息写入 lockfile。"
+      },
+      "mcp": {
+        "title": "MCP Server",
+        "summary": "Agent 如何通过 MCP 发现、推荐、加载、安装和验证技能。",
+        "concept": "MCP server 通过 stdio JSON-RPC 暴露 Agent Skill OS 运行时能力。",
+        "contract": "MCP tools 遵守和 CLI 相同的运行时策略：推荐一个主技能，并避免默认加载所有已安装技能。"
+      }
+    }
   }
 }

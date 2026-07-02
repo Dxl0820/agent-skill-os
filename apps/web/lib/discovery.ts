@@ -27,6 +27,12 @@ export const targetAdapters = [
 
 export const useCases = [
   {
+    slug: "code-review",
+    packId: "developer-productivity",
+    skillIds: ["code-reviewer", "test-writer", "bug-reproducer", "pr-summarizer"],
+    command: "aso install-pack developer-productivity --target codex --dir ."
+  },
+  {
     slug: "developer-productivity",
     packId: "developer-productivity",
     skillIds: ["code-reviewer", "test-writer", "bug-reproducer", "refactor-planner", "readme-writer", "pr-summarizer"],

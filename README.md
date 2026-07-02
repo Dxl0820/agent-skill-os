@@ -268,6 +268,17 @@ Agent Skill OS v0.9 adds trust signals without accounts, payments, ratings, or h
 
 See [docs/marketplace.md](docs/marketplace.md).
 
+## Stable Platform
+
+Agent Skill OS v1.0 defines the stable baseline for skill schema, pack schema, registry schema, CLI commands, runtime files, target adapters, MCP tools, quality checks, migration, and security guidance.
+
+Start here:
+
+- [Getting started](docs/getting-started.md)
+- [Stable platform](docs/stable-platform.md)
+- [Migration guide](docs/migration.md)
+- [Security](docs/security.md)
+
 ## Repository Structure
 
 ~~~txt
@@ -351,6 +362,7 @@ pnpm build
 
 - Stable platform documentation
 - Migration and release guarantees
+- Stable schema, CLI, runtime, target adapter, MCP, quality, and security baseline
 
 ## Growth Scenarios
 
@@ -360,7 +372,7 @@ pnpm build
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md), [docs/contributing-skill.md](docs/contributing-skill.md), [docs/registry.md](docs/registry.md), [docs/mcp.md](docs/mcp.md), [docs/private-registry.md](docs/private-registry.md), [docs/quality.md](docs/quality.md), [docs/versioning.md](docs/versioning.md), and [docs/marketplace.md](docs/marketplace.md).
+See [CONTRIBUTING.md](CONTRIBUTING.md), [docs/getting-started.md](docs/getting-started.md), [docs/stable-platform.md](docs/stable-platform.md), [docs/migration.md](docs/migration.md), [docs/security.md](docs/security.md), [docs/contributing-skill.md](docs/contributing-skill.md), [docs/registry.md](docs/registry.md), [docs/mcp.md](docs/mcp.md), [docs/private-registry.md](docs/private-registry.md), [docs/quality.md](docs/quality.md), [docs/versioning.md](docs/versioning.md), and [docs/marketplace.md](docs/marketplace.md).
 
 ## License
 

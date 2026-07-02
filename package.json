@@ -1,6 +1,6 @@
 {
   "name": "agent-skill-os-monorepo",
-  "version": "0.9.0",
+  "version": "1.0.0",
   "private": true,
   "description": "Install battle-tested skills into your AI coding agent in 30 seconds.",
   "type": "module",

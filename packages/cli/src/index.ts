@@ -42,7 +42,7 @@ import {
 } from "@agent-skill-os/core";
 
 const program = new Command();
-const cliVersion = "0.9.0";
+const cliVersion = "1.0.0";
 const cliPackageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
 program
