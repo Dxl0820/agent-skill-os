@@ -5,9 +5,9 @@ Install reusable expert skills into AI coding agents like Codex, Claude Code, an
 **Agent Skill OS is the package manager and runtime contract layer for AI agent skills.**
 
 [![npm version](https://img.shields.io/npm/v/agent-skill-os?color=2563eb)](https://www.npmjs.com/package/agent-skill-os)
-[![CI](https://github.com/Dxl0820/agent-skill-os/actions/workflows/ci.yml/badge.svg)](https://github.com/Dxl0820/agent-skill-os/actions/workflows/ci.yml)
+[![CI](https://github.com/Da-loong/agent-skill-os/actions/workflows/ci.yml/badge.svg)](https://github.com/Da-loong/agent-skill-os/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-059669.svg)](LICENSE)
-[![GitHub stars](https://img.shields.io/github/stars/Dxl0820/agent-skill-os?style=social)](https://github.com/Dxl0820/agent-skill-os/stargazers)
+[![GitHub stars](https://img.shields.io/github/stars/Da-loong/agent-skill-os?style=social)](https://github.com/Da-loong/agent-skill-os/stargazers)
 
 ```txt
 Install many. Load few.
