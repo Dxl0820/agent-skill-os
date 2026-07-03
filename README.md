@@ -1,76 +1,58 @@
 # Agent Skill OS
 
-Install battle-tested skills into your AI coding agent in 30 seconds.
+Install reusable expert skills into AI coding agents like Codex, Claude Code, and Cursor.
 
-Install many. Load few.
+**Agent Skill OS is the package manager and runtime contract layer for AI agent skills.**
 
 [![npm version](https://img.shields.io/npm/v/agent-skill-os?color=2563eb)](https://www.npmjs.com/package/agent-skill-os)
 [![CI](https://github.com/Dxl0820/agent-skill-os/actions/workflows/ci.yml/badge.svg)](https://github.com/Dxl0820/agent-skill-os/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-059669.svg)](LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/Dxl0820/agent-skill-os?style=social)](https://github.com/Dxl0820/agent-skill-os/stargazers)
 
-Before:
+```txt
+Install many. Load few.
+```
 
-~~~txt
-Copy-paste random prompts from old chats.
-~~~
-
-After:
-
-~~~txt
-aso install-pack developer-productivity --target codex --dir .
-~~~
+Agent Skill OS lets you install a library of reusable skills into a project while the runtime router helps the agent load only the skills relevant to the current task.
 
 <p align="center">
   <img src="assets/demo.gif" alt="Agent Skill OS demo" width="900" />
 </p>
 
-~~~bash
-pnpm add -g agent-skill-os
-aso install readme-writer --target codex --dir .
-aso install-pack developer-productivity --target codex --dir .
-~~~
-
 <p>
-  <a href="#quick-start">Quick Start</a> •
-  <a href="#demo">Demo</a> •
-  <a href="#skills">Skills</a> •
-  <a href="#cli">CLI</a> •
-  <a href="#contributing">Contributing</a>
+  <a href="#quick-start">Quick Start</a> |
+  <a href="#what-you-get">What You Get</a> |
+  <a href="#how-it-works">How It Works</a> |
+  <a href="#commands">Commands</a> |
+  <a href="#docs">Docs</a>
 </p>
-
-## Why
-
-Agent Skill OS turns reusable prompts and workflows into installable Markdown skills with typed metadata, validation, packs, and target adapters.
-
-Agent Skill OS is built around a runtime principle: install as many skills as a project needs, but ask the agent to load only the few skills relevant to the current task.
 
 ## Quick Start
 
-### Use the CLI
+Install the CLI:
 
-Install Agent Skill OS and add a reusable skill to a Codex project:
+```bash
+npm install -g agent-skill-os
+aso --version
+```
 
-~~~bash
-pnpm add -g agent-skill-os
-aso install readme-writer --target codex --dir ./demo
-aso use readme-writer --target codex
-aso recommend "review this pull request"
-~~~
+Install a skill pack into a Codex project:
 
-### Run this repository locally
+```bash
+aso install-pack developer-productivity --target codex --dir .
+```
 
-~~~bash
-pnpm install
-pnpm validate
-pnpm test
-pnpm build
-pnpm aso install-pack developer-productivity --target codex --dir .
-~~~
+Ask your agent:
+
+```txt
+Review this pull request.
+```
+
+The generated loader tells the agent to read `.agent-skill-os/router.json`, choose one primary skill, load only the selected `SKILL.md`, follow its Runtime Contract, and validate the answer against the skill Quality Bar.
 
 ## Demo
 
-Install a reusable skill into Codex in seconds:
+Install one reusable skill into Codex:
 
 ```bash
 aso install readme-writer --target codex --dir ./demo
@@ -82,6 +64,10 @@ Generated structure:
 demo/
   .agent-skill-os/
     manifest.json
+    skill-lock.json
+    router.json
+    skill-index.json
+    usage.md
   .codex/
     AGENTS.md
     skills/
@@ -89,45 +75,120 @@ demo/
         SKILL.md
 ```
 
-Runtime files are generated alongside the installed skill:
+Load instructions for the agent:
 
-```txt
-demo/
-  .agent-skill-os/
-    manifest.json
-    router.json
-    skill-index.json
-    usage.md
+```bash
+aso use readme-writer --target codex
 ```
 
-## Install a Skill
+## What You Get
 
-~~~bash
-pnpm aso install readme-writer --target generic --dir ./tmp/demo
-pnpm aso install readme-writer --target codex --dir ./tmp/demo-codex
-~~~
+| Layer | What it does |
+| --- | --- |
+| Skills | Versioned Markdown workflows with metadata, triggers, inputs, output contracts, quality bars, and safety notes. |
+| Packs | Curated groups of related skills that install together. |
+| Runtime files | `manifest.json`, `skill-lock.json`, `router.json`, `skill-index.json`, and `usage.md`. |
+| Target loaders | Codex, Claude, Cursor, and generic loader files that tell the agent how to use installed skills. |
+| Router policy | One primary skill and up to two supporting skills for each task. |
+| Quality checks | Deterministic validation for skill structure, runtime contracts, routing, examples, and safety notes. |
+| MCP server | Runtime tools for dynamic skill search, recommendation, loading, installation, and validation. |
 
-## Install a Pack
+## Why It Exists
 
-~~~bash
-pnpm aso install-pack developer-productivity --target generic --dir ./tmp/demo-pack
-~~~
+Before Agent Skill OS:
 
-## Works With
+```txt
+Copy-paste old prompts.
+Rewrite the same workflow in every project.
+Ask the agent to read too much context.
+Lose track of which prompt, version, or target was used.
+```
 
-- generic: writes to `agent-skills/<skill-id>/SKILL.md`
-- claude: writes to `.claude/skills/<skill-id>/SKILL.md` and `.claude/CLAUDE.md`
-- codex: writes to `.codex/skills/<skill-id>/SKILL.md` and updates `.codex/AGENTS.md`
-- cursor: writes `.cursor/rules/<skill-id>.mdc` and `.cursor/rules/agent-skill-os.mdc`
+After Agent Skill OS:
 
-## Skills
+```txt
+Install reusable skills.
+Generate target-specific loader files.
+Route each task to the right skill.
+Load only the relevant skill files.
+Validate output against a Runtime Contract.
+```
 
-The MVP ships with 24 built-in skills across documentation, coding, GitHub maintenance, product launch, AI video/content, and research.
+## How It Works
+
+1. Install skills or packs into a project.
+2. Agent Skill OS writes target-specific loader files and shared runtime metadata.
+3. The agent reads the router, selects the relevant skill, and loads only that skill file.
+4. The agent follows the skill Runtime Contract.
+5. The result is checked against the skill Quality Bar.
+
+Default runtime policy:
+
+```json
+{
+  "loadAllSkillsByDefault": false,
+  "maxPrimarySkills": 1,
+  "maxSupportingSkills": 2,
+  "stateSelectedSkillBeforeExecution": true
+}
+```
+
+## Built-In Packs
+
+| Pack | Use it for | Install |
+| --- | --- | --- |
+| `developer-productivity` | code review, tests, bug reproduction, refactors, PR summaries | `aso install-pack developer-productivity --target codex --dir .` |
+| `repo-maintainer` | issues, changelogs, release notes, roadmaps | `aso install-pack repo-maintainer --target codex --dir .` |
+| `launch-kit` | PRDs, README files, landing copy, launch posts | `aso install-pack launch-kit --target codex --dir .` |
+| `ai-video-creator` | demo videos, short scripts, titles, thumbnails | `aso install-pack ai-video-creator --target codex --dir .` |
+
+Agent Skill OS ships with 24 built-in skills across documentation, coding, GitHub maintenance, product launch, content, and research.
+
+## Targets
+
+| Target | Generated files |
+| --- | --- |
+| `codex` | `.codex/AGENTS.md`, `.codex/skills/<skill-id>/SKILL.md` |
+| `claude` | `.claude/CLAUDE.md`, `.claude/skills/<skill-id>/SKILL.md` |
+| `cursor` | `.cursor/rules/agent-skill-os.mdc`, `.cursor/rules/<skill-id>.mdc` |
+| `generic` | `agent-skills/<skill-id>/SKILL.md` |
+
+Every target also receives shared runtime files in `.agent-skill-os/`.
+
+## Commands
+
+| Job | Command |
+| --- | --- |
+| List built-in skills | `aso list` |
+| Search skills | `aso search readme` |
+| Show a skill | `aso show readme-writer` |
+| Install one skill | `aso install readme-writer --target codex --dir .` |
+| Install a pack | `aso install-pack developer-productivity --target codex --dir .` |
+| Print agent load instructions | `aso use readme-writer --target codex` |
+| Recommend skills for a task | `aso recommend "review this pull request"` |
+| Check installed project | `aso doctor --target codex --dir .` |
+| Run skill quality checks | `aso quality` |
+| Start MCP server | `aso mcp` |
+
+Registry and versioning commands:
+
+```bash
+aso registry list
+aso registry add company https://github.com/company/private-agent-skills/raw/main/registry.json
+aso registry refresh
+aso search readme --remote
+aso install company/security-reviewer --target codex --dir .
+aso outdated --dir .
+aso update readme-writer --target codex --dir .
+aso uninstall readme-writer --target codex --dir .
+aso lock --dir .
+```
 
 ## Skill Format
 
-Every skill lives at `skills/<skill-id>/SKILL.md` and includes frontmatter plus these sections:
+Every built-in skill lives at `skills/<skill-id>/SKILL.md` and includes:
 
+- frontmatter metadata
 - Role
 - When to Use
 - Inputs
@@ -139,138 +200,55 @@ Every skill lives at `skills/<skill-id>/SKILL.md` and includes frontmatter plus 
 - Example Output
 - Safety Notes
 
-## CLI Reference
+The Runtime Contract is the difference between a prompt and an agent skill. It defines required inputs, execution steps, output shape, quality checks, and failure mode.
 
-~~~bash
-pnpm aso list
-pnpm aso search readme
-pnpm aso show readme-writer
-pnpm aso install readme-writer --target generic --dir ./tmp/demo
-pnpm aso install-pack developer-productivity --target generic --dir ./tmp/demo-pack
-pnpm aso use readme-writer --target codex
-pnpm aso use-pack developer-productivity --target codex
-pnpm aso recommend "write a README for this repo"
-pnpm aso registry add official https://example.com/registry.json
-pnpm aso registry refresh
-pnpm aso search readme --remote
-pnpm aso install official/readme-writer --target codex --dir ./tmp/demo
-pnpm aso install-url https://example.com/skills/readme-writer/SKILL.md --target codex --dir ./tmp/demo
-pnpm aso outdated --dir ./tmp/demo
-pnpm aso update readme-writer --target codex --dir ./tmp/demo
-pnpm aso update-pack developer-productivity --target codex --dir ./tmp/demo-pack
-pnpm aso uninstall readme-writer --target codex --dir ./tmp/demo
-pnpm aso lock --dir ./tmp/demo
-pnpm aso mcp
-pnpm aso quality
-pnpm aso validate
-pnpm aso doctor --target generic --dir ./tmp/demo
-~~~
+## Remote and Private Registries
 
-## Runtime
+A registry is a JSON index that points to raw `SKILL.md` files and pack definitions.
 
-Agent Skill OS v0.2 adds the runtime layer that helps an agent decide which installed skill to use.
-
-- Registry: skill metadata includes capabilities, triggers, routing, and runtime contracts.
-- Router: `.agent-skill-os/router.json` maps tasks to installed skills.
-- Loader: target files such as `.codex/AGENTS.md` tell the agent how to load only the selected skill.
-- Runtime Contract: each `SKILL.md` defines required inputs, execution steps, output contract, and failure mode.
-- Developer Interface: `aso use` prints loading instructions, and `aso recommend` maps a task to recommended skills.
-
-## Remote Registry
-
-Agent Skill OS v0.3 adds local-first remote registry support. A registry is a JSON index that points to raw `SKILL.md` files.
-
-~~~bash
-aso registry add official https://example.com/registry.json
-aso registry refresh
-aso search readme --remote
-aso install official/readme-writer --target codex --dir .
-aso install-url https://example.com/skills/readme-writer/SKILL.md --target codex --dir .
-~~~
-
-Remote skills are treated as text instructions, not executable code. The CLI prints the source URL before installing remote skills so you can review untrusted content.
-
-## MCP Server
-
-Agent Skill OS v0.4 exposes the runtime through MCP:
-
-~~~bash
-aso mcp
-~~~
-
-MCP tools include `agent_skill_search`, `agent_skill_recommend`, `agent_skill_load`, `agent_skill_list_installed`, `agent_skill_install`, and `agent_skill_validate`.
-
-The MCP server follows the same policy: do not load all skills by default; recommend one primary skill and at most two supporting skills.
-
-See [docs/mcp.md](docs/mcp.md).
-
-## Team Registries
-
-Agent Skill OS v0.5 supports team/private registry packs:
-
-~~~bash
+```bash
 aso registry add company https://github.com/company/private-agent-skills/raw/main/registry.json
 aso registry refresh
 aso install company/security-reviewer --target codex --dir .
 aso install-pack company/frontend-team --target codex --dir .
-~~~
+```
 
-See [docs/private-registry.md](docs/private-registry.md).
+Remote skills are text instructions, not executable code. Review untrusted registry sources before installing them.
 
-## Quality Checks
+## MCP
 
-Agent Skill OS v0.6 adds deterministic skill quality and trust checks:
+Run the MCP server:
 
-~~~bash
-aso quality
-aso quality --json
-aso quality --min-grade A
-~~~
+```bash
+aso mcp
+```
 
-The checker reports grade, safety, routing quality, runtime contract completeness, and issues. See [docs/quality.md](docs/quality.md).
+MCP tools include `agent_skill_search`, `agent_skill_recommend`, `agent_skill_load`, `agent_skill_list_installed`, `agent_skill_install`, and `agent_skill_validate`.
 
-## Versioning and Lockfiles
+## Development
 
-Agent Skill OS v0.7 records installed skill versions and sources in `.agent-skill-os/skill-lock.json`.
+Run the repository locally:
 
-~~~bash
-aso outdated --dir .
-aso update readme-writer --target codex --dir .
-aso update-pack developer-productivity --target codex --dir .
-aso uninstall readme-writer --target codex --dir .
-aso lock --dir .
-~~~
+```bash
+pnpm install
+pnpm validate
+pnpm test
+pnpm build
+```
 
-Skill metadata can declare `compatibleWith`, `dependencies`, and `optionalDependencies`. Built-in skill dependencies are installed first; optional dependencies are recorded but not installed automatically.
+Repository layout:
 
-See [docs/versioning.md](docs/versioning.md).
+```txt
+apps/web          Next.js discovery site and docs
+packages/core     Schema, registry, validation, installer, runtime, quality
+packages/cli      Commander-based aso CLI and MCP server
+skills/           24 built-in skills
+packs/            4 built-in skill packs
+scripts/          Registry generation, validation, demo checks, CLI wrapper
+generated/        Generated registry JSON
+```
 
-## Web Discovery
-
-Agent Skill OS v0.8 adds indexable discovery pages for browsing the registry by target adapter and practical use case:
-
-- `/targets`
-- `/targets/codex`
-- `/use-cases`
-- `/use-cases/developer-productivity`
-
-These pages reuse the generated registry and localized skill metadata. Skill Markdown content remains in its original language.
-
-## Marketplace Foundation
-
-Agent Skill OS v0.9 adds trust signals without accounts, payments, ratings, or hosted submissions:
-
-- official/community/private source level
-- publisher and license
-- deterministic `aso quality` grade
-- unsafe skill reporting workflow
-- `/marketplace` discovery page
-
-See [docs/marketplace.md](docs/marketplace.md).
-
-## Stable Platform
-
-Agent Skill OS v1.0 defines the stable baseline for skill schema, pack schema, registry schema, CLI commands, runtime files, target adapters, MCP tools, quality checks, migration, and security guidance.
+## Docs
 
 Start here:
 
@@ -279,100 +257,34 @@ Start here:
 - [Migration guide](docs/migration.md)
 - [Security](docs/security.md)
 
-## Repository Structure
+Concepts:
 
-~~~txt
-apps/web          Next.js static gallery and docs
-packages/core     Schema, registry, validation, installer, packs
-packages/cli      Commander-based aso CLI
-skills/           24 built-in skills
-packs/            4 skill packs
-scripts/          Registry generation and validation scripts
-generated/        Generated registry JSON
-~~~
+- [Skills](docs/concepts/skills.md)
+- [Packs](docs/concepts/packs.md)
+- [Router](docs/concepts/router.md)
+- [Runtime Contract](docs/concepts/runtime-contract.md)
 
-## Development
+Deep dives:
 
-~~~bash
-pnpm install
-pnpm dev
-pnpm build
-~~~
-
-## Roadmap
-
-### v0.1
-
-- Local CLI installer
-- 24 built-in skills
-- 4 skill packs
-- Static skill gallery
-- Validation and registry generation
-
-### v0.2
-
-- Agent Skill Runtime
-- Runtime router and skill index
-- Stronger target loaders
-- Runtime Contract in every built-in skill
-- `aso use`, `aso use-pack`, and `aso recommend`
-
-### v0.3
-
-- Remote registry config
-- Registry add/list/remove/refresh
-- Remote search
-- Install from registry skill IDs
-- Install from raw SKILL.md URLs
-
-### v0.4
-
-- MCP server runtime interface
-- Dynamic skill search, recommend, load, install, and validate tools
-- Stdio JSON-RPC transport through `aso mcp`
-
-### v0.5
-
-- Team/private registries
-- Remote team pack install
-
-### v0.6
-
-- Quality and trust checks
-
-### v0.7
-
-- Skill dependencies and versioning
-- `skill-lock.json`
-- Update, uninstall, outdated, and lock commands
-
-### v0.8
-
-- Web registry discovery
-- Target adapter pages
-- Use case workflow pages
-
-### v0.9
-
-- Marketplace foundation
-- Trust profiles
-- Unsafe skill reporting
-
-### v1.0
-
-- Stable platform documentation
-- Migration and release guarantees
-- Stable schema, CLI, runtime, target adapter, MCP, quality, and security baseline
-
-## Growth Scenarios
-
-1. Developer productivity: install `developer-productivity` so an agent can review code, write tests, reproduce bugs, and summarize PRs.
-2. Open-source launch: install `launch-kit` so an agent can write a PRD, README, landing page copy, launch posts, and demo video plan.
-3. AI video creator: install `ai-video-creator` so an agent can write short video scripts, demo scripts, titles, thumbnails, and source summaries.
+- [Registry](docs/registry.md)
+- [MCP](docs/mcp.md)
+- [Private registries](docs/private-registry.md)
+- [Quality](docs/quality.md)
+- [Versioning](docs/versioning.md)
+- [Marketplace foundation](docs/marketplace.md)
+- [Contributing a skill](docs/contributing-skill.md)
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md), [docs/getting-started.md](docs/getting-started.md), [docs/stable-platform.md](docs/stable-platform.md), [docs/migration.md](docs/migration.md), [docs/security.md](docs/security.md), [docs/contributing-skill.md](docs/contributing-skill.md), [docs/registry.md](docs/registry.md), [docs/mcp.md](docs/mcp.md), [docs/private-registry.md](docs/private-registry.md), [docs/quality.md](docs/quality.md), [docs/versioning.md](docs/versioning.md), and [docs/marketplace.md](docs/marketplace.md).
+Contributions are welcome, but new skills should be narrow, repeatable, safe, and testable.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) and [docs/contributing-skill.md](docs/contributing-skill.md).
+
+## Security
+
+Agent Skill OS distributes instructions to agents. Skills can influence agent behavior, so review remote skills before installing them and do not install untrusted private registries blindly.
+
+See [SECURITY.md](SECURITY.md) and [docs/security.md](docs/security.md).
 
 ## License
 
